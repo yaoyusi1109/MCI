@@ -2,7 +2,7 @@
 
 Updated November 5, 2026. Numbers match the supplied reading list.
 
-All 13 unique articles are available as full-text PDFs. Four PDFs supplied by the user (#5, #7, #10, #14) were identified by title and authors and renamed to match the existing numbering. The pre-existing published Repoussis PDF is also preserved, giving 14 PDF files in total.
+All 13 unique articles are available as full-text PDFs. Four PDFs supplied by the user (#5, #7, #10, #14) were identified by title and authors and renamed to match the existing numbering. The [published Repoussis PDF](12_Repoussis_Emergency_Preparedness_Published.pdf) is also preserved, giving 14 PDF files in total.
 
 Web resources are retained as source links; local HTML copies were removed at user request. The FIRE-WUI webpage (#3) was readable online, but its local download was blocked.
 
@@ -21,7 +21,7 @@ Web resources are retained as source links; local HTML copies were removed at us
 | 9 | [HIFLD_Fire_EMS_Stations](https://portal.datarescueproject.org/datasets/hifld-open-fire-and-emergency-medical-service-ems-stations/) | Source link only | Local HTML copy removed at user request; source URL retained. |
 | 10 | [Chang_Simulation_Dynamic_Ambulance_Dispatch](https://doi.org/10.1016/j.cor.2026.107559) | [10_Chang_Simulation_Dynamic_Ambulance_Dispatch.pdf](10_Chang_Simulation_Dynamic_Ambulance_Dispatch.pdf) | Downloaded by user; title and authors checked, then renamed November 5, 2026. |
 | 11 | [Mills_Dynamic_Distribution_of_Patients](https://par.nsf.gov/servlets/purl/10068610) | [11_Mills_Dynamic_Distribution_of_Patients.pdf](11_Mills_Dynamic_Distribution_of_Patients.pdf) |  |
-| 12 | [Repoussis_Emergency_Preparedness](https://openaccess.city.ac.uk/id/eprint/19862/1/MCIpapernew.pdf) | [12_Repoussis_Emergency_Preparedness.pdf](12_Repoussis_Emergency_Preparedness.pdf) | Accepted manuscript downloaded from City Research Online. A published-version PDF was already present and was preserved. |
+| 12 | [Repoussis_Emergency_Preparedness](https://openaccess.city.ac.uk/id/eprint/19862/1/MCIpapernew.pdf) | [12_Repoussis_Emergency_Preparedness.pdf](12_Repoussis_Emergency_Preparedness.pdf) | Accepted manuscript downloaded from City Research Online. Published version: [12_Repoussis_Emergency_Preparedness_Published.pdf](12_Repoussis_Emergency_Preparedness_Published.pdf). |
 | 13 | [NHC_Data_Archive](https://www.nhc.noaa.gov/data/index.php?text) | Source link only | Local HTML copy removed at user request; source URL retained. |
 | 14 | [Branas_Mass_Casualty_Case_Series](https://pubmed.ncbi.nlm.nih.gov/11045407/) | [14_Branas_Mass_Casualty_Case_Series.pdf](14_Branas_Mass_Casualty_Case_Series.pdf) | Downloaded by user; title and authors checked, then renamed November 5, 2026. |
 | 15 | [OpenStreetMap](https://www.openstreetmap.org/#map=7/36.660/-93.735) | Source link only | Local HTML copy removed at user request; source URL retained. |

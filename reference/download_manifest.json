@@ -182,8 +182,9 @@
     "bytes": 2307703,
     "error": "",
     "status": "full_text_pdf",
-    "note": "Accepted manuscript downloaded from City Research Online. A published-version PDF was already present and was preserved.",
-    "sha256": "eea1c90a9c9498b46a7638b3942693b73214f01287d56d9da8382ef9f6751fbd"
+    "note": "Accepted manuscript downloaded from City Research Online. The separately supplied published version is saved as 12_Repoussis_Emergency_Preparedness_Published.pdf.",
+    "sha256": "eea1c90a9c9498b46a7638b3942693b73214f01287d56d9da8382ef9f6751fbd",
+    "published_version_file": "12_Repoussis_Emergency_Preparedness_Published.pdf"
   },
   {
     "number": 13,
