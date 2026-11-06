@@ -1,0 +1,82 @@
+[
+  {
+    "number": 3,
+    "name": "FIRE_WUI_Project",
+    "url": "https://systems.jhu.edu/research-projects/fire-wui-a-convergence-framework-for-modeling-collective-human-behavior-in-wildfire-evacuation/?download=1",
+    "http": "403",
+    "content_type": "text/html; charset=UTF-8",
+    "resolved_url": "https://systems.jhu.edu/research-projects/fire-wui-a-convergence-framework-for-modeling-collective-human-behavior-in-wildfire-evacuation/?download=1",
+    "saved": null,
+    "bytes": 5973,
+    "error": ""
+  },
+  {
+    "number": 5,
+    "name": "Ebrahimian_Dynamic_Road_Network_Evacuation",
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1155/cplx/4292477",
+    "http": "403",
+    "content_type": "text/html; charset=UTF-8",
+    "resolved_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1155/cplx/4292477",
+    "saved": null,
+    "bytes": 5611,
+    "error": ""
+  },
+  {
+    "number": 6,
+    "name": "MEDEVAC_Gharb_Flood",
+    "url": "https://www.banglajol.info/index.php/BJMS/article/view/88733",
+    "http": "200",
+    "content_type": "text/html; charset=utf-8",
+    "resolved_url": "https://www.banglajol.info/index.php/BJMS/article/view/88733",
+    "saved": null,
+    "bytes": 35825,
+    "error": "",
+    "removed_file": "06_MEDEVAC_Gharb_Flood.html",
+    "status": "source_link_only",
+    "note": "Local HTML copy removed at user request; source URL retained."
+  },
+  {
+    "number": 7,
+    "name": "Rambha_Staged_Hospital_Evacuation",
+    "url": "https://cistup.iisc.ac.in/tarun/papers/2021_Hospital_Evacuation.pdf",
+    "http": "502",
+    "content_type": "text/html",
+    "resolved_url": "https://cistup.iisc.ac.in/tarun/papers/2021_Hospital_Evacuation.pdf",
+    "saved": null,
+    "bytes": 165,
+    "error": ""
+  },
+  {
+    "number": 8,
+    "name": "Mashkani_Clinical_Condition_Deterioration",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9672660/pdf/10479_2022_Article_5046.pdf",
+    "http": "200",
+    "content_type": "text/html; charset=utf-8",
+    "resolved_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9672660/pdf/10479_2022_Article_5046.pdf",
+    "saved": null,
+    "bytes": 1817,
+    "error": ""
+  },
+  {
+    "number": 10,
+    "name": "Chang_Simulation_Dynamic_Ambulance_Dispatch",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0305054826001772/pdfft?isDTMRedir=true&download=true",
+    "http": "403",
+    "content_type": "text/html; charset=UTF-8",
+    "resolved_url": "https://www.sciencedirect.com/science/article/pii/S0305054826001772/pdfft?isDTMRedir=true&download=true",
+    "saved": null,
+    "bytes": 832982,
+    "error": ""
+  },
+  {
+    "number": 14,
+    "name": "Branas_Mass_Casualty_Case_Series",
+    "url": "https://www.tandfonline.com/doi/pdf/10.1080/10903120090940985",
+    "http": "403",
+    "content_type": "text/html; charset=UTF-8",
+    "resolved_url": "https://www.tandfonline.com/doi/pdf/10.1080/10903120090940985",
+    "saved": null,
+    "bytes": 5583,
+    "error": ""
+  }
+]
