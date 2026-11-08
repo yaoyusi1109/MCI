@@ -1,0 +1,4 @@
+hospital_id,name,trauma_level,available_beds,latitude,longitude,ambulance_entrance_lat,ambulance_entrance_lon
+H001,R Adams Cowley Shock Trauma Center,PARC,2,39.2885,-76.6235,,
+H002,Johns Hopkins Hospital,I,1,39.295828,-76.591953,,
+H003,Sinai Hospital of Baltimore,II,1,39.351968,-76.661297,,

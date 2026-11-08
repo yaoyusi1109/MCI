@@ -1,0 +1,15 @@
+{
+  "scenario_id": "MCI01",
+  "simulation_horizon_min": 1440,
+  "loading_minutes": 5,
+  "hospital_turnover_minutes": 60,
+  "primary_objective": "patient_delivery_makespan",
+  "routing_provider": "valhalla",
+  "non_reusable_beds": true,
+  "triage_precedence": [
+    "RED",
+    "YELLOW",
+    "GREEN"
+  ],
+  "black_triage_transport_policy": "NO_AUTOMATIC_TRANSPORT"
+}

@@ -1,0 +1,5 @@
+patient_id,minutes_per_deterioration,stabilization_multiplier
+P001,30,0.5
+P002,20,0.5
+P003,90,0.5
+P004,0,1.0
