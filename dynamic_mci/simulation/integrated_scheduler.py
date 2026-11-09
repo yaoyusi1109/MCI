@@ -11,7 +11,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
-from simulation.engine import get_route, get_hospital_location, location
+from simulation.engine import (
+    get_route,
+    get_hospital_location,
+    get_station_location,
+    location,
+)
 from simulation.gurobi_dispatch import choose_dispatch
 
 BASE = Path(__file__).resolve().parents[1]
@@ -115,6 +120,7 @@ def run(scenario, triage_file, horizon=240.0, save=True):
     dynamics = {x['patient_id']: x for x in rows(scenario / 'patient_dynamics.csv')}
     people = rows(scenario / 'ems_personnel.csv')
     units = {x['unit_id']: x for x in rows(scenario / 'response_units.csv')}
+    stations = {x['station_id']: x for x in rows(scenario / 'stations.csv')}
     hospitals = rows(scenario / 'hospitals.csv')
     compatible = {(x['triage'].upper(), x['hospital_id']) for x in rows(scenario / 'hospital_compatibility.csv') if flag(x['compatible'])}
     incident = rows(scenario / 'incidents.csv')[0]
@@ -249,6 +255,50 @@ def run(scenario, triage_file, horizon=240.0, save=True):
             )
 
         legs[hid] = (get_route(pickup, dest), get_route(dest, pickup))
+
+    # Initial ambulance response route: station to MCI.
+    # Use the same station and dispatch information
+    # as the rolling-triage engine.
+
+    ambulance_unit = units[aid]
+    station_id = ambulance_unit['station_id']
+
+    if station_id not in stations:
+        raise ValueError(
+            f"Unknown station {station_id} for {aid}"
+        )
+
+    station_origin = get_station_location(
+        stations[station_id]
+    )
+
+    initial_route = get_route(
+        station_origin,
+        pickup
+    )
+
+    dispatch_min = float(
+        ambulance_unit.get('dispatch_min') or 0
+    )
+
+    arrival_min = float(
+        triage['unit_arrivals_min'][aid]
+    )
+
+    if arrival_min < dispatch_min:
+        raise ValueError(
+            "Ambulance arrival precedes dispatch"
+        )
+
+    routes.append({
+        'purpose': 'STATION_TO_MCI',
+        'ambulance_id': aid,
+        'start_min': dispatch_min,
+        **initial_route,
+        'start_min': dispatch_min,
+        'end_min': arrival_min
+    })
+
     # Finite-state ambulance: ON_SCENE -> LOADING -> TO_HOSPITAL -> TURNOVER -> RETURN -> ON_SCENE.
     ambulance = {'phase': 'BEFORE_ARRIVAL', 'until': float(triage['unit_arrivals_min'][aid]),
                  'patient': None, 'hospital': None, 'trip': 0}

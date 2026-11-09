@@ -90,7 +90,9 @@
 
 <div class="brand"><div class="eyebrow">EMERGENCY RESPONSE · SIMULATION</div><h1>Maryland MCI</h1><p>Routing operations dashboard · Prototype 01</p></div>
 <section class="section"><h2>Simulation playback</h2>
-<div class="buttons"><button class="button primary" id="runSimulation">Run Simulation</button><button class="button" id="playSimulation" disabled>Play</button></div>
+<div class="row"><label for="simulationMode">Simulation mode</label></div>
+<select id="simulationMode"><option value="static">Static baseline</option><option value="dynamic" selected>Dynamic Gurobi + rolling triage</option></select>
+<div class="buttons" style="margin-top:10px"><button class="button primary" id="runSimulation">Run Simulation</button><button class="button" id="playSimulation" disabled>Play</button></div>
 <div class="row"><label>Playback speed</label><select id="playSpeed" style="width:120px"><option value="1">1×</option><option value="10">10×</option><option value="60" selected>60×</option><option value="300">300×</option></select></div>
 <input type="range" id="simSeek" min="0" max="100" value="0" step="0.1" style="width:100%" disabled>
 <div class="row"><label>Simulation clock</label><strong id="simClock">0:00</strong></div>
@@ -100,7 +102,7 @@
 <div id="simStatus" class="status">Run a simulation to load the event timeline.</div>
 <div id="simAssignments" class="small" style="margin-top:10px"></div>
 </section>
-<section class="section"><h2>Scenario overview</h2><div class="metrics"><div class="metric"><strong>01</strong><span>Active MCI</span></div><div class="metric"><strong>01</strong><span>Example ambulance</span></div><div class="metric"><strong id="travel">—</strong><span>Station → Pickup (min)</span></div><div class="metric"><strong id="distance">—</strong><span>Pickup → Hospital (min)</span></div></div><p class="small">Ambulance origin, pickup and hospital entrance are illustrative; verify vehicle access points. Gurobi is not connected.</p></section>
+<section class="section"><h2>Scenario overview</h2><div class="metrics"><div class="metric"><strong>01</strong><span>Active MCI</span></div><div class="metric"><strong>01</strong><span>Example ambulance</span></div><div class="metric"><strong id="travel">—</strong><span>Station → Pickup (min)</span></div><div class="metric"><strong id="distance">—</strong><span>Pickup → Hospital (min)</span></div></div><p class="small">Ambulance origin, pickup and hospital entrance are illustrative; verify vehicle access points. Dynamic mode uses rolling-triage Gurobi dispatch; static mode retains the original baseline.</p></section>
 <section class="section"><h2>Routing provider</h2><select id="provider"><option value="valhalla">Valhalla (Docker :8002)</option><option value="osmnx">OSMnx (cached Baltimore City)</option></select></section>
 <section class="section"><h2>Search incident address</h2><div class="row"><input id="address" type="text" value="333 W Camden St, Baltimore, MD" style="width:100%;padding:9px;border:1px solid var(--border);border-radius:8px"></div><button class="button primary" id="searchAddress">Find address</button><p class="small">Address lookup positions the red incident marker. Set the orange pickup point separately.</p></section>
 <section class="section"><h2>Incident location</h2><p class="muted">Click or drag the red incident marker. Drag the orange pickup/staging marker to the vehicle-accessible curb. Drag the blue ambulance origin to adjust its location.</p><div class="row"><label>Latitude / longitude</label><span class="coord" id="coords">Not placed</span></div><div class="buttons"><button class="button primary" id="reset">Reset MCI</button><button class="button" id="clear">Clear route</button></div></section>
@@ -318,7 +320,9 @@ async function loadScenarioList() {
     scenarioSelect.appendChild(option);
   }
 
-  if (data.scenarios.includes("camden_yards")) {
+  if (data.scenarios.includes("camden_yards_dynamic")) {
+    scenarioSelect.value = "camden_yards_dynamic";
+  } else if (data.scenarios.includes("camden_yards")) {
     scenarioSelect.value = "camden_yards";
   }
 
@@ -494,6 +498,7 @@ scenarioTable.onchange = renderScenarioTable;
 
 
 scenarioSelect.onchange = async () => {
+  setReportRun(null);
   if (
     scenarioDirty &&
     !confirm("Discard unsaved changes?")
@@ -609,53 +614,58 @@ function interpolateRoute(points,fraction){
 }
 function renderSim(t){
   if(!simData)return;
-  simMinute=Math.max(0,Math.min(Number(simData.makespan_min),t));
-  $('simSeek').value=100*simMinute/Math.max(0.001,Number(simData.makespan_min));
+  const end=Number(simData.playback_end_min ?? simData.makespan_min);
+  simMinute=Math.max(0,Math.min(end,t));
+  $('simSeek').value=100*simMinute/Math.max(.001,end);
   $('simClock').textContent=simTime(simMinute);
-  const completed=simData.assignments.filter(a=>Number(a.hospital_arrival_min)<=simMinute);
+  const completed=(simData.assignments||[]).filter(a=>a.hospital_arrival_min!=null&&Number(a.hospital_arrival_min)<=simMinute);
   $('simDelivered').textContent=`${completed.length} / ${simData.transport_patients}`;
-  const routes=simData.routes||[];
-  let location=null;
+  const routes=(simData.routes||[]).filter(r=>Array.isArray(r.coordinates)&&r.coordinates.length&&Number.isFinite(Number(r.start_min))&&Number.isFinite(Number(r.end_min))).slice().sort((a,b)=>Number(a.start_min)-Number(b.start_min));
+  let position=null;
   for(const route of routes){
-    if(!Array.isArray(route.coordinates)||!route.coordinates.length)continue;
-    if(simMinute>=Number(route.start_min)){
-      const span=Math.max(.00001,Number(route.end_min)-Number(route.start_min));
-      location=interpolateRoute(route.coordinates,(simMinute-Number(route.start_min))/span);
+    const start=Number(route.start_min), finish=Number(route.end_min);
+    if(simMinute<start)break;
+    if(simMinute<=finish){
+      position=interpolateRoute(route.coordinates,Math.max(0,Math.min(1,(simMinute-start)/Math.max(.00001,finish-start))));
+      break;
     }
+    position=route.coordinates[route.coordinates.length-1];
   }
-  if(location){simAmbulance.setLatLng(location);if(!map.hasLayer(simAmbulance))simAmbulance.addTo(map);}
-  const last=[...(simData.events||[])].filter(e=>Number(e.time_min)<=simMinute).at(-1);
-  $('simStatus').textContent=last?`${simTime(last.time_min)} · ${last.event.replaceAll('_',' ')}${last.patient_id?' · '+last.patient_id:''}`:'Simulation ready';
+  if(!position&&routes.length)position=routes[0].coordinates[0];
+  if(position){simAmbulance.setLatLng(position);if(!map.hasLayer(simAmbulance))simAmbulance.addTo(map);}
+  const last=(simData.events||[]).filter(e=>Number(e.time_min)<=simMinute).at(-1);
+  $('simStatus').textContent=last?`${simTime(last.time_min)} · ${String(last.event).replaceAll('_',' ')}${last.patient_id?' · '+last.patient_id:''}`:'Simulation ready';
 }
 function pauseSim(){simPlaying=false;$('playSimulation').textContent='Play';if(simFrame)cancelAnimationFrame(simFrame);simFrame=0;simLastStamp=null;}
 function tickSim(stamp){
   if(!simPlaying)return;
   if(simLastStamp!==null)renderSim(simMinute+(stamp-simLastStamp)/1000*Number($('playSpeed').value)/60);
   simLastStamp=stamp;
-  if(simMinute>=Number(simData.makespan_min)){pauseSim();return;}
+  if(simMinute>=Number(simData.playback_end_min ?? simData.makespan_min)){pauseSim();return;}
   simFrame=requestAnimationFrame(tickSim);
 }
 $('playSimulation').onclick=()=>{
   if(!simData)return;
   if(simPlaying){pauseSim();return;}
-  if(simMinute>=Number(simData.makespan_min))renderSim(0);
+  if(simMinute>=Number(simData.playback_end_min ?? simData.makespan_min))renderSim(0);
   simPlaying=true;$('playSimulation').textContent='Pause';simLastStamp=null;simFrame=requestAnimationFrame(tickSim);
 };
-$('simSeek').oninput=()=>{pauseSim();if(simData)renderSim(Number($('simSeek').value)/100*Number(simData.makespan_min));};
-$('simEnd').onclick=()=>{pauseSim();if(simData)renderSim(Number(simData.makespan_min));};
+$('simSeek').oninput=()=>{pauseSim();if(simData)renderSim(Number($('simSeek').value)/100*Number(simData.playback_end_min ?? simData.makespan_min));};
+$('simEnd').onclick=()=>{pauseSim();if(simData)renderSim(Number(simData.playback_end_min ?? simData.makespan_min));};
 $('runSimulation').onclick=async()=>{
   if(scenarioDirty){$('simStatus').textContent='Save scenario changes before running.';return;}
-  pauseSim();$('runSimulation').disabled=true;$('simStatus').textContent='Running Valhalla + Gurobi simulation…';
+  pauseSim();$('runSimulation').disabled=true;$('simStatus').textContent='Running '+($('simulationMode').value==='dynamic'?'rolling triage + dynamic Gurobi':'static baseline')+'…';
   try{
-    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scenarioSelect.value,ambulance_id:'A001'})});
+    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scenarioSelect.value,ambulance_id:'A001',mode:$('simulationMode').value,horizon:240})});
     if(!r.ok){const body=await r.json();throw new Error(body.detail||`HTTP ${r.status}`);}
     simData=await r.json();
-    setReportRun(simData.run_id);
+    setReportRun(simData.run_id,simData.scenario_id||scenarioSelect.value);
     simRouteLayer.clearLayers();
     for(const route of simData.routes||[]){if(Array.isArray(route.coordinates)&&route.coordinates.length>1){L.polyline(route.coordinates,{color:route.purpose==='MCI_TO_HOSPITAL'?'#159c79':'#2563eb',weight:4,opacity:.45}).addTo(simRouteLayer);}}
-    $('simMakespan').textContent=`${Number(simData.makespan_min).toFixed(2)} min`;
+    $('simMakespan').textContent=`${Number(simData.playback_end_min ?? simData.makespan_min).toFixed(2)} min`;
     $('simAssignments').replaceChildren();
-    for(const a of simData.assignments||[]){const p=document.createElement('p');p.textContent=`${a.triage} ${a.patient_id} → ${a.hospital_id} · arrival ${simTime(a.hospital_arrival_min)}`;$('simAssignments').appendChild(p);}
+    for(const a of simData.assignments||[]){const p=document.createElement('p');p.textContent=`${a.triage||'UNKNOWN'} ${a.patient_id||'?'} → ${a.hospital_id||'?'} · arrival ${a.hospital_arrival_min==null?'pending':simTime(a.hospital_arrival_min)}`;$('simAssignments').appendChild(p);}
+    if(simData.mode==='dynamic'){$('simStatus').textContent=`Dynamic Gurobi · ${simData.delivered} delivered · ${simData.expectant} expectant · ${simData.optimizer_decisions.length} decisions`;}
     $('simSeek').disabled=false;$('playSimulation').disabled=false;renderSim(0);
     if((simData.routes||[]).length){const coords=simData.routes.flatMap(x=>x.coordinates||[]);if(coords.length)map.fitBounds(L.latLngBounds(coords),{padding:[35,35]});}
   }catch(e){$('simStatus').textContent=`Simulation error: ${e.message}`;}
@@ -667,9 +677,11 @@ $('runSimulation').onclick=async()=>{
 // ---------------------------------------------
 
 let reportRunId = null;
+let reportScenarioId = null;
 
-function setReportRun(runId) {
+function setReportRun(runId, scenarioId=null) {
   reportRunId = runId || null;
+  reportScenarioId = scenarioId;
 
   document.getElementById("downloadExcel")
     .disabled = !reportRunId;
@@ -688,7 +700,7 @@ function downloadSimulationReport(type) {
 
   // Get the active scenario from the dashboard.
   const scenarioId =
-    document.getElementById("scenarioSelect").value;
+    reportScenarioId || document.getElementById("scenarioSelect").value;
 
   // Build the scenario-specific report URL.
   const url =
