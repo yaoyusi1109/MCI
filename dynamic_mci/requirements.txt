@@ -5,3 +5,5 @@ osmnx>=2,<3
 networkx>=3,<4
 scikit-learn>=1.3
 openpyxl
+gurobipy
+pandas

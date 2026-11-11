@@ -6,15 +6,60 @@
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-:root{--bg:#f2f5f9;--panel:#fff;--ink:#182638;--muted:#66768a;--border:#dce4ee;--navy:#142c48;--blue:#2563eb;--red:#e54d55;--green:#159c79;--soft:#eef4ff;--shadow:0 8px 32px rgba(15,38,65,.08)}
-*{box-sizing:border-box}body{margin:0;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg)}button,select{font:inherit}button{cursor:pointer}#app{height:100vh;display:grid;grid-template-columns:350px minmax(0,1fr)}aside{background:var(--panel);border-right:1px solid var(--border);overflow-y:auto;z-index:800;box-shadow:var(--shadow)}.brand{background:var(--navy);color:white;padding:23px 24px 22px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:.16em;color:#a9c5e9}.brand h1{font-size:21px;line-height:1.2;margin:9px 0 5px}.brand p{color:#bfd0e3;margin:0;font-size:12px}.section{padding:19px 23px;border-bottom:1px solid var(--border)}.section h2{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 13px}.muted{color:var(--muted);font-size:12px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:13px;border:1px solid var(--border);border-radius:11px;background:#fafcff}.metric strong{font-size:21px;display:block;font-variant-numeric:tabular-nums}.metric span{font-size:11px;color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0}.row label{font-size:12px;color:var(--muted)}.coord{font-variant-numeric:tabular-nums;font-size:12px;font-weight:650}.button{border:1px solid var(--border);background:white;border-radius:9px;padding:10px 12px;color:var(--ink);font-weight:650}.button.primary{background:var(--blue);color:white;border-color:var(--blue)}.button:disabled{opacity:.5;cursor:not-allowed}.buttons{display:flex;gap:8px}.buttons>*{flex:1}.status{background:var(--soft);color:#2455a5;padding:11px 12px;border-radius:9px;font-size:12px;min-height:38px}.legend{display:flex;flex-wrap:wrap;gap:13px;font-size:11px;color:var(--muted)}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.map-wrap{position:relative;min-width:0}#map{height:100%;width:100%}.map-title{position:absolute;z-index:600;left:18px;top:18px;background:white;border:1px solid var(--border);box-shadow:var(--shadow);border-radius:11px;padding:12px 16px;pointer-events:none}.map-title b{display:block;font-size:14px}.map-title span{font-size:11px;color:var(--muted)}.map-footer{position:absolute;z-index:600;bottom:24px;left:18px;background:white;border-radius:9px;padding:10px 13px;border:1px solid var(--border);box-shadow:var(--shadow);font-size:12px;color:var(--muted);pointer-events:none}.pin{height:32px;width:32px;border:3px solid white;border-radius:50%;box-shadow:0 3px 12px #172d4c66;display:grid;place-items:center;color:white;font-size:16px;font-weight:800}.pin.mci{background:var(--red)}.pin.ambulance{background:var(--blue)}select{width:100%;padding:10px;border:1px solid var(--border);border-radius:9px;background:white;color:var(--ink)}.small{font-size:11px;color:var(--muted)}@media(max-width:750px){#app{grid-template-columns:1fr;grid-template-rows:350px minmax(400px,1fr);height:100dvh}aside{border-right:0;border-bottom:1px solid var(--border)}.brand{padding:15px 20px}.section{padding:12px 20px}.map-title{top:12px;left:12px}.map-footer{bottom:16px;left:12px}}
+:root{--bg:#f2f5f9;--panel:#fff;--ink:#182638;--muted:#66768a;--border:#dce4ee;--navy:#142c48;--blue:#2563eb;--red:#e54d55;--green:#159c79;--soft:#eef4ff;--soft-ink:#2455a5;--metric:#fafcff;--ok:#1a7f37;--bad:#cf222e;--shadow:0 8px 32px rgba(15,38,65,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151c;--panel:#18202a;--ink:#e3e9f0;--muted:#97a4b3;--border:#2b3643;--navy:#0d1d31;--blue:#4f8cff;--soft:#1b2a42;--soft-ink:#9cc0ff;--metric:#1d2733;--ok:#3fb950;--bad:#ff7b72;--shadow:0 8px 32px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#10151c;--panel:#18202a;--ink:#e3e9f0;--muted:#97a4b3;--border:#2b3643;--navy:#0d1d31;--blue:#4f8cff;--soft:#1b2a42;--soft-ink:#9cc0ff;--metric:#1d2733;--ok:#3fb950;--bad:#ff7b72;--shadow:0 8px 32px rgba(0,0,0,.35)}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg)}button,select{font:inherit}button{cursor:pointer}#app{height:100vh;height:100dvh;display:grid;grid-template-columns:var(--side-w,clamp(320px,28vw,440px)) 8px minmax(0,1fr)}aside{background:var(--panel);border-right:1px solid var(--border);overflow-y:auto;overflow-x:hidden;z-index:800;box-shadow:var(--shadow);min-width:0;overscroll-behavior:contain}.brand{background:var(--navy);color:white;padding:23px 24px 22px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:.16em;color:#a9c5e9}.brand h1{font-size:21px;line-height:1.2;margin:9px 0 5px}.brand p{color:#bfd0e3;margin:0;font-size:12px}.section{padding:19px 23px;border-bottom:1px solid var(--border)}.section h2{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 13px}.muted{color:var(--muted);font-size:12px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:13px;border:1px solid var(--border);border-radius:11px;background:var(--metric)}.metric strong{font-size:21px;display:block;font-variant-numeric:tabular-nums}.metric span{font-size:11px;color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0}.row label{font-size:12px;color:var(--muted)}.coord{font-variant-numeric:tabular-nums;font-size:12px;font-weight:650}.button{border:1px solid var(--border);background:var(--panel);border-radius:9px;padding:10px 12px;color:var(--ink);font-weight:650}.button.primary{background:var(--blue);color:white;border-color:var(--blue)}.button:disabled{opacity:.5;cursor:not-allowed}.buttons{display:flex;gap:8px}.buttons>*{flex:1}.status{background:var(--soft);color:var(--soft-ink);padding:11px 12px;border-radius:9px;font-size:12px;min-height:38px}.legend{display:flex;flex-wrap:wrap;gap:13px;font-size:11px;color:var(--muted)}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.map-wrap{position:relative;min-width:0}#map{height:100%;width:100%}.map-title{position:absolute;z-index:600;left:18px;top:18px;background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:11px;padding:12px 16px;pointer-events:none}.map-title b{display:block;font-size:14px}.map-title span{font-size:11px;color:var(--muted)}.map-footer{position:absolute;z-index:600;bottom:24px;left:18px;background:var(--panel);border-radius:9px;padding:10px 13px;border:1px solid var(--border);box-shadow:var(--shadow);font-size:12px;color:var(--muted);pointer-events:none}.pin{height:32px;width:32px;border:3px solid white;border-radius:50%;box-shadow:0 3px 12px #172d4c66;display:grid;place-items:center;color:white;font-size:16px;font-weight:800}.pin.mci{background:var(--red)}.pin.ambulance{background:var(--blue)}select{width:100%;padding:10px;border:1px solid var(--border);border-radius:9px;background:var(--panel);color:var(--ink)}.small{font-size:11px;color:var(--muted)}/* tabs, results tables, step log, AI tab */
+input,textarea{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--border);border-radius:6px}
+#tabs{position:sticky;top:0;z-index:5;display:flex;gap:2px;padding:0 10px;background:var(--panel);border-bottom:1px solid var(--border)}
+#tabs{overflow-x:auto;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:1 0 auto;white-space:nowrap;border:0;background:none;color:var(--muted);padding:11px 6px;font-size:12px;font-weight:650;border-bottom:2px solid transparent}
+#tabs button.on{color:var(--blue);border-bottom-color:var(--blue)}
+.pane{display:none}.pane.on{display:block}.sub{display:none}.sub.on{display:block}
+#scenarioEditor th{border-bottom:1px solid var(--border)!important}
+.tbl{width:100%;border-collapse:collapse;font-size:11.5px;font-variant-numeric:tabular-nums;margin:6px 0 12px}
+.tbl th,.tbl td{padding:4px 5px;border-bottom:1px solid var(--border);text-align:left}.tbl th{color:var(--muted);font-weight:650}
+.tbl td input,.tbl td select{width:100%;padding:3px 5px;font-size:12px}
+.tbl.stats td:last-child{text-align:right;font-weight:650}
+.tri{display:inline-block;padding:0 6px;border-radius:9px;font-size:10.5px;font-weight:700;color:#fff}
+.tri.RED{background:#d1343e}.tri.YELLOW{background:#c99a06}.tri.GREEN{background:#159c79}.tri.BLACK{background:#333}
+.steplog{list-style:none;padding:0;margin:10px 0 0;font-size:12px}
+.steplog li{padding:4px 0;border-bottom:1px dashed var(--border)}
+.steplog li.ok::before{content:"✓ ";color:var(--ok)}.steplog li.run::before{content:"… "}.steplog li.err{color:var(--bad)}
+.seg{display:flex;gap:4px;flex-wrap:wrap}.seg button{flex:1;border:1px solid var(--border);background:var(--panel);color:var(--ink);padding:7px;border-radius:7px;font-size:12px}
+.seg button.on{background:var(--soft);border-color:var(--blue);color:var(--blue);font-weight:650}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}.grid2 label{font-size:11px;color:var(--muted);display:block}.grid2 input{width:100%;padding:5px 7px}
+#pane-ai textarea{width:100%;min-height:64px;padding:6px 8px;resize:vertical}
+#pane-ai details{margin-top:10px;font-size:12px}#pane-ai summary{cursor:pointer;color:var(--blue)}
+#pane-ai pre{white-space:pre-wrap;font-size:11px;background:var(--bg);padding:8px;border-radius:6px;max-height:260px;overflow:auto}
+.tag{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:10px;background:var(--soft);color:var(--blue);text-transform:none;letter-spacing:0}
+.ai-legend{display:grid;grid-template-columns:18px 1fr;gap:4px 8px;align-items:center;font-size:11px;color:var(--muted)}
+.ai-legend b{display:block;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 1px #000}
+.map-hide-main .leaflet-overlay-pane,.map-hide-main .leaflet-marker-pane,.map-hide-main .leaflet-shadow-pane{display:none}
+.leaflet-aiPlan-pane,.leaflet-aiMarkers-pane{display:none}.map-show-ai .leaflet-aiPlan-pane,.map-show-ai .leaflet-aiMarkers-pane{display:block}
+#splitter{cursor:col-resize;background:var(--bg);border-right:1px solid var(--border);position:relative;z-index:801;touch-action:none}
+#splitter::after{content:'';position:absolute;left:2px;right:2px;top:50%;height:36px;margin-top:-18px;border-radius:3px;background:var(--border)}
+#splitter:hover::after,#splitter.drag::after{background:var(--blue)}
+body.resizing{cursor:col-resize;user-select:none}
+#scenarioEditor,#simAssignments,#ai-paramTable,#ai-planOut{overflow-x:auto}
+.tbl{min-width:100%}
+@media(max-width:1100px){.section{padding:16px 18px}.brand{padding:18px 18px 16px}.map-footer{display:none}}
+@media(max-width:750px){#app{grid-template-columns:1fr;grid-template-rows:minmax(0,52dvh) minmax(300px,1fr);height:100dvh}#splitter{display:none}.map-title{display:none}#tabs button{padding:10px 2px;font-size:11.5px}aside{border-right:0;border-bottom:1px solid var(--border)}.brand{padding:15px 20px}.section{padding:12px 20px}.map-title{top:12px;left:12px}.map-footer{bottom:16px;left:12px}}
 </style>
 </head>
 <body>
 <div id="app">
 <aside>
+<div class="brand"><div class="eyebrow">EMERGENCY RESPONSE · SIMULATION</div><h1>Maryland MCI</h1><p>Routing operations dashboard · Prototype 01</p></div>
+<nav id="tabs" role="tablist">
+  <button data-tab="sim" class="on">Simulation</button>
+  <button data-tab="scenario">Scenario</button>
+  <button data-tab="mapcfg">Map &amp; routing</button>
+  <button data-tab="ai">AI simulation</button>
+</nav>
 
-
+<!-- ================= Scenario ================= -->
+<div class="pane" id="pane-scenario">
 <section class="section">
   <h2>Scenario Management</h2>
 
@@ -82,27 +127,59 @@
     Scenario not loaded.
   </p>
 </section>
+</div>
 
-
-
-
-
-
-<div class="brand"><div class="eyebrow">EMERGENCY RESPONSE · SIMULATION</div><h1>Maryland MCI</h1><p>Routing operations dashboard · Prototype 01</p></div>
+<!-- ================= Simulation ================= -->
+<div class="pane on" id="pane-sim">
 <section class="section"><h2>Simulation playback</h2>
 <div class="row"><label for="simulationMode">Simulation mode</label></div>
 <select id="simulationMode"><option value="static">Static baseline</option><option value="dynamic" selected>Dynamic Gurobi + rolling triage</option></select>
+<div class="row"><label for="simCurve">Survival curve (scoring only)</label><select id="simCurve" style="width:140px"><option value="optimistic">Optimistic</option><option value="moderate" selected>Moderate</option><option value="pessimistic">Pessimistic</option></select></div>
 <div class="buttons" style="margin-top:10px"><button class="button primary" id="runSimulation">Run Simulation</button><button class="button" id="playSimulation" disabled>Play</button></div>
 <div class="row"><label>Playback speed</label><select id="playSpeed" style="width:120px"><option value="1">1×</option><option value="10">10×</option><option value="60" selected>60×</option><option value="300">300×</option></select></div>
 <input type="range" id="simSeek" min="0" max="100" value="0" step="0.1" style="width:100%" disabled>
 <div class="row"><label>Simulation clock</label><strong id="simClock">0:00</strong></div>
 <div class="row"><label>Patient-delivery makespan</label><strong id="simMakespan">—</strong></div>
 <div class="row"><label>Patients delivered</label><strong id="simDelivered">—</strong></div>
+<div class="row"><label>Expected survivors (red + yellow)</label><strong id="simSurvivors">—</strong></div>
 <button class="button" id="simEnd">Show final results</button>
 <div id="simStatus" class="status">Run a simulation to load the event timeline.</div>
-<div id="simAssignments" class="small" style="margin-top:10px"></div>
+<ul id="simLog" class="steplog"></ul>
 </section>
+<section class="section"><h2>Results</h2><div id="simAssignments" class="small">No run yet.</div></section>
 <section class="section"><h2>Scenario overview</h2><div class="metrics"><div class="metric"><strong>01</strong><span>Active MCI</span></div><div class="metric"><strong>01</strong><span>Example ambulance</span></div><div class="metric"><strong id="travel">—</strong><span>Station → Pickup (min)</span></div><div class="metric"><strong id="distance">—</strong><span>Pickup → Hospital (min)</span></div></div><p class="small">Ambulance origin, pickup and hospital entrance are illustrative; verify vehicle access points. Dynamic mode uses rolling-triage Gurobi dispatch; static mode retains the original baseline.</p></section>
+<section class="section">
+  <h2>Simulation Reports</h2>
+
+  <p class="small" id="reportRunId">
+    Run a simulation to generate reports.
+  </p>
+
+  <div class="buttons">
+    <button
+      class="button primary"
+      id="downloadExcel"
+      disabled>
+      Download Full Results
+    </button>
+
+    <button
+      class="button"
+      id="downloadPatients"
+      disabled>
+      Patient CSV
+    </button>
+  </div>
+
+  <p class="small">
+    Includes patient results, ambulance timeline,
+    hospital utilization, and validation.
+  </p>
+</section>
+</div>
+
+<!-- ================= Map & routing ================= -->
+<div class="pane" id="pane-mapcfg">
 <section class="section"><h2>Routing provider</h2><select id="provider"><option value="valhalla">Valhalla (Docker :8002)</option><option value="osmnx">OSMnx (cached Baltimore City)</option></select></section>
 <section class="section"><h2>Search incident address</h2><div class="row"><input id="address" type="text" value="333 W Camden St, Baltimore, MD" style="width:100%;padding:9px;border:1px solid var(--border);border-radius:8px"></div><button class="button primary" id="searchAddress">Find address</button><p class="small">Address lookup positions the red incident marker. Set the orange pickup point separately.</p></section>
 <section class="section"><h2>Incident location</h2><p class="muted">Click or drag the red incident marker. Drag the orange pickup/staging marker to the vehicle-accessible curb. Drag the blue ambulance origin to adjust its location.</p><div class="row"><label>Latitude / longitude</label><span class="coord" id="coords">Not placed</span></div><div class="buttons"><button class="button primary" id="reset">Reset MCI</button><button class="button" id="clear">Clear route</button></div></section>
@@ -134,45 +211,97 @@
     <span><i class="dot" style="background:#2563eb"></i>Ambulance</span>
     <span><i class="dot" style="background:#2563eb"></i>To MCI route</span>
     <span><i class="dot" style="background:#15a37a"></i>MCI → Hospital route</span>
+    <span><i class="dot" style="background:#9f1d2b"></i>Hospital: PARC / trauma I</span>
+    <span><i class="dot" style="background:#e5484d"></i>Hospital: trauma II</span>
+    <span><i class="dot" style="background:#f59e0b"></i>Hospital: other</span>
   </div>
 </section>
 
 <section class="section"><h2>Routing status</h2><div id="status" class="status" role="status" aria-live="polite">Click the map to select an MCI location.</div><p class="small">Uses your local FastAPI <code>POST /route</code> endpoint and selected Valhalla or cached OSMnx road graph.</p></section>
+</div>
 
-
+<!-- ================= AI simulation (separate model; own inputs, does not use scenario CSVs) ================= -->
+<div class="pane" id="pane-ai">
 <section class="section">
-  <h2>Simulation Reports</h2>
-
-  <p class="small" id="reportRunId">
-    Run a simulation to generate reports.
-  </p>
-
-  <div class="buttons">
-    <button
-      class="button primary"
-      id="downloadExcel"
-      disabled>
-      Download Full Results
-    </button>
-
-    <button
-      class="button"
-      id="downloadPatients"
-      disabled>
-      Patient CSV
-    </button>
+  <h2>AI estimates → Gurobi (t0 plan)</h2>
+  <p class="small">A separate model from the scenario simulation: one MCI site, fixed ambulances, one plan at t0. The AI only estimates unknown inputs (low / likely / high); Gurobi makes the plan. All numbers are synthetic placeholders. Flood effects are off (water level 0) for now.</p>
+  <div class="ai-legend" style="margin:10px 0">
+    <b style="background:#111"></b><span>MCI site (drag to move)</span>
+    <b style="background:#1f6feb"></b><span>Ambulance (drag to move)</span>
+    <b style="background:#e5484d"></b><span>Trauma hospital (target)</span>
+    <b style="background:#f59e0b"></b><span>Non-trauma hospital (target)</span>
+    <b style="background:#9aa5b1"></b><span>Hospital not targeted (click to toggle)</span>
   </div>
-
-  <p class="small">
-    Includes patient results, ambulance timeline,
-    hospital utilization, and validation.
-  </p>
+  <div class="seg" id="ai-subtabs">
+    <button data-sub="casualty" class="on">Casualty</button><button data-sub="constants">Constants</button><button data-sub="run">Run &amp; results</button>
+  </div>
 </section>
 
+<section class="section sub on" id="ai-sub-casualty">
+  <h2>MCI site</h2>
+  <div class="grid2">
+    <div><label>Latitude</label><input id="ai-siteLat"></div>
+    <div><label>Longitude</label><input id="ai-siteLon"></div>
+  </div>
+  <p class="small">Or drag the black marker on the map.</p>
+  <h2 style="margin-top:14px">Incident description (sent to the AI)</h2>
+  <textarea id="ai-incident"></textarea>
+  <h2 style="margin-top:14px">AI estimate</h2>
+  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+    <button class="button primary" id="ai-aiBtn">Run AI estimate</button>
+    <select id="ai-backend" style="width:auto">
+      <option value="claude">Claude (runner's own CLI login)</option>
+      <option value="mock">Mock (no AI)</option>
+    </select>
+    <label class="small"><input type="checkbox" id="ai-fresh"> fresh call</label>
+  </div>
+  <p class="small" id="ai-backendNote"></p>
+  <h2 style="margin-top:14px">Casualty &amp; capacity inputs <span class="tag" id="ai-srcTag">manual defaults</span></h2>
+  <p class="small">AI fills these; every cell stays editable. Solve uses exactly what is in this table.</p>
+  <div id="ai-paramTable"></div>
+  <details id="ai-aiDetails" style="display:none">
+    <summary>AI assumptions, validation, prompt, raw reply</summary>
+    <div id="ai-aiAssumptions"></div>
+    <p><b>Validation</b></p><pre id="ai-aiValidation"></pre>
+    <p><b>Prompt</b></p><pre id="ai-aiPrompt"></pre>
+    <p><b>Raw reply</b></p><pre id="ai-aiRaw"></pre>
+  </details>
+</section>
 
+<section class="section sub" id="ai-sub-constants">
+  <h2>Ambulances at t0</h2>
+  <table id="ai-ambTable" class="tbl"></table>
+  <button class="button" id="ai-addAmb" style="margin-top:6px">+ Add ambulance</button>
+  <h2 style="margin-top:14px">Target hospitals</h2>
+  <div id="ai-hospList"></div>
+  <h2 style="margin-top:14px">Main constants</h2>
+  <div class="grid2">
+    <div><label>Ambulance speed (km/h)</label><input id="ai-c_speed_kmh"></div>
+  </div>
+  <details>
+    <summary>Fixed assumptions (rarely changed)</summary>
+    <div class="grid2" id="ai-assumptions" style="margin-top:8px"></div>
+  </details>
+</section>
+
+<section class="section sub" id="ai-sub-run">
+  <div class="buttons">
+    <button class="button primary" id="ai-runAll">Run AI → Gurobi</button>
+    <button class="button" id="ai-solveBtn">Solve with current inputs</button>
+  </div>
+  <p class="small">"Run AI → Gurobi" calls the AI first (backend chosen on the Casualty tab). "Solve" skips the AI and uses the table as is.</p>
+  <ul id="ai-log" class="steplog"></ul>
+  <h2 style="margin-top:14px">Plan</h2>
+  <div class="seg" id="ai-planSeg">
+    <button data-p="low">Low</button><button data-p="likely" class="on">Likely</button><button data-p="high">High</button>
+  </div>
+  <div id="ai-planOut"><p class="small">No plan yet.</p></div>
+</section>
+</div>
 
 </aside>
-<main class="map-wrap"><div id="map"></div><div class="map-title"><b>Baltimore, Maryland</b><span>Road-network response routing</span></div><div class="map-footer">Click to place · Drag red marker to reposition</div></main>
+<div id="splitter" role="separator" aria-orientation="vertical" aria-label="Resize side panel" tabindex="0" title="Drag to resize · double-click to reset"></div>
+<main class="map-wrap"><div id="map"></div><div class="map-title"><b>Baltimore, Maryland</b><span id="mapSubtitle">Road-network response routing</span></div><div class="map-footer" id="mapFooter">Click to place · Drag red marker to reposition</div></main>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
@@ -206,11 +335,12 @@ function showHospitals(){
     const lat=Number(h.ambulance_entrance_lat || h.latitude);
     const lon=Number(h.ambulance_entrance_lon || h.longitude);
     if(!Number.isFinite(lat)||!Number.isFinite(lon)||!lat||!lon)continue;
-    const marker=L.circleMarker([lat,lon],{radius:10,color:'#fff',weight:2,fillColor:'#159c79',fillOpacity:1});
+    const marker=L.circleMarker([lat,lon],{radius:10,color:'#fff',weight:2,fillColor:traumaColor(h.trauma_level),fillOpacity:1});
     marker.bindPopup(`<b>${escapeHtml(h.name||h.hospital_id)}</b><br>Trauma: ${escapeHtml(h.trauma_level||'Unknown')}<br>Initial beds: ${escapeHtml(h.available_beds||'0')}`);
     marker.addTo(hospitalLayer);
   }
 }
+function traumaColor(level){const l=String(level||'').trim().toUpperCase();return l==='PARC'||l==='I'?'#9f1d2b':l==='II'?'#e5484d':'#f59e0b';}
 function escapeHtml(x){return String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 function markerIcon(kind, symbol){return L.divIcon({className:'',html:`<div class="pin ${kind}">${symbol}</div>`,iconSize:[32,32],iconAnchor:[16,16]});}
@@ -258,7 +388,7 @@ function placeMci(p){
   else mciMarker.setLatLng(p);
   routeTo(p);
 }
-map.on('click',e=>placeMci(e.latlng));
+map.on('click',e=>{if(activeTab==='ai')return;placeMci(e.latlng);}); // AI tab has its own markers
 $('clear').onclick=()=>{requestSerial++;if(routeLine){map.removeLayer(routeLine);routeLine=null;}if(hospitalRoute){map.removeLayer(hospitalRoute);hospitalRoute=null;}$('travel').textContent='—';$('distance').textContent='—';setStatus('Routes cleared. Drag the MCI marker or click the map to recalculate.');};
 $('reset').onclick=()=>{map.setView([39.285,-76.621],14);placeMci(L.latLng(39.2839,-76.6217));};
 function updateBasemap(){const isSat=$('basemap').value==='satellite';if(isSat){map.removeLayer(streets);satellite.addTo(map);if($('labels').checked)labels.addTo(map);}else{map.removeLayer(satellite);map.removeLayer(labels);streets.addTo(map);}}
@@ -654,23 +784,59 @@ $('simSeek').oninput=()=>{pauseSim();if(simData)renderSim(Number($('simSeek').va
 $('simEnd').onclick=()=>{pauseSim();if(simData)renderSim(Number(simData.playback_end_min ?? simData.makespan_min));};
 $('runSimulation').onclick=async()=>{
   if(scenarioDirty){$('simStatus').textContent='Save scenario changes before running.';return;}
-  pauseSim();$('runSimulation').disabled=true;$('simStatus').textContent='Running '+($('simulationMode').value==='dynamic'?'rolling triage + dynamic Gurobi':'static baseline')+'…';
+  pauseSim();$('runSimulation').disabled=true;
+  const mode=$('simulationMode').value, curve=$('simCurve').value, scen=scenarioSelect.value;
+  const modeName=mode==='dynamic'?'rolling triage + dynamic Gurobi':'static baseline';
+  $('simStatus').textContent='Running '+modeName+'…';
+  $('simLog').replaceChildren();
+  simLog(`Scenario ${scen} · ${modeName} · horizon 240 min`);
+  // The backend runs as one request, so this line shows elapsed time rather than per-stage progress.
+  const running=simLog(`Running ${mode==='dynamic'?'triage → integrated Gurobi':'baseline'}… 0 s`,'run');
+  const t0=performance.now();
+  const timer=setInterval(()=>{running.textContent=`Running ${mode==='dynamic'?'triage → integrated Gurobi':'baseline'}… ${Math.round((performance.now()-t0)/1000)} s`;},1000);
   try{
-    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scenarioSelect.value,ambulance_id:'A001',mode:$('simulationMode').value,horizon:240})});
+    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scen,ambulance_id:'A001',mode,horizon:240,survival_curve:curve})});
     if(!r.ok){const body=await r.json();throw new Error(body.detail||`HTTP ${r.status}`);}
     simData=await r.json();
-    setReportRun(simData.run_id,simData.scenario_id||scenarioSelect.value);
+    clearInterval(timer);running.className='ok';running.textContent=`Finished in ${((performance.now()-t0)/1000).toFixed(1)} s`;
+    if(simData.mode==='dynamic'){
+      simLog(`${simData.delivered} delivered · ${simData.expectant ?? 0} expectant · ${(simData.optimizer_decisions||[]).length} Gurobi decisions`);
+      if(simData.validation!=null)simLog(`Validation: ${typeof simData.validation==='object'?(simData.validation.status||JSON.stringify(simData.validation)):simData.validation}`);
+    }else{
+      simLog(`${simData.patients_delivered ?? (simData.assignments||[]).length} of ${simData.transport_patients} transport patients delivered`);
+    }
+    simLog(`${(simData.routes||[]).length} route legs loaded for playback`);
+    simLog(`Expected survivors (${simData.survival_curve} curve): ${simData.expected_survivors} of ${simData.survival_scored_patients} red/yellow`);
+    setReportRun(simData.run_id,simData.scenario_id||scen);
+    if(simData.run_id)simLog(`Reports ready: ${simData.run_id}`);
     simRouteLayer.clearLayers();
     for(const route of simData.routes||[]){if(Array.isArray(route.coordinates)&&route.coordinates.length>1){L.polyline(route.coordinates,{color:route.purpose==='MCI_TO_HOSPITAL'?'#159c79':'#2563eb',weight:4,opacity:.45}).addTo(simRouteLayer);}}
     $('simMakespan').textContent=`${Number(simData.playback_end_min ?? simData.makespan_min).toFixed(2)} min`;
-    $('simAssignments').replaceChildren();
-    for(const a of simData.assignments||[]){const p=document.createElement('p');p.textContent=`${a.triage||'UNKNOWN'} ${a.patient_id||'?'} → ${a.hospital_id||'?'} · arrival ${a.hospital_arrival_min==null?'pending':simTime(a.hospital_arrival_min)}`;$('simAssignments').appendChild(p);}
+    $('simSurvivors').textContent=`${simData.expected_survivors} / ${simData.survival_scored_patients}`;
+    renderSimResults();
     if(simData.mode==='dynamic'){$('simStatus').textContent=`Dynamic Gurobi · ${simData.delivered} delivered · ${simData.expectant} expectant · ${simData.optimizer_decisions.length} decisions`;}
     $('simSeek').disabled=false;$('playSimulation').disabled=false;renderSim(0);
     if((simData.routes||[]).length){const coords=simData.routes.flatMap(x=>x.coordinates||[]);if(coords.length)map.fitBounds(L.latLngBounds(coords),{padding:[35,35]});}
-  }catch(e){$('simStatus').textContent=`Simulation error: ${e.message}`;}
-  finally{$('runSimulation').disabled=false;}
+  }catch(e){clearInterval(timer);running.className='err';running.textContent=`Failed after ${((performance.now()-t0)/1000).toFixed(1)} s: ${e.message}`;$('simStatus').textContent=`Simulation error: ${e.message}`;}
+  finally{clearInterval(timer);$('runSimulation').disabled=false;}
 };
+function simLog(text,cls='ok'){const li=document.createElement('li');li.className=cls;li.textContent=text;$('simLog').appendChild(li);return li;}
+function renderSimResults(){
+  const box=$('simAssignments');box.replaceChildren();
+  const rows=simData?.assignments||[];
+  if(!rows.length){box.textContent='No deliveries in this run.';return;}
+  const esc=escapeHtml, num=(v,d=2)=>v==null?'–':Number(v).toFixed(d);
+  // Per-hospital totals against the scenario's initial beds (hospitals.csv).
+  const beds={};for(const h of activeScenario?.tables?.['hospitals.csv']?.rows||[])beds[h.hospital_id]={name:h.name,beds:h.available_beds};
+  const byH={};for(const a of rows){const k=a.hospital_id||'?';(byH[k]=byH[k]||{n:0,last:0}).n++;byH[k].last=Math.max(byH[k].last,Number(a.hospital_arrival_min)||0);}
+  let html='<table class="tbl"><tr><th>Hospital</th><th>Delivered</th><th>Initial beds</th><th>Last arrival</th></tr>'+
+    Object.entries(byH).map(([h,v])=>`<tr><td title="${esc(beds[h]?.name||'')}">${esc(h)}</td><td>${v.n}</td><td>${esc(beds[h]?.beds??'–')}</td><td>${simTime(v.last)}</td></tr>`).join('')+'</table>';
+  html+='<table class="tbl"><tr><th>Patient</th><th>Triage</th><th>Amb</th><th>Hospital</th><th>Arrive</th><th>P(survive)</th></tr>'+
+    rows.slice().sort((a,b)=>(Number(a.hospital_arrival_min)||1e9)-(Number(b.hospital_arrival_min)||1e9)).map(a=>{const t=String(a.triage||'UNKNOWN').toUpperCase();
+      return `<tr><td>${esc(a.patient_id||'?')}</td><td><span class="tri ${esc(t)}">${esc(t)}</span></td><td>${esc(a.ambulance_id||'–')}</td><td>${esc(a.hospital_id||'?')}</td><td>${a.hospital_arrival_min==null?'pending':simTime(a.hospital_arrival_min)}</td><td>${num(a.survival)}</td></tr>`;}).join('')+'</table>';
+  html+=`<p class="small">P(survive) scores each red/yellow arrival with the ${esc(simData.survival_curve)} survival curve (Chang et al. 2026 / Mills et al. 2013). It is a reporting metric; dispatch does not use it.</p>`;
+  box.innerHTML=html;
+}
 
 // ---------------------------------------------
 // Simulation report downloads
@@ -723,5 +889,48 @@ document.getElementById("downloadPatients")
     downloadSimulationReport("patients");
   });
 
+
+// ---------------------------------------------
+// Tabs, resizable side panel, map resizing
+// ---------------------------------------------
+let activeTab='sim';
+function setTab(t){
+  activeTab=t;
+  for(const b of $('tabs').children)b.classList.toggle('on',b.dataset.tab===t);
+  document.querySelectorAll('aside > .pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+t));
+  // The AI tab draws its own layers; hide the scenario-simulation layers while it is open.
+  const c=map.getContainer();c.classList.toggle('map-hide-main',t==='ai');c.classList.toggle('map-show-ai',t==='ai');
+  $('mapSubtitle').textContent=t==='ai'?'AI estimates → Gurobi t0 plan':'Road-network response routing';
+  $('mapFooter').textContent=t==='ai'?'Drag the black site or blue ambulances · Click a hospital to toggle it':'Click to place · Drag red marker to reposition';
+  if(t==='ai'){pauseSim();window.aiSim?.activate();}else window.aiSim?.deactivate();
+  try{localStorage.setItem('mci.tab',t);}catch{}
+}
+$('tabs').onclick=e=>{const t=e.target.closest('button')?.dataset.tab;if(t)setTab(t);};
+try{const t=localStorage.getItem('mci.tab');if(t&&$('pane-'+t))setTab(t);}catch{}
+
+const appEl=$('app'), splitter=$('splitter');
+function setSideWidth(px){
+  if(px==null){appEl.style.removeProperty('--side-w');}
+  else{const w=Math.round(Math.max(280,Math.min(px,window.innerWidth*0.6)));appEl.style.setProperty('--side-w',w+'px');}
+  map.invalidateSize();
+}
+try{const w=Number(localStorage.getItem('mci.sideW'));if(w)setSideWidth(w);}catch{}
+splitter.addEventListener('pointerdown',e=>{
+  splitter.setPointerCapture(e.pointerId);splitter.classList.add('drag');document.body.classList.add('resizing');
+  const move=ev=>setSideWidth(ev.clientX);
+  const up=()=>{splitter.releasePointerCapture(e.pointerId);splitter.classList.remove('drag');document.body.classList.remove('resizing');
+    splitter.removeEventListener('pointermove',move);splitter.removeEventListener('pointerup',up);
+    try{localStorage.setItem('mci.sideW',parseInt(getComputedStyle(appEl).gridTemplateColumns));}catch{}};
+  splitter.addEventListener('pointermove',move);splitter.addEventListener('pointerup',up);
+});
+splitter.addEventListener('dblclick',()=>{setSideWidth(null);try{localStorage.removeItem('mci.sideW');}catch{}});
+splitter.addEventListener('keydown',e=>{
+  if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+  const cur=$('app').querySelector('aside').getBoundingClientRect().width;
+  setSideWidth(cur+(e.key==='ArrowRight'?24:-24));e.preventDefault();
+});
+// Keep Leaflet in sync with any layout change (window resize, panel drag, mobile rotation).
+new ResizeObserver(()=>map.invalidateSize()).observe($('map'));
 </script>
+<script src="ai_sim.js"></script>
 </body></html>

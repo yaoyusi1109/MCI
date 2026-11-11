@@ -127,6 +127,8 @@ class SimulationRequest(BaseModel):
     ambulance_id: str = 'A001'
     mode: str = 'static'
     horizon: float = Field(default=240.0, gt=0, le=1440)
+    # Reporting only: which Mills et al. (2013) curve to score arrivals with. Does not affect dispatch.
+    survival_curve: str = 'moderate'
 
 
 def _as_float(value, default=None):
@@ -194,7 +196,7 @@ def run_simulation_api(req: SimulationRequest):
             result = run_simulation(scenario, req.ambulance_id)
             result['mode'] = 'static'
             result['scenario_id'] = req.scenario_id
-            return result
+            return _add_survival(result, req.survival_curve)
         if req.mode != 'dynamic':
             raise ValueError('Mode must be static or dynamic')
 
@@ -221,7 +223,8 @@ def run_simulation_api(req: SimulationRequest):
                        and (p / 'integrated_results.json').is_file()]
             if len(created) != 1:
                 raise RuntimeError('Could not uniquely identify the saved integrated run')
-            return _dynamic_dashboard_result(raw, created[0].name, req.scenario_id)
+            return _add_survival(_dynamic_dashboard_result(raw, created[0].name, req.scenario_id),
+                                 req.survival_curve)
         finally:
             _dynamic_run_lock.release()
     except HTTPException:
@@ -278,5 +281,117 @@ def download_report(scenario_id: str, run_id: str, report_type: str):
         raise HTTPException(404, 'Report not found')
     return FileResponse(path, media_type=media_type,
                         filename=f'{scenario_id}_{run_id}_{filename}')
+
+# ---------------------------------------------
+# Expected survival (reporting metric only)
+# ---------------------------------------------
+# SF(t) = b0 / ((t / b1) ** b2 + 1), t = minutes from incident start to hospital arrival.
+# Chang et al. (2026) Fig. 12, values from Mills et al. (2013). Same table as AI_simulation/mci_ai/config.py.
+# It scores the plan after the fact; the dispatch objective above is unchanged.
+SURVIVAL_CURVES = {
+    'pessimistic': {'RED': (0.09, 17, 1.01), 'YELLOW': (0.57, 61, 2.03)},
+    'moderate':    {'RED': (0.24, 47, 1.30), 'YELLOW': (0.76, 138, 2.17)},
+    'optimistic':  {'RED': (0.56, 91, 1.58), 'YELLOW': (0.81, 160, 2.41)},
+}
+
+
+def _add_survival(result, curve):
+    if curve not in SURVIVAL_CURVES:
+        raise ValueError('survival_curve must be one of ' + ', '.join(SURVIVAL_CURVES))
+    total, scored = 0.0, 0
+    for a in result.get('assignments') or []:
+        params = SURVIVAL_CURVES[curve].get(str(a.get('triage') or '').upper())
+        t = _as_float(a.get('hospital_arrival_min'))
+        if params is None or t is None:
+            a['survival'] = None  # GREEN / BLACK / undelivered: no curve
+            continue
+        b0, b1, b2 = params
+        a['survival'] = round(b0 / ((max(t, 0.0) / b1) ** b2 + 1.0), 3)
+        total += a['survival']
+        scored += 1
+    result['survival_curve'] = curve
+    result['expected_survivors'] = round(total, 2)
+    result['survival_scored_patients'] = scored
+    return result
+
+
+# ---------------------------------------------
+# AI simulation tab (separate model; does not read or write scenario CSVs)
+# ---------------------------------------------
+# Wraps ../AI_simulation/mci_ai: AI-estimated inputs (low / likely / high) -> one t0 Gurobi plan each.
+# The "claude" backend runs the Claude Code CLI of whoever runs this server, so keep the server
+# on 127.0.0.1; teammates run their own copy.
+import sys
+AI_SIM_DIR = Path(__file__).resolve().parent.parent / 'AI_simulation'
+if str(AI_SIM_DIR) not in sys.path:
+    sys.path.insert(0, str(AI_SIM_DIR))
+
+
+def _ai_modules():
+    try:
+        from mci_ai import ai_estimator, config as ai_config, gurobi_model, scenario as ai_scenario
+    except ImportError as exc:
+        raise HTTPException(503, f'AI simulation unavailable: {exc}') from exc
+    return ai_estimator, ai_config, gurobi_model, ai_scenario
+
+
+def _ai_call(fn):
+    try:
+        return fn()
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(500, f'{type(exc).__name__}: {exc}') from exc
+
+
+def _ai_scn(body):
+    _, _, _, ai_scenario = _ai_modules()
+    return ai_scenario.make_scenario(site=body.get('site'), ambulances=body.get('ambulances'),
+                                     hospital_ids=body.get('hospital_ids'), constants=body.get('constants'))
+
+
+@app.get('/api/ai-sim/defaults')
+def ai_sim_defaults():
+    est, cfg, _, _ = _ai_modules()
+    return {'site': cfg.DEFAULT_SITE, 'ambulances': cfg.DEFAULT_AMBULANCES,
+            'hospitals': cfg.HOSPITALS, 'hospital_ids': cfg.DEFAULT_HOSPITAL_IDS,
+            'constants': cfg.DEFAULT_CONSTANTS, 'assumptions': cfg.ASSUMPTIONS,
+            'survival_curves': list(cfg.SURVIVAL), 'backends': est.available_backends()}
+
+
+@app.post('/api/ai-sim/features')
+def ai_sim_features(body: dict = Body(...)):
+    def go():
+        _, _, _, ai_scenario = _ai_modules()
+        scn = _ai_scn(body)
+        return {'scenario': scn, 'features': ai_scenario.route_features(scn)}
+    return _ai_call(go)
+
+
+@app.post('/api/ai-sim/estimate')
+def ai_sim_estimate(body: dict = Body(...)):
+    def go():
+        est, _, _, ai_scenario = _ai_modules()
+        scn = _ai_scn(body)
+        feats = ai_scenario.route_features(scn)
+        return est.estimate(scn, feats, backend=body.get('backend', 'mock'),
+                            model=body.get('model') or 'sonnet', use_cache=not body.get('fresh'))
+    return _ai_call(go)
+
+
+@app.post('/api/ai-sim/solve')
+def ai_sim_solve(body: dict = Body(...)):
+    def go():
+        est, _, gm, _ = _ai_modules()
+        scn = _ai_scn(body)
+        params, log = est.validate(body['raw'], scn)  # same checks as AI output
+        name = body.get('name', 'likely')
+        res = gm.solve(gm.build_data(scn, params[name]))
+        res['validation_log'] = log
+        res['inputs'] = params[name]
+        return res
+    return _ai_call(go)
+
+
 
 app.mount('/',StaticFiles(directory=Path(__file__).resolve().parent/'frontend',html=True),name='frontend')

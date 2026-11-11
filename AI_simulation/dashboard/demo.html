@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCI Dispatch Demo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<!-- Road + flood data: served by server.py from ../../dashboard/road_closures_data.js (built by build_road_closures.py). -->
+<script src="road_closures_data.js"></script>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --text: #1d232b; --muted: #5d6875;
+    --line: #d9dee5; --accent: #1f6feb; --accent-soft: #e6efff; --ok: #1a7f37; --bad: #cf222e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12161c; --panel: #1b2129; --text: #e6eaef; --muted: #9aa5b1;
+      --line: #2d3540; --accent: #5b9bff; --accent-soft: #1d2b44; --ok: #3fb950; --bad: #ff7b72;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  #app { display: grid; grid-template-columns: 420px 1fr; height: 100%; }
+  #side { background: var(--panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
+  #head { padding: 12px 16px 0; }
+  #tabs { display: flex; border-bottom: 1px solid var(--line); padding: 0 8px; gap: 2px; }
+  #tabs button { border: none; background: none; color: var(--muted); padding: 9px 8px; cursor: pointer;
+    font: inherit; font-size: 13px; border-bottom: 2px solid transparent; }
+  #tabs button.on { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+  .pane { display: none; padding: 12px 16px 24px; overflow-y: auto; flex: 1; }
+  .pane.on { display: block; }
+  #map { height: 100%; }
+  h1 { font-size: 16px; margin: 0 0 2px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 6px; }
+  p.note { color: var(--muted); font-size: 12px; margin: 4px 0 8px; }
+  .seg { display: flex; gap: 4px; flex-wrap: wrap; }
+  .seg button { flex: 1; border: 1px solid var(--line); background: var(--panel); color: var(--text);
+    padding: 6px; border-radius: 6px; cursor: pointer; font: inherit; font-size: 13px; }
+  .seg button.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .btn { border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent);
+    padding: 7px 12px; border-radius: 6px; cursor: pointer; font: inherit; font-weight: 600; }
+  .btn:disabled { opacity: .5; cursor: wait; }
+  .btn.small { padding: 3px 8px; font-weight: 500; font-size: 12px; }
+  input, select, textarea { font: inherit; font-size: 13px; color: var(--text); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 5px; padding: 4px 6px; }
+  input[type=number], input.num { width: 100%; }
+  textarea { width: 100%; min-height: 60px; resize: vertical; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 3px 4px; border-bottom: 1px solid var(--line); text-align: left; }
+  th { color: var(--muted); font-weight: 600; }
+  td input, td select { width: 100%; padding: 2px 4px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+  .grid2 label { font-size: 12px; color: var(--muted); display: block; }
+  details { margin-top: 10px; font-size: 12px; }
+  details summary { cursor: pointer; color: var(--accent); }
+  pre { white-space: pre-wrap; font-size: 11px; background: var(--bg); padding: 8px; border-radius: 6px; max-height: 260px; overflow: auto; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); }
+  #log { list-style: none; padding: 0; margin: 6px 0; font-size: 12px; }
+  #log li { padding: 3px 0; border-bottom: 1px dashed var(--line); }
+  #log li.err { color: var(--bad); }
+  #log li.ok::before { content: "✓ "; color: var(--ok); }
+  #log li.run::before { content: "… "; }
+  .stats td:last-child { text-align: right; font-weight: 600; }
+  .legend { display: grid; grid-template-columns: 22px 1fr; gap: 3px 8px; align-items: center; font-size: 12px; }
+  .legend i { display: block; height: 4px; border-radius: 2px; }
+  .legend b { display: block; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; }
+  @media (max-width: 760px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: auto 55vh; }
+    #side { border-right: none; border-bottom: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+<aside id="side">
+  <div id="head">
+    <h1>MCI dispatch demo: AI estimates → Gurobi</h1>
+    <p class="note">One MCI site, fixed ambulances, one plan at t0. All numbers are synthetic placeholders.</p>
+  </div>
+  <nav id="tabs">
+    <button data-tab="hurricane" class="on">Hurricane</button>
+    <button data-tab="casualty">Casualty condition</button>
+    <button data-tab="constants">Simulation constants</button>
+    <button data-tab="run">Run &amp; results</button>
+  </nav>
+
+  <!-- ---------------- Hurricane ---------------- -->
+  <section class="pane on" id="pane-hurricane">
+    <h2>Flood scenario (water level per step)</h2>
+    <select id="hScenario" style="width:100%"></select>
+    <h2>Time step</h2>
+    <div class="seg" id="hStep"></div>
+    <p style="font-size:20px;font-weight:650;margin:10px 0 0" id="hLabel"></p>
+    <p class="note">The model uses this water level to count flooded road pieces near each site → hospital route.
+      The AI turns those counts into travel-delay factors.</p>
+    <h2>Map key</h2>
+    <div class="legend">
+      <i style="background:#d62728"></i><span>Closed (≥ 1 ft over the road)</span>
+      <i style="background:#ff7f0e"></i><span>Crawl (0.5–1 ft)</span>
+      <i style="background:#ffd23f"></i><span>Slow (0–0.5 ft)</span>
+      <b style="background:#111"></b><span>MCI site (drag to move)</span>
+      <b style="background:#1f6feb"></b><span>Ambulance (drag to move)</span>
+      <b style="background:#e5484d"></b><span>Trauma hospital (target)</span>
+      <b style="background:#f59e0b"></b><span>Non-trauma hospital (target)</span>
+      <b style="background:#9aa5b1"></b><span>Hospital not targeted (click to toggle)</span>
+    </div>
+    <p class="note">Wind / fallen-tree blockage from the original road-closure dashboard is not in the model yet.</p>
+  </section>
+
+  <!-- ---------------- Casualty condition ---------------- -->
+  <section class="pane" id="pane-casualty">
+    <h2>MCI site</h2>
+    <div class="grid2">
+      <div><label>Latitude</label><input id="siteLat" class="num"></div>
+      <div><label>Longitude</label><input id="siteLon" class="num"></div>
+    </div>
+    <p class="note">Or drag the black marker on the map.</p>
+    <h2>Incident description (sent to the AI)</h2>
+    <textarea id="incident"></textarea>
+
+    <h2>AI estimate</h2>
+    <div class="row" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <button class="btn" id="aiBtn">Run AI estimate</button>
+      <select id="backend">
+        <option value="claude">Claude (runner's own CLI login)</option>
+        <option value="mock">Mock (no AI)</option>
+      </select>
+      <label style="font-size:12px"><input type="checkbox" id="fresh"> fresh call</label>
+    </div>
+    <p class="note" id="backendNote"></p>
+
+    <h2>Casualty &amp; capacity inputs <span class="tag" id="srcTag">manual defaults</span></h2>
+    <p class="note">AI fills these; every cell stays editable. Solve uses exactly what is in this table.</p>
+    <div id="paramTable"></div>
+    <details id="aiDetails" style="display:none">
+      <summary>AI assumptions, validation, prompt, raw reply</summary>
+      <div id="aiAssumptions"></div>
+      <p><b>Validation</b></p><pre id="aiValidation"></pre>
+      <p><b>Prompt</b></p><pre id="aiPrompt"></pre>
+      <p><b>Raw reply</b></p><pre id="aiRaw"></pre>
+    </details>
+  </section>
+
+  <!-- ---------------- Simulation constants ---------------- -->
+  <section class="pane" id="pane-constants">
+    <h2>Ambulances at t0</h2>
+    <table id="ambTable"></table>
+    <button class="btn small" id="addAmb" style="margin-top:6px">+ Add ambulance</button>
+    <h2>Target hospitals</h2>
+    <div id="hospList"></div>
+    <h2>Main constants</h2>
+    <div class="grid2">
+      <div><label>Ambulance speed (km/h)</label><input id="c_speed_kmh" class="num"></div>
+    </div>
+    <details>
+      <summary>Fixed assumptions (rarely changed)</summary>
+      <div class="grid2" id="assumptions" style="margin-top:8px"></div>
+    </details>
+  </section>
+
+  <!-- ---------------- Run & results ---------------- -->
+  <section class="pane" id="pane-run">
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn" id="runAll">Run AI → Gurobi</button>
+      <button class="btn" id="solveBtn">Solve with current inputs</button>
+    </div>
+    <p class="note">"Run AI → Gurobi" calls the AI first (backend chosen on Casualty tab). "Solve" skips the AI and uses the table as is.</p>
+    <ul id="log"></ul>
+    <h2>Plan</h2>
+    <div class="seg" id="planSeg">
+      <button data-p="low">Low</button><button data-p="likely" class="on">Likely</button><button data-p="high">High</button>
+    </div>
+    <div id="planOut"><p class="note">No plan yet.</p></div>
+  </section>
+</aside>
+<div id="map"></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const NAMES = ["low", "likely", "high"];
+const FLOOD = {
+  gradual: { name: "Gradual rise: 1 → 5 ft", levels: [1, 2, 3, 4, 5] },
+  isabel:  { name: "Isabel-like surge: 2 → 8 ft", levels: [2, 4, 6, 7, 8] },
+  extreme: { name: "Extreme surge: 2 → 10 ft", levels: [2, 4, 6, 8, 10] },
+};
+const S = { tab: "hurricane", flood: "isabel", step: 1, defaults: null, site: null, ambulances: [],
+            hospitalIds: [], constants: {}, raw: null, src: "manual defaults", plans: {}, show: "likely", busy: false };
+
+// ---------------- map ----------------
+const map = L.map("map").setView([39.29, -76.61], 12);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  { maxZoom: 19, attribution: "© OpenStreetMap contributors" }).addTo(map);
+map.createPane("roads").style.zIndex = 420;
+const roadCanvas = L.canvas({ pane: "roads", padding: 0.3 });
+const floodLayer = L.layerGroup().addTo(map);
+const planLayer = L.layerGroup().addTo(map);
+const markerLayer = L.layerGroup().addTo(map);
+
+const chunks = []; let NEVER = 255;
+if (window.ROAD_DATA) {
+  NEVER = ROAD_DATA.meta.never;
+  for (const [, , d, ch] of ROAD_DATA.roads) {
+    const ll = []; let x = 0, y = 0;
+    for (let i = 0; i < d.length; i += 2) { x += d[i]; y += d[i + 1]; ll.push([y / 1e5, x / 1e5]); }
+    let start = 0;
+    for (let k = 0; k < ch.length; k += 4) {
+      const end = ch[k], L0 = ch[k + 1];
+      if (L0 !== NEVER && L0 > 0) chunks.push({ pts: ll.slice(start, end + 1), L0 });
+      start = end;
+    }
+  }
+}
+const floodFt = () => FLOOD[S.flood].levels[S.step];
+function drawFlood() {
+  floodLayer.clearLayers();
+  const lx2 = Math.round(2 * floodFt());
+  for (const c of chunks) {
+    if (lx2 < c.L0) continue;
+    const d = lx2 - c.L0;
+    const color = d >= 2 ? "#d62728" : d === 1 ? "#ff7f0e" : "#ffd23f";
+    L.polyline(c.pts, { renderer: roadCanvas, color, weight: d >= 2 ? 4 : 3, opacity: 0.9 }).addTo(floodLayer);
+  }
+}
+
+function dot(color, r = 7) { return { radius: r, color: "#fff", weight: 2, fillColor: color, fillOpacity: 1 }; }
+function draggable(latlng, color, title, onMove) {
+  const icon = L.divIcon({ className: "", iconSize: [18, 18],
+    html: `<div title="${title}" style="width:18px;height:18px;border-radius:50%;background:${color};border:2px solid #fff;box-shadow:0 0 2px #000"></div>` });
+  const m = L.marker(latlng, { icon, draggable: true }).bindTooltip(title);
+  m.on("dragend", e => { const p = e.target.getLatLng(); onMove(+p.lat.toFixed(5), +p.lng.toFixed(5)); });
+  return m;
+}
+function drawMarkers() {
+  markerLayer.clearLayers();
+  for (const h of S.defaults.hospitals) {
+    const on = S.hospitalIds.includes(h.id);
+    L.circleMarker([h.lat, h.lon], dot(on ? (h.trauma ? "#e5484d" : "#f59e0b") : "#9aa5b1", 8))
+      .bindTooltip(`${h.id} ${h.name}${h.trauma ? " (trauma)" : ""}${on ? "" : " (click to target)"}`)
+      .on("click", () => toggleHospital(h.id)).addTo(markerLayer);
+  }
+  S.ambulances.forEach((a, i) => draggable([a.lat, a.lon], "#1f6feb", a.id,
+    (lat, lon) => { S.ambulances[i].lat = lat; S.ambulances[i].lon = lon; renderAmbTable(); inputsChanged(); }).addTo(markerLayer));
+  draggable([S.site.lat, S.site.lon], "#111", "MCI site",
+    (lat, lon) => { S.site = { lat, lon }; $("siteLat").value = lat; $("siteLon").value = lon; inputsChanged(); }).addTo(markerLayer);
+}
+
+// ---------------- tabs ----------------
+$("tabs").onclick = e => {
+  const t = e.target.dataset.tab; if (!t) return;
+  S.tab = t;
+  [...$("tabs").children].forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+  document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "pane-" + t));
+};
+
+// ---------------- hurricane ----------------
+for (const [k, s] of Object.entries(FLOOD)) $("hScenario").add(new Option(s.name, k));
+$("hScenario").value = S.flood;
+for (let i = 0; i < 5; i++) {
+  const b = document.createElement("button"); b.textContent = "T" + (i + 1);
+  b.onclick = () => { S.step = i; renderHurricane(); };
+  $("hStep").appendChild(b);
+}
+$("hScenario").onchange = e => { S.flood = e.target.value; renderHurricane(); };
+function renderHurricane() {
+  [...$("hStep").children].forEach((b, i) => b.classList.toggle("on", i === S.step));
+  $("hLabel").textContent = `T${S.step + 1}: water +${floodFt()} ft`;
+  drawFlood(); inputsChanged();
+}
+
+// ---------------- constants ----------------
+function renderAmbTable() {
+  $("ambTable").innerHTML = "<tr><th>Id</th><th>Latitude</th><th>Longitude</th><th></th></tr>" +
+    S.ambulances.map((a, i) => `<tr><td>${a.id}</td>
+      <td><input data-i="${i}" data-k="lat" value="${a.lat}"></td>
+      <td><input data-i="${i}" data-k="lon" value="${a.lon}"></td>
+      <td><button class="btn small" data-del="${i}">✕</button></td></tr>`).join("");
+}
+$("ambTable").onchange = e => { const { i, k } = e.target.dataset; if (i == null) return;
+  S.ambulances[i][k] = +e.target.value; drawMarkers(); inputsChanged(); };
+$("ambTable").onclick = e => { const i = e.target.dataset.del; if (i == null) return;
+  if (S.ambulances.length <= 1) return alert("Keep at least one ambulance.");
+  S.ambulances.splice(+i, 1); relabelAmb(); renderAmbTable(); drawMarkers(); inputsChanged(); };
+$("addAmb").onclick = () => {
+  if (S.ambulances.length >= 8) return alert("At most 8 ambulances (Gurobi restricted license).");
+  S.ambulances.push({ id: "", lat: +(S.site.lat + 0.02).toFixed(5), lon: +(S.site.lon - 0.02).toFixed(5) });
+  relabelAmb(); renderAmbTable(); drawMarkers(); inputsChanged();
+};
+function relabelAmb() { S.ambulances.forEach((a, i) => a.id = "A" + (i + 1)); }
+
+function renderHospList() {
+  $("hospList").innerHTML = S.defaults.hospitals.map(h => `<label style="display:block;font-size:13px">
+    <input type="checkbox" data-h="${h.id}" ${S.hospitalIds.includes(h.id) ? "checked" : ""}>
+    ${h.id} ${h.name} ${h.trauma ? '<span class="tag">trauma</span>' : ""}</label>`).join("");
+}
+$("hospList").onchange = e => toggleHospital(e.target.dataset.h);
+function toggleHospital(id) {
+  S.hospitalIds = S.hospitalIds.includes(id) ? S.hospitalIds.filter(x => x !== id) : [...S.hospitalIds, id].sort();
+  if (!S.hospitalIds.length) { S.hospitalIds = [id]; }
+  renderHospList(); drawMarkers(); ensureRawHospitals(); renderParamTable(); inputsChanged();
+}
+
+function renderAssumptions() {
+  const A = S.defaults.assumptions;
+  $("assumptions").innerHTML = Object.keys(A).map(k =>
+    `<div><label>${k}</label><input id="a_${k}" value="${A[k]}"></div>`).join("");
+}
+
+// ---------------- casualty parameters (editable AI output) ----------------
+function manualRaw() {
+  const sev = { low: 0.6, likely: 1, high: 1.6 }, curve = { low: "optimistic", likely: "moderate", high: "pessimistic" };
+  return { assumptions: ["Manual default values; nothing estimated yet."],
+    scenarios: NAMES.map(n => ({ name: n, immediate: Math.round(5 * sev[n]), delayed: Math.round(10 * sev[n]),
+      minor: Math.round(15 * sev[n]), scene_delay_min: Math.round(6 + 4 * sev[n]), survival_curve: curve[n],
+      approach_delay_factor: +(1 + 0.2 * sev[n]).toFixed(2), hospitals: [] })) };
+}
+function hospDefault(id, name) {
+  const h = S.defaults.hospitals.find(x => x.id === id), s = { low: 0.6, likely: 1, high: 1.6 }[name];
+  return { id, available_beds: Math.max(2, Math.round((h.trauma ? 14 : 10) / s)), route_delay_factor: +(1 + 0.25 * s).toFixed(2) };
+}
+function ensureRawHospitals() {
+  for (const sc of S.raw.scenarios)
+    for (const id of S.hospitalIds)
+      if (!sc.hospitals.find(h => h.id === id)) sc.hospitals.push(hospDefault(id, sc.name));
+}
+const ROWS = [
+  ["immediate", "Red (immediate)"], ["delayed", "Yellow (delayed)"], ["minor", "Green (minor, not transported)"],
+  ["scene_delay_min", "Scene delay before first load (min)"], ["survival_curve", "Survival curve"],
+  ["approach_delay_factor", "Ambulance approach delay ×"],
+];
+function renderParamTable() {
+  const sc = n => S.raw.scenarios.find(s => s.name === n);
+  let html = "<table><tr><th></th>" + NAMES.map(n => `<th>${n}</th>`).join("") + "</tr>";
+  for (const [k, label] of ROWS) {
+    html += `<tr><td>${label}</td>` + NAMES.map(n => {
+      const v = sc(n)[k];
+      if (k === "survival_curve")
+        return `<td><select data-n="${n}" data-k="${k}">${S.defaults.survival_curves.map(c =>
+          `<option ${c === v ? "selected" : ""}>${c}</option>`).join("")}</select></td>`;
+      return `<td><input data-n="${n}" data-k="${k}" value="${v}"></td>`;
+    }).join("") + "</tr>";
+  }
+  for (const id of S.hospitalIds) {
+    for (const [k, label] of [["available_beds", "beds"], ["route_delay_factor", "route delay ×"]]) {
+      html += `<tr><td>${id} ${label}</td>` + NAMES.map(n => {
+        const h = sc(n).hospitals.find(x => x.id === id);
+        return `<td><input data-n="${n}" data-h="${id}" data-k="${k}" value="${h ? h[k] : ""}"></td>`;
+      }).join("") + "</tr>";
+    }
+  }
+  $("paramTable").innerHTML = html + "</table>";
+  $("srcTag").textContent = S.src;
+}
+$("paramTable").onchange = e => {
+  const { n, h, k } = e.target.dataset; if (!n) return;
+  const sc = S.raw.scenarios.find(s => s.name === n);
+  const val = k === "survival_curve" ? e.target.value : +e.target.value;
+  if (h) sc.hospitals.find(x => x.id === h)[k] = val; else sc[k] = val;
+  if (!S.src.endsWith("edited")) { S.src += " · edited"; $("srcTag").textContent = S.src; }
+};
+
+// ---------------- inputs for the backend ----------------
+function inputs() {
+  const constants = { speed_kmh: +$("c_speed_kmh").value, flood_level_ft: floodFt(), incident: $("incident").value };
+  for (const k of Object.keys(S.defaults.assumptions)) {
+    const raw = $("a_" + k).value, like = S.defaults.assumptions[k];
+    constants[k] = typeof like === "boolean" ? /^(1|true|yes|y)$/i.test(raw) : typeof like === "number" ? +raw : raw;
+  }
+  return { site: S.site, ambulances: S.ambulances, hospital_ids: S.hospitalIds, constants };
+}
+function inputsChanged() { if (Object.keys(S.plans).length) { S.plans = {}; planLayer.clearLayers(); renderPlan(); } }
+$("siteLat").onchange = $("siteLon").onchange = () => {
+  S.site = { lat: +$("siteLat").value, lon: +$("siteLon").value }; drawMarkers(); inputsChanged(); };
+
+async function api(path, body) {
+  const r = await fetch(path, { method: body ? "POST" : "GET", headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined });
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+}
+
+// ---------------- run log ----------------
+function log(text, cls = "ok") { const li = document.createElement("li"); li.className = cls; li.textContent = text; $("log").appendChild(li); return li; }
+function setBusy(b) { S.busy = b; ["aiBtn", "runAll", "solveBtn"].forEach(id => $(id).disabled = b); }
+
+async function runAI() {
+  const backend = $("backend").value;
+  const li = log(`Step 4: AI estimate (${backend})…`, "run");
+  try {
+    const res = await api("/api/ai", { ...inputs(), backend, fresh: $("fresh").checked });
+    S.raw = res.raw; ensureRawHospitals();
+    const m = res.meta;
+    S.src = m.backend === "claude" ? `AI: claude ${m.model}${m.cached ? " (cached)" : ""}` : "mock rules";
+    li.className = "ok";
+    li.textContent = `Step 4: ${S.src}, ${m.seconds}s; ${res.validation_log.length} value(s) clamped`;
+    $("aiDetails").style.display = "";
+    $("aiAssumptions").innerHTML = "<ul>" + (res.raw.assumptions || []).map(a => `<li>${a}</li>`).join("") + "</ul>";
+    $("aiValidation").textContent = res.validation_log.join("\n") || "All values accepted.";
+    $("aiPrompt").textContent = res.prompt;
+    $("aiRaw").textContent = JSON.stringify(res.raw, null, 1);
+    renderParamTable();
+    return true;
+  } catch (e) { li.className = "err"; li.textContent = `Step 4 failed: ${e.message}`; return false; }
+}
+
+async function solveAll() {
+  const inp = inputs();
+  let li = log("Steps 1–3: travel times + flooded roads near routes…", "run");
+  try {
+    const f = await api("/api/features", inp);
+    li.className = "ok";
+    li.textContent = "Steps 1–3: " + f.features.routes.map(r =>
+      `${r.hospital} ${r.clear_min}min/${r.closed_pieces} closed`).join(", ");
+  } catch (e) { li.className = "err"; li.textContent = "Steps 1–3 failed: " + e.message; return; }
+  S.plans = {};
+  for (const n of NAMES) {
+    li = log(`Step 5: Gurobi, ${n} scenario…`, "run");
+    try {
+      const p = await api("/api/solve", { ...inp, raw: S.raw, name: n });
+      S.plans[n] = p;
+      li.className = p.trips ? "ok" : "err";
+      li.textContent = `Step 5 (${n}): ${p.status_name} in ${p.seconds}s` +
+        (p.trips ? `, ${p.transported} transported, expected survivors ${p.expected_survivors}` : "");
+      if (n === S.show) renderPlan();
+    } catch (e) { li.className = "err"; li.textContent = `Step 5 (${n}) failed: ${e.message}`; }
+  }
+  renderPlan();
+}
+
+$("aiBtn").onclick = async () => { setBusy(true); $("log").innerHTML = ""; await runAI(); setBusy(false); };
+$("solveBtn").onclick = async () => { setBusy(true); $("log").innerHTML = ""; await solveAll(); setBusy(false); };
+$("runAll").onclick = async () => { setBusy(true); $("log").innerHTML = "";
+  if (await runAI()) await solveAll(); setBusy(false); };
+$("planSeg").onclick = e => { const p = e.target.dataset.p; if (!p) return; S.show = p;
+  [...$("planSeg").children].forEach(b => b.classList.toggle("on", b.dataset.p === p)); renderPlan(); };
+
+// ---------------- results ----------------
+function renderPlan() {
+  planLayer.clearLayers();
+  const p = S.plans[S.show];
+  if (!p) { $("planOut").innerHTML = '<p class="note">No plan yet.</p>'; return; }
+  if (!p.trips) { $("planOut").innerHTML = `<p class="note">${p.status_name}: no plan found.</p>`; return; }
+  const H = Object.fromEntries(S.defaults.hospitals.map(h => [h.id, h]));
+  // map: first leg of each ambulance (dashed), then site -> hospital flows by class
+  const first = {};
+  for (const t of p.trips) if (!first[t.ambulance] || t.trip < first[t.ambulance].trip) first[t.ambulance] = t;
+  for (const a of S.ambulances) if (first[a.id])
+    L.polyline([[a.lat, a.lon], [S.site.lat, S.site.lon]], { color: "#1f6feb", weight: 2, dashArray: "5 5" }).addTo(planLayer);
+  const flow = {};
+  for (const t of p.trips) { const k = t.hospital; flow[k] = flow[k] || { immediate: 0, delayed: 0 }; flow[k][t.class]++; }
+  for (const [hid, f] of Object.entries(flow)) {
+    const h = H[hid], n = f.immediate + f.delayed;
+    L.polyline([[S.site.lat, S.site.lon], [h.lat, h.lon]], { color: f.immediate ? "#cf222e" : "#d4a72c", weight: 2 + 2 * n, opacity: 0.75 })
+      .bindTooltip(`${hid}: ${f.immediate} red, ${f.delayed} yellow`, { permanent: true, direction: "center" }).addTo(planLayer);
+  }
+  const unserved = p.unserved.immediate + p.unserved.delayed;
+  const ma = p.mean_arrival;
+  let html = `<table class="stats">
+    <tr><td>Solver</td><td>${p.status_name}, ${p.seconds}s, gap ${(100 * (p.mip_gap || 0)).toFixed(2)}%</td></tr>
+    <tr><td>Model size</td><td>${p.size.vars} vars (${p.size.bin_int_vars} integer), ${p.size.linear_constrs} constraints</td></tr>
+    <tr><td>Objective</td><td>${p.objective === "flow_time" ? "min total time to hospital" : "max expected survival"}</td></tr>
+    <tr><td>Transported</td><td>${p.transported}${unserved ? ` (unserved: ${p.unserved.immediate} red, ${p.unserved.delayed} yellow)` : ""}</td></tr>
+    <tr><td>Expected survivors (Chang curves)</td><td>${p.expected_survivors}</td></tr>
+    <tr><td>Mean arrival, red / yellow (min)</td><td>${ma.immediate ?? "–"} / ${ma.delayed ?? "–"}</td></tr>
+    <tr><td>Last hospital arrival (min)</td><td>${p.makespan}</td></tr></table>`;
+  html += "<h2>Beds (after green walk-ins)</h2><table><tr><th>Hospital</th><th>Input</th><th>Walk-ins</th><th>Usable</th><th>Used</th><th>Travel min</th></tr>" +
+    Object.entries(p.beds).map(([h, b]) => `<tr><td>${h}</td><td>${b.reported}</td><td>${b.walk_ins}</td><td>${b.usable}</td><td>${b.used}</td><td>${p.travel_min[h]}</td></tr>`).join("") + "</table>";
+  html += "<h2>Trips</h2><table><tr><th>Amb</th><th>#</th><th>Patient</th><th>Pickup</th><th>Hospital</th><th>Arrive</th><th>P(survive)</th></tr>" +
+    p.trips.map(t => `<tr><td>${t.ambulance}</td><td>${t.trip}</td><td>${t.patient}</td><td>${t.pickup}</td><td>${t.hospital}</td><td>${t.hospital_arrival}</td><td>${t.survival.toFixed(2)}</td></tr>`).join("") + "</table>";
+  if (p.validation_log && p.validation_log.length) html += `<details><summary>Input values clamped before solving</summary><pre>${p.validation_log.join("\n")}</pre></details>`;
+  $("planOut").innerHTML = html;
+}
+
+// ---------------- start ----------------
+(async () => {
+  try { S.defaults = await api("/api/defaults"); }
+  catch (e) { document.body.innerHTML = `<p style="padding:20px">Start the backend first: <code>python dashboard/server.py</code>, then open http://127.0.0.1:8765. (${e.message})</p>`; return; }
+  const D = S.defaults;
+  S.site = { ...D.site }; S.ambulances = D.ambulances.map(a => ({ ...a })); S.hospitalIds = [...D.hospital_ids];
+  $("siteLat").value = S.site.lat; $("siteLon").value = S.site.lon;
+  $("incident").value = D.constants.incident; $("c_speed_kmh").value = D.constants.speed_kmh;
+  const lv = FLOOD[S.flood].levels.indexOf(D.constants.flood_level_ft); if (lv >= 0) S.step = lv;
+  const b = D.backends;
+  $("backendNote").textContent = b.claude_cli
+    ? "Uses the Claude Code login (or ANTHROPIC_API_KEY) of whoever runs server.py. Nothing is stored in this project. Responses are cached; tick 'fresh call' to re-ask."
+    : "No `claude` CLI found on this machine, so the AI step will fail; use Mock, or install Claude Code.";
+  if (!b.claude_cli) $("backend").value = "mock";
+  S.raw = manualRaw(); ensureRawHospitals();
+  renderAmbTable(); renderHospList(); renderAssumptions(); renderParamTable(); drawMarkers(); renderHurricane();
+})();
+</script>
+</body>
+</html>
