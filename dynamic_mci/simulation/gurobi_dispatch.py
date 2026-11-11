@@ -31,6 +31,60 @@ PRIORITY = {
 }
 
 
+def _explain(eligible, capacity, compatible, travel_minutes, t, chosen, chosen_h):
+    """Why this patient and this hospital, in the order of the lexicographic objectives.
+
+    Reporting only: it restates what the model optimised and never changes the decision.
+    """
+    def wait(p):
+        return max(0.0, t - float(p.get("ready_min", 0)))
+
+    def options(p):
+        return [h for h, n in capacity.items()
+                if n > 0 and (p["observed"], h) in compatible and h in travel_minutes]
+
+    sel_rank, sel_wait = PRIORITY[chosen["observed"]], wait(chosen)
+    patients = []
+    for p in sorted(eligible, key=lambda p: (-PRIORITY[p["observed"]], -wait(p), p["id"])):
+        if p["id"] == chosen["id"]:
+            why = "chosen: highest observed triage" + (", then longest wait" if any(
+                PRIORITY[q["observed"]] == sel_rank and q["id"] != p["id"] for q in eligible) else "")
+        elif not options(p):
+            why = "no compatible hospital has a free bed"
+        elif PRIORITY[p["observed"]] < sel_rank:
+            why = f"lower observed triage ({p['observed']} < {chosen['observed']})"
+        elif wait(p) < sel_wait:
+            why = f"same triage, waited less ({wait(p):.1f} vs {sel_wait:.1f} min)"
+        else:
+            why = "same triage and wait; fixed tie-break order"
+        patients.append({"id": p["id"], "observed": p["observed"], "waiting_min": round(wait(p), 2),
+                         "chosen": p["id"] == chosen["id"], "why": why})
+
+    best = float(travel_minutes[chosen_h])
+    hospitals = []
+    for h in sorted(set(capacity) | set(travel_minutes)):
+        beds, travel = capacity.get(h, 0), travel_minutes.get(h)
+        if h == chosen_h:
+            why = "chosen: fastest drive among compatible hospitals with a free bed"
+        elif (chosen["observed"], h) not in compatible:
+            why = f"cannot take {chosen['observed']} patients"
+        elif beds <= 0:
+            why = "no free bed"
+        elif travel is None:
+            why = "no route"
+        else:
+            why = f"{float(travel) - best:+.1f} min farther"
+        hospitals.append({"id": h, "beds": beds, "travel_min": None if travel is None else round(float(travel), 2),
+                          "chosen": h == chosen_h, "why": why})
+
+    return {
+        "rule": "1) highest observed triage, 2) longest wait since triage, "
+                "3) shortest drive to a compatible hospital with a free bed",
+        "patients": patients,
+        "hospitals": hospitals,
+    }
+
+
 def choose_dispatch(
     patients,
     capacity,
@@ -228,6 +282,11 @@ def choose_dispatch(
                     )
                 ),
                 4,
+            )
+
+            info["explanation"] = _explain(
+                eligible, capacity, compatible, travel_minutes,
+                decision_time_min, patient, hospital,
             )
 
             return {

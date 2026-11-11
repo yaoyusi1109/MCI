@@ -16,7 +16,18 @@ from scenario_manager import (
     save_scenario
 )
 
+from simulation import road_events
+
 app=FastAPI(title='Maryland MCI - Consolidated Routing')
+
+def _flood_closures(flood_at):
+    """Closures of the Aug 12, 2014 flood in effect at `flood_at` ('HH:MM'), or [] when not applied."""
+    if flood_at is None:
+        return []
+    try:
+        return road_events.closures_at(flood_at)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
 
 class RouteRequest(BaseModel):
     provider: str = 'valhalla'
@@ -24,17 +35,31 @@ class RouteRequest(BaseModel):
     origin_lon: float = Field(ge=-180,le=180)
     destination_lat: float = Field(ge=-90,le=90)
     destination_lon: float = Field(ge=-180,le=180)
+    # Optional: avoid the real road closures of Aug 12, 2014 reported by this local time ('HH:MM').
+    flood_at: str | None = None
 
 @app.post('/route')
 def route(req:RouteRequest):
     providers={'valhalla':valhalla_provider.route,'osmnx':osmnx_provider.route}
     if req.provider not in providers:
         raise HTTPException(400,'Provider must be valhalla or osmnx')
+    closures=_flood_closures(req.flood_at)
+    if closures and req.provider!='valhalla':
+        raise HTTPException(400,'Road closures need the Valhalla provider')
     try:
-        return providers[req.provider]((req.origin_lat,req.origin_lon),(req.destination_lat,req.destination_lon))
+        origin,destination=(req.origin_lat,req.origin_lon),(req.destination_lat,req.destination_lon)
+        if closures:
+            result=valhalla_provider.route(origin,destination,road_events.exclusions_for(closures))
+            return {**result,'closures_avoided':[c['id'] for c in closures]}
+        return providers[req.provider](origin,destination)
     except Exception as exc:
         # Return clear failure, never silently switch providers.
         raise HTTPException(503,f'{req.provider} routing unavailable: {exc}') from exc
+
+@app.get('/api/flood-2014/closures')
+def flood_closures():
+    """Real road closures of the Aug 12, 2014 flood, placed on the roads they name (for the map)."""
+    return {'event_date':road_events.EVENT_DATE,'closures':road_events.all_closures()}
 
 @app.get('/geocode')
 def geocode(q:str=Query(min_length=4,max_length=200)):
@@ -129,6 +154,24 @@ class SimulationRequest(BaseModel):
     horizon: float = Field(default=240.0, gt=0, le=1440)
     # Reporting only: which Mills et al. (2013) curve to score arrivals with. Does not affect dispatch.
     survival_curve: str = 'moderate'
+    # Optional: route around the real Aug 12, 2014 road closures reported by this local time ('HH:MM').
+    flood_at: str | None = None
+    # Optional what-if road blocks placed on the map: [{lat, lon, at_min, label?}].
+    road_blocks: list[dict] = Field(default_factory=list, max_length=20)
+
+
+def _road_blocks(blocks, horizon):
+    out = []
+    for i, b in enumerate(blocks, 1):
+        try:
+            lat, lon, at = float(b['lat']), float(b['lon']), float(b.get('at_min', 0))
+        except (KeyError, TypeError, ValueError) as exc:
+            raise HTTPException(400, f'Road block {i} needs numeric lat, lon and at_min') from exc
+        if not (-90 <= lat <= 90 and -180 <= lon <= 180 and 0 <= at <= horizon):
+            raise HTTPException(400, f'Road block {i} is outside the map or the time horizon')
+        out.append({'id': f'block_{i}', 'road': str(b.get('label') or f'Road block {i}')[:80],
+                    'at_min': at, 'exclude_locations': [{'lat': lat, 'lon': lon}], 'user_block': True})
+    return out
 
 
 def _as_float(value, default=None):
@@ -183,6 +226,7 @@ def _dynamic_dashboard_result(raw, run_id, scenario_id):
         'validation': summary.get('validation'),
         'assignments': assignments, 'events': events, 'routes': routes,
         'optimizer_decisions': raw.get('optimizer_decisions') or [],
+        'staff_timeline': raw.get('staff_timeline') or [],
         'patients': raw.get('patients') or [],
         'hospital_capacity_final': raw.get('hospital_capacity_final'),
     }
@@ -190,6 +234,65 @@ def _dynamic_dashboard_result(raw, run_id, scenario_id):
 
 @app.post('/api/simulation/run')
 def run_simulation_api(req: SimulationRequest):
+    # Closures in effect from minute 0, and closures that start during the run.
+    initial = [{**c, 'at_min': 0.0} for c in _flood_closures(req.flood_at)]
+    later = road_events.closures_after(req.flood_at) if req.flood_at else []
+    later = [c for c in later if c['at_min'] <= req.horizon]
+    blocks = _road_blocks(req.road_blocks, req.horizon)
+    if req.mode == 'static':
+        # The static engine plans once; it can only use closures that exist from the start.
+        initial += [{**b, 'at_min': 0.0} for b in blocks]
+        later = []
+    else:
+        initial += [b for b in blocks if b['at_min'] <= 0]
+        later = sorted(later + [b for b in blocks if b['at_min'] > 0], key=lambda c: c['at_min'])
+    # Every Valhalla call made by this run (static engine, triage, integrated scheduler) avoids them.
+    with road_events.use_closures(initial):
+        result = _run_simulation(req, later)
+    result['flood_at'] = req.flood_at
+    result['road_closures_applied'] = [{'id': c['id'], 'road': c['road'], 'time_local': c.get('time_local')}
+                                       for c in initial]
+    # For the map: when each closure starts, and where it is.
+    result['road_closure_timeline'] = [
+        {'id': c['id'], 'road': road_events.label(c), 'at_min': round(float(c['at_min']), 2),
+         'time_local': c.get('time_local'), 'user_block': bool(c.get('user_block')),
+         'points': [[loc['lat'], loc['lon']] for loc in c['exclude_locations']]}
+        for c in initial + later]
+    return result
+
+
+def _response_units(scenario, triage):
+    """Non-transport units (fire engines) for the map: who they are and how they drove in.
+
+    The ambulance has its own routes in the result; everything else the triage stage dispatched is
+    returned here with its station-to-scene route, so the dashboard can show it arriving and parked.
+    """
+    def rows(name):
+        with (scenario / name).open(newline='', encoding='utf-8-sig') as f:
+            return list(csv.DictReader(f))
+    units = {u['unit_id']: u for u in rows('response_units.csv')}
+    stations = {s['station_id']: s for s in rows('stations.csv')}
+    crew, unit_of = {}, {}
+    for p in rows('ems_personnel.csv'):
+        crew[p['unit_id']] = crew.get(p['unit_id'], 0) + 1
+        unit_of[p['personnel_id']] = p['unit_id']
+    commander_unit = unit_of.get(triage.get('incident_commander'))
+    info = []
+    for uid in triage.get('units', []):
+        u = units.get(uid, {})
+        if u.get('unit_type', '').upper() == 'AMBULANCE':
+            continue
+        st = stations.get(u.get('station_id'), {})
+        info.append({'unit_id': uid, 'unit_type': u.get('unit_type'), 'station': st.get('station_name'),
+                     'crew': crew.get(uid, 0), 'arrival_min': triage.get('unit_arrivals_min', {}).get(uid),
+                     'incident_command': uid == commander_unit})
+    ids = {u['unit_id'] for u in info}
+    return {'response_units': info,
+            'unit_routes': [r for r in triage.get('routes', []) if r.get('unit_id') in ids and r.get('coordinates')],
+            'incident_commander': triage.get('incident_commander')}
+
+
+def _run_simulation(req: SimulationRequest, timed_closures=()):
     try:
         scenario = scenario_path(req.scenario_id)
         if req.mode == 'static':
@@ -218,13 +321,15 @@ def run_simulation_api(req: SimulationRequest):
                 raise FileNotFoundError(f'Triage result not saved: {triage_file}')
             run_folder = REPORT_ROOT / req.scenario_id / 'integrated_tests'
             existing = {p.name for p in run_folder.iterdir() if p.is_dir()} if run_folder.exists() else set()
-            raw = run_integrated(scenario, triage_file, horizon=req.horizon, save=True)
+            raw = run_integrated(scenario, triage_file, horizon=req.horizon, save=True,
+                                 timed_closures=list(timed_closures))
             created = [p for p in run_folder.iterdir() if p.is_dir() and p.name not in existing
                        and (p / 'integrated_results.json').is_file()]
             if len(created) != 1:
                 raise RuntimeError('Could not uniquely identify the saved integrated run')
-            return _add_survival(_dynamic_dashboard_result(raw, created[0].name, req.scenario_id),
-                                 req.survival_curve)
+            result = _dynamic_dashboard_result(raw, created[0].name, req.scenario_id)
+            result.update(_response_units(scenario, triage))
+            return _add_survival(result, req.survival_curve)
         finally:
             _dynamic_run_lock.release()
     except HTTPException:

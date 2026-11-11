@@ -1,0 +1,28 @@
+# Valhalla routing server for the MCI dashboard (simulation/engine.py and routing_providers
+# expect it at http://127.0.0.1:8002).
+#
+#   cd dynamic_mci && docker compose up -d      # first run downloads Maryland OSM (~210 MB) and builds tiles
+#   docker compose logs -f valhalla             # watch the build; ready when "INFO: Found config file. Starting valhalla service!" appears
+#   docker compose down                         # stop
+#
+# Data lives in valhalla/custom_files/ (git-ignored). Delete that folder's contents, except the
+# .pbf, to force a clean rebuild; or set force_rebuild to "True" for one run.
+services:
+  valhalla:
+    image: ghcr.io/valhalla/valhalla-scripted:3.9.1
+    container_name: mci-valhalla
+    ports:
+      - "127.0.0.1:8002:8002"
+    volumes:
+      - ./valhalla/custom_files:/custom_files
+    environment:
+      # Downloaded only if no .pbf is already in valhalla/custom_files.
+      tile_urls: https://download.geofabrik.de/north-america/us/maryland-latest.osm.pbf
+      use_tiles_ignore_pbf: "True"   # reuse built tiles on restart instead of rebuilding
+      force_rebuild: "False"
+      build_admins: "True"
+      build_time_zones: "True"
+      build_elevation: "False"
+      build_transit: "False"
+      server_threads: "4"
+    restart: unless-stopped

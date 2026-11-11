@@ -5,6 +5,7 @@ Run from project root: python -m simulation.integrated_scheduler --scenario data
 import argparse
 import csv
 import json
+import math
 import shutil
 from collections import Counter
 from datetime import datetime, timezone
@@ -16,8 +17,10 @@ from simulation.engine import (
     get_hospital_location,
     get_station_location,
     location,
+    passes_near,
 )
 from simulation.gurobi_dispatch import choose_dispatch
+from simulation import road_events
 
 BASE = Path(__file__).resolve().parents[1]
 STEP = 0.75
@@ -109,7 +112,56 @@ class HospitalBedLedger:
         return issues
 
 
-def run(scenario, triage_file, horizon=240.0, save=True):
+def point_along(coords, fraction):
+    """Point at `fraction` of a polyline's length, and the index of the next vertex.
+
+    Same distance metric as the dashboard's playback interpolation, so a re-route starts exactly
+    where the animated ambulance is drawn.
+    """
+    d = [0.0]
+    for (a_lat, a_lon), (b_lat, b_lon) in zip(coords, coords[1:]):
+        dy = (b_lat - a_lat) * 111000
+        dx = (b_lon - a_lon) * 111000 * math.cos(math.radians(b_lat))
+        d.append(d[-1] + math.hypot(dx, dy))
+    if d[-1] == 0:
+        return list(coords[0]), 1
+    target = max(0.0, min(1.0, fraction)) * d[-1]
+    j = 1
+    while j < len(d) - 1 and d[j] < target:
+        j += 1
+    part = (target - d[j - 1]) / max(1e-9, d[j] - d[j - 1])
+    a, b = coords[j - 1], coords[j]
+    return [a[0] + (b[0] - a[0]) * part, a[1] + (b[1] - a[1]) * part], j
+
+
+def position_on(rec, t):
+    """Where the ambulance on route record `rec` is at time t: (point, next vertex index, minutes in).
+
+    Uses the per-vertex driving times when the route has them (slow streets, fast highways), else
+    an even pace along the line. The dashboard's playback uses the same rule.
+    """
+    coords = rec['coordinates']
+    start, finish = float(rec['start_min']), float(rec['end_min'])
+    frac = max(0.0, min(1.0, (t - start) / max(1e-9, finish - start)))
+    vm = rec.get('vertex_minutes')
+    if not vm or len(vm) != len(coords) or vm[-1] <= 0:
+        pos, j = point_along(coords, frac)
+        return pos, j, None
+    target = frac * vm[-1]
+    j = 1
+    while j < len(vm) - 1 and vm[j] < target:
+        j += 1
+    part = (target - vm[j - 1]) / max(1e-9, vm[j] - vm[j - 1])
+    a, b = coords[j - 1], coords[j]
+    return [a[0] + (b[0] - a[0]) * part, a[1] + (b[1] - a[1]) * part], j, target
+
+
+def run(scenario, triage_file, horizon=240.0, save=True, timed_closures=None):
+    """timed_closures: road closures that start during the run, each {id, road|label, at_min,
+    exclude_locations}. At `at_min` the closure is added to routing; an ambulance whose remaining
+    path crosses it re-routes from its current position, and later trips use updated travel times.
+    The first response leg (station to scene) is fixed by the triage stage and is not re-routed.
+    """
     scenario = Path(scenario).resolve()
     triage = json.loads(Path(triage_file).read_text(encoding='utf-8'))
     if triage['scenario'] != scenario.name or triage['validation']['status'] != 'PASS':
@@ -140,13 +192,15 @@ def run(scenario, triage_file, horizon=240.0, save=True):
     if len(assessments) != len(patients) or set(assessments) != {x['patient_id'] for x in patients}:
         raise ValueError('Missing or duplicate initial triage assessments')
     selected_units = set(triage['units'])
-    ambulances = [u for u in selected_units if units[u]['unit_type'].upper() == 'AMBULANCE']
-    if len(ambulances) != 1:
-        raise ValueError('Stage 2B requires exactly one selected ambulance')
-    aid = ambulances[0]
-    crew = sorted(x['personnel_id'] for x in people if x['unit_id'] == aid)
-    if len(crew) != 2:
-        raise ValueError(f'{aid} requires exactly two assigned EMS crew members')
+    # Fleet: every selected ambulance runs the same state machine; each has a two-person crew.
+    ambulance_ids = sorted(u for u in selected_units if units[u]['unit_type'].upper() == 'AMBULANCE')
+    if not ambulance_ids:
+        raise ValueError('Stage 2B requires at least one selected ambulance')
+    crews = {}
+    for aid in ambulance_ids:
+        crews[aid] = sorted(x['personnel_id'] for x in people if x['unit_id'] == aid)
+        if len(crews[aid]) != 2:
+            raise ValueError(f'{aid} requires exactly two assigned EMS crew members')
     staff = {}
     for x in people:
         if x['unit_id'] not in selected_units:
@@ -230,6 +284,7 @@ def run(scenario, triage_file, horizon=240.0, save=True):
         events.append({'time_min': round(t, 4), 'event': kind, **fields})
     # Route matrix: no fabricated travel times. Valhalla must be available.
     legs = {}
+    dests = {}
     for h in hospitals:
         hid = h['hospital_id']
 
@@ -254,57 +309,34 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                 h["longitude"]
             )
 
-        legs[hid] = (get_route(pickup, dest), get_route(dest, pickup))
-
-    # Initial ambulance response route: station to MCI.
-    # Use the same station and dispatch information
-    # as the rolling-triage engine.
-
-    ambulance_unit = units[aid]
-    station_id = ambulance_unit['station_id']
-
-    if station_id not in stations:
-        raise ValueError(
-            f"Unknown station {station_id} for {aid}"
-        )
-
-    station_origin = get_station_location(
-        stations[station_id]
-    )
-
-    initial_route = get_route(
-        station_origin,
-        pickup
-    )
-
-    dispatch_min = float(
-        ambulance_unit.get('dispatch_min') or 0
-    )
-
-    arrival_min = float(
-        triage['unit_arrivals_min'][aid]
-    )
-
-    if arrival_min < dispatch_min:
-        raise ValueError(
-            "Ambulance arrival precedes dispatch"
-        )
-
-    routes.append({
-        'purpose': 'STATION_TO_MCI',
-        'ambulance_id': aid,
-        'start_min': dispatch_min,
-        **initial_route,
-        'start_min': dispatch_min,
-        'end_min': arrival_min
-    })
+        dests[hid] = dest
+        legs[hid] = (get_route(pickup, dest, explain=True), get_route(dest, pickup, explain=True))
 
     # Finite-state ambulance: ON_SCENE -> LOADING -> TO_HOSPITAL -> TURNOVER -> RETURN -> ON_SCENE.
-    ambulance = {'phase': 'BEFORE_ARRIVAL', 'until': float(triage['unit_arrivals_min'][aid]),
-                 'patient': None, 'hospital': None, 'trip': 0}
-    if commander in crew:
-        # No non-transport command transfer in this isolated scenario: block transport rather than silently abandoning command.
-        log(0, 'COMMAND_CONTINUITY_WARNING', reason='Ambulance crew holds incident command; transport blocked')
+    # `route` is the route record the ambulance is currently driving (for re-routing).
+    fleet = {}
+    for aid in ambulance_ids:
+        # Initial response route: station to MCI, with the same station and dispatch
+        # information as the rolling-triage engine.
+        ambulance_unit = units[aid]
+        station_id = ambulance_unit['station_id']
+        if station_id not in stations:
+            raise ValueError(f"Unknown station {station_id} for {aid}")
+        initial_route = get_route(get_station_location(stations[station_id]), pickup, explain=True)
+        dispatch_min = float(ambulance_unit.get('dispatch_min') or 0)
+        arrival_min = float(triage['unit_arrivals_min'][aid])
+        if arrival_min < dispatch_min:
+            raise ValueError("Ambulance arrival precedes dispatch")
+        routes.append({'purpose': 'STATION_TO_MCI', 'ambulance_id': aid, **initial_route,
+                       'start_min': dispatch_min, 'end_min': arrival_min})
+        fleet[aid] = {'phase': 'BEFORE_ARRIVAL', 'until': arrival_min, 'patient': None, 'hospital': None,
+                      'trip': 0, 'route': None}
+    # An ambulance whose crew holds incident command cannot leave: block it rather than silently
+    # abandoning command (there is no command transfer to a non-transport unit in this stage).
+    command_blocked = {aid for aid in ambulance_ids if commander in crews[aid]}
+    for aid in sorted(command_blocked):
+        log(0, 'COMMAND_CONTINUITY_WARNING', ambulance_id=aid,
+            reason='Ambulance crew holds incident command; transport blocked')
     def advance(p, start, end, stabilizing):
         if p['true'] == 'BLACK' or p['status'] in ('DELIVERED', 'IN_TRANSPORT', 'EXPECTANT', 'LOADING'):
             return
@@ -325,14 +357,92 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                 p['exposure'] = 0.0
                 log(t, 'PATIENT_STATE_CHANGED', patient_id=p['id'], from_triage=old, to_triage=p['true'], observed_triage=p['observed'])
                 # Do not use hidden true state to remove a patient from the observed queue.
-    def release_crew(t):
-        for wid in crew:
+    def release_crew(aid, t):
+        for wid in crews[aid]:
             staff[wid]['role'] = 'AVAILABLE'
             staff[wid]['patient'] = None
             log(t, 'CREW_RETURNED', personnel_id=wid, ambulance_id=aid)
+    # Who is doing what, as intervals (reporting only): initial triage from the triage stage, then the
+    # role each on-scene worker holds in every step (command, stabilising, re-assessing, transport).
+    triage_minutes = float(triage.get('triage_duration_seconds', 45)) / 60
+    staff_timeline = [{'personnel_id': a['personnel_id'], 'unit_id': staff[a['personnel_id']]['unit'],
+                       'role': 'TRIAGING', 'patient_id': a['patient_id'],
+                       'start_min': round(float(a['triage_complete_min']) - triage_minutes, 4),
+                       'end_min': round(float(a['triage_complete_min']), 4)}
+                      for a in triage['assessments'] if a.get('personnel_id') in staff]
+    open_task = {}
+
+    def track(t, end):
+        for wid, w in staff.items():
+            if w['arrival'] > t + EPS:
+                continue
+            rec = open_task.get(wid)
+            if rec and (rec['role'], rec['patient_id']) == (w['role'], w['patient']) and abs(rec['end_min'] - t) < EPS:
+                rec['end_min'] = end
+            else:
+                open_task[wid] = {'personnel_id': wid, 'unit_id': w['unit'], 'role': w['role'],
+                                  'patient_id': w['patient'], 'start_min': t, 'end_min': end}
+                staff_timeline.append(open_task[wid])
+
+    pending_closures = sorted((dict(c) for c in (timed_closures or [])), key=lambda c: float(c['at_min']))
+
+    def apply_closure(c, t):
+        """A road closes at time t: re-route a moving ambulance that would cross it, refresh legs."""
+        name = road_events.label(c)
+        road_events.add_closure(c)
+        log(t, 'ROAD_CLOSED', closure_id=c.get('id'), road=name)
+        points = [(loc['lat'], loc['lon']) for loc in c['exclude_locations']]
+        for aid in ambulance_ids:
+            amb = fleet[aid]
+            rec = amb['route']
+            if amb['phase'] not in ('TO_HOSPITAL', 'RETURN') or rec is None:
+                continue
+            start, finish = float(rec['start_min']), float(rec['end_min'])
+            if not start - EPS <= t < finish - EPS:
+                continue
+            coords = rec['coordinates']
+            pos, j, minutes_in = position_on(rec, t)
+            remaining = [pos] + [list(p) for p in coords[j:]]
+            if not any(passes_near(remaining, p) for p in points):
+                continue
+            try:
+                new = get_route(tuple(pos), tuple(coords[-1]), explain=True)
+            except Exception as exc:  # e.g. the ambulance is on the closed edge itself
+                log(t, 'REROUTE_FAILED', ambulance_id=aid, road=name, reason=str(exc)[:200])
+                continue
+            new_end = t + new['travel_minutes']
+            delay = round(new_end - finish, 2)
+            rec.update(end_min=t, coordinates=[list(p) for p in coords[:j]] + [pos], interrupted_by=name)
+            if minutes_in is not None:
+                rec['vertex_minutes'] = rec['vertex_minutes'][:j] + [round(minutes_in, 4)]
+            keep = {k: rec[k] for k in ('purpose', 'ambulance_id', 'patient_id', 'hospital_id') if k in rec}
+            amb['route'] = {**keep, **new, 'start_min': t, 'end_min': new_end,
+                            'rerouted': True, 'reroute_reason': name, 'delay_min': delay}
+            routes.append(amb['route'])
+            amb['until'] = new_end
+            log(t, 'AMBULANCE_REROUTED', ambulance_id=aid, road=name, delay_min=delay,
+                patient_id=amb['patient'], hospital_id=amb['hospital'])
+        changed = {}
+        for hid, dest in dests.items():
+            old = legs[hid]
+            legs[hid] = (get_route(pickup, dest, explain=True), get_route(dest, pickup, explain=True))
+            d_to = legs[hid][0]['travel_minutes'] - old[0]['travel_minutes']
+            d_back = legs[hid][1]['travel_minutes'] - old[1]['travel_minutes']
+            if abs(d_to) > 0.01 or abs(d_back) > 0.01:
+                changed[hid] = {'to_min': round(legs[hid][0]['travel_minutes'], 2),
+                                'to_delta': round(d_to, 2), 'back_delta': round(d_back, 2)}
+        if changed:
+            # Event fields stay scalar: the Excel report writes one cell per field.
+            summary_text = '; '.join(f"{h} to {v['to_min']} min ({v['to_delta']:+.2f}), back {v['back_delta']:+.2f}"
+                                     for h, v in changed.items())
+            log(t, 'TRAVEL_TIMES_UPDATED', road=name, hospitals=summary_text)
+
     t = 0.0
     while t < horizon - EPS:
         end = min(horizon, t + STEP)
+        # Road closures that start now (flood reports after the MCI start, or user road blocks).
+        while pending_closures and float(pending_closures[0]['at_min']) <= t + EPS:
+            apply_closure(pending_closures.pop(0), t)
         # Process all due task completions and ambulance transitions at the slot boundary.
         for wid, w in staff.items():
             if w['role'] == 'REASSESSING' and w['until'] <= t + EPS:
@@ -348,36 +458,44 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                 if p['observed'] == 'BLACK' and p['status'] == 'WAITING':
                     p.update(status='EXPECTANT', disposition='EXPECTANT')
                     log(t, 'EXPECTANT_DISPOSITION', patient_id=p['id'])
-        if ambulance['phase'] != 'ON_SCENE' and ambulance['until'] <= t + EPS:
-            phase = ambulance['phase']
-            pid, hid = ambulance['patient'], ambulance['hospital']
+        for aid in ambulance_ids:
+            amb = fleet[aid]
+            if amb['phase'] == 'ON_SCENE' or amb['until'] > t + EPS:
+                continue
+            phase = amb['phase']
+            pid, hid = amb['patient'], amb['hospital']
             if phase == 'BEFORE_ARRIVAL':
-                ambulance['phase'] = 'ON_SCENE'
+                amb['phase'] = 'ON_SCENE'
                 log(t, 'AMBULANCE_ARRIVED', ambulance_id=aid)
             elif phase == 'LOADING':
                 p = state[pid]
                 p['status'] = 'IN_TRANSPORT'
-                ambulance['phase'] = 'TO_HOSPITAL'
-                ambulance['until'] = t + legs[hid][0]['travel_minutes']
+                amb['phase'] = 'TO_HOSPITAL'
+                amb['until'] = t + legs[hid][0]['travel_minutes']
                 log(t, 'AMBULANCE_DEPARTED', ambulance_id=aid, patient_id=pid, hospital_id=hid)
-                routes.append({'purpose': 'MCI_TO_HOSPITAL', 'patient_id': pid, 'hospital_id': hid, 'start_min': t, 'end_min': ambulance['until'], **legs[hid][0]})
+                amb['route'] = {'purpose': 'MCI_TO_HOSPITAL', 'ambulance_id': aid, 'patient_id': pid, 'hospital_id': hid,
+                                'start_min': t, 'end_min': amb['until'], **legs[hid][0]}
+                routes.append(amb['route'])
             elif phase == 'TO_HOSPITAL':
                 p = state[pid]
                 bed_ledger.occupy(pid, hid, t)
                 log(t, 'BED_OCCUPIED', patient_id=pid, hospital_id=hid)
                 p.update(status='DELIVERED', disposition='DELIVERED', arrival=t)
                 assignments.append({'patient_id': pid, 'triage_at_assignment': p['observed'], 'hospital_id': hid, 'hospital_arrival_min': round(t, 4), 'ambulance_id': aid})
-                log(t, 'PATIENT_DELIVERED', patient_id=pid, hospital_id=hid)
-                ambulance['phase'] = 'TURNOVER'
-                ambulance['until'] = t + float(config.get('hospital_turnover_minutes', 60))
+                log(t, 'PATIENT_DELIVERED', patient_id=pid, hospital_id=hid, ambulance_id=aid)
+                amb['phase'] = 'TURNOVER'
+                amb['route'] = None
+                amb['until'] = t + float(config.get('hospital_turnover_minutes', 60))
             elif phase == 'TURNOVER':
-                ambulance['phase'] = 'RETURN'
-                ambulance['until'] = t + legs[hid][1]['travel_minutes']
-                routes.append({'purpose': 'HOSPITAL_TO_MCI', 'hospital_id': hid, 'start_min': t, 'end_min': ambulance['until'], **legs[hid][1]})
+                amb['phase'] = 'RETURN'
+                amb['until'] = t + legs[hid][1]['travel_minutes']
+                amb['route'] = {'purpose': 'HOSPITAL_TO_MCI', 'ambulance_id': aid, 'hospital_id': hid,
+                                'start_min': t, 'end_min': amb['until'], **legs[hid][1]}
+                routes.append(amb['route'])
                 log(t, 'TURNOVER_COMPLETE', ambulance_id=aid)
             elif phase == 'RETURN':
-                ambulance.update(phase='ON_SCENE', patient=None, hospital=None)
-                release_crew(t)
+                amb.update(phase='ON_SCENE', patient=None, hospital=None, route=None)
+                release_crew(aid, t)
                 log(t, 'AMBULANCE_RETURNED', ambulance_id=aid)
         for p in state.values():
             if p['observed'] is None and p['assessed'] <= t + EPS:
@@ -410,7 +528,11 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                     patient['optimizer_known'] = patient['observed']
 
         # Bed capacity comes only from the live ledger, never from hospitals.csv.
-        if ambulance['phase'] == 'ON_SCENE' and commander not in crew:
+        # Each ambulance free at the CCP gets one Gurobi dispatch, in ambulance-id order; a patient or
+        # bed taken by an earlier ambulance in the same step is no longer offered to the next one.
+        for aid in ambulance_ids:
+            if fleet[aid]['phase'] != 'ON_SCENE' or aid in command_blocked:
+                continue
             candidates = [p for p in state.values()
                           if p['status'] == 'WAITING' and p['requires_transport']
                           and p['observed'] in ('RED', 'YELLOW', 'GREEN')]
@@ -481,7 +603,7 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                     # A failed reservation cannot create a phantom assignment.
                     bed_ledger.reserve(pid, hid, t)
                     log(t, 'BED_RESERVED', patient_id=pid, hospital_id=hid)
-                    for wid in crew:
+                    for wid in crews[aid]:
                         w = staff[wid]
                         if w['role'] == 'REASSESSING':
                             q = state[w['patient']]
@@ -491,8 +613,8 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                         log(t, 'CREW_RESERVED', ambulance_id=aid,
                             personnel_id=wid, patient_id=pid)
                     p.update(status='LOADING', hospital=hid)
-                    ambulance.update(phase='LOADING', patient=pid, hospital=hid,
-                                     until=t + float(config.get('loading_minutes', 5)))
+                    fleet[aid].update(phase='LOADING', patient=pid, hospital=hid,
+                                      until=t + float(config.get('loading_minutes', 5)))
                     log(t, 'PATIENT_ASSIGNED', patient_id=pid, hospital_id=hid,
                         observed_triage=p['observed'],
                         optimizer_known_triage=p['optimizer_known'],
@@ -500,6 +622,8 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                     decision_log.update(selected_patient_id=pid,
                                         selected_hospital_id=hid)
                 optimizer_decisions.append(decision_log)
+                if decision is None:
+                    break  # nothing feasible now; the next free ambulance would get the same answer
         # Allocate remaining personnel to stabilization.
         covered = set()
         for p in sorted((p for p in state.values() if p['status'] == 'WAITING'), key=lambda p: (RANK[p['observed']], p['id'])):
@@ -512,8 +636,11 @@ def run(scenario, triage_file, horizon=240.0, save=True):
         assignments_by_worker = Counter(wid for wid, w in staff.items() if w['role'] in ('REASSESSING', 'STABILIZING', 'TRANSPORT_RESERVED'))
         if any(n > 1 for n in assignments_by_worker.values()):
             conflicts.append(f'Duplicate worker task at {t}')
-        if any(staff[wid]['role'] != 'TRANSPORT_RESERVED' for wid in crew) and ambulance['phase'] in ('LOADING', 'TO_HOSPITAL', 'TURNOVER', 'RETURN'):
-            conflicts.append(f'Crew availability violation at {t}')
+        for aid in ambulance_ids:
+            if (fleet[aid]['phase'] in ('LOADING', 'TO_HOSPITAL', 'TURNOVER', 'RETURN')
+                    and any(staff[wid]['role'] != 'TRANSPORT_RESERVED' for wid in crews[aid])):
+                conflicts.append(f'Crew availability violation for {aid} at {t}')
+        track(t, end)
         for p in state.values():
             advance(p, t, end, p['id'] in covered)
         t = end
@@ -529,14 +656,18 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                'deceased': 0, 'deceased_note': 'No explicit death process modeled',
                'still_awaiting_or_in_transport': len(remaining),
                'observed_makespan_min': round(max((p['arrival'] for p in delivered), default=0), 4),
-               'completed_incident': not remaining and ambulance['phase'] not in ('LOADING', 'TO_HOSPITAL'),
-               'transport_policy': 'Gurobi rolling single-dispatch MILP; not full-horizon optimal',
+               'completed_incident': not remaining and all(a['phase'] not in ('LOADING', 'TO_HOSPITAL') for a in fleet.values()),
+               'ambulances': ', '.join(ambulance_ids),  # text: the Excel report writes one cell per field
+               'transport_policy': 'Gurobi rolling single-dispatch MILP, one decision per free ambulance '
+                                   'in ambulance-id order; not full-horizon optimal',
                'validation': {'status': 'PASS' if not conflicts else 'FAIL', 'issues': conflicts}}
     summary['optimizer_observation_policy'] = observation_policy
     summary['optimizer_observation_release_min'] = release_min
     result = {'summary': summary, 'patients': [{k: p[k] for k in ('id', 'initial', 'true', 'observed', 'status', 'disposition', 'arrival', 'hospital', 'care_min', 'reassessments', 'transition_count')} for p in state.values()],
               'assignments': assignments, 'events': sorted(events, key=lambda x: x['time_min']), 'routes': routes,
               'optimizer_decisions': optimizer_decisions,
+              'staff_timeline': [{**r, 'start_min': round(r['start_min'], 4), 'end_min': round(r['end_min'], 4)}
+                                 for r in staff_timeline],
               'optimizer_patient_registry_history':
                   optimizer_patient_registry_history,
               'hospital_capacity_timeline': bed_ledger.timeline,

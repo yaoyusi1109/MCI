@@ -1,0 +1,12 @@
+hospital_id,name,trauma_level,available_beds,latitude,longitude,ambulance_entrance_lat,ambulance_entrance_lon
+H001,R Adams Cowley Shock Trauma Center,PARC,5,39.2885,-76.6235,,
+H002,The Johns Hopkins Hospital,I,5,39.295828,-76.591953,,
+H003,Sinai Hospital of Baltimore,II,3,39.351968,-76.661297,,
+H004,Johns Hopkins Bayview Medical Center,II,3,39.29111,-76.54896,,
+H005,MedStar Union Memorial Hospital,None,3,39.32953,-76.61484,,
+H006,Mercy Medical Center,None,3,39.29327,-76.61280,,
+H007,UMMC Midtown Campus,None,3,39.29963,-76.62084,,
+H008,MedStar Harbor Hospital,None,3,39.25184,-76.61403,,
+H009,MedStar Good Samaritan Hospital,None,3,39.35755,-76.58585,,
+H010,Ascension Saint Agnes Hospital,None,3,39.27154,-76.67346,,
+H011,Grace Medical Center,None,3,39.28881,-76.64941,,

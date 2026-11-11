@@ -20,9 +20,11 @@ def decode_polyline(encoded, precision=6):
         coords.append([lat/scale,lon/scale])
     return coords
 
-def route(origin,destination):
+def route(origin,destination,exclude_locations=None):
     payload={'locations':[{'lat':origin[0],'lon':origin[1]},{'lat':destination[0],'lon':destination[1]}],
              'costing':'auto','units':'miles','shape_format':'polyline6'}
+    if exclude_locations:
+        payload['exclude_locations']=exclude_locations
     response=requests.post(f'{VALHALLA_URL}/route',json=payload,timeout=35)
     response.raise_for_status()
     data=response.json()

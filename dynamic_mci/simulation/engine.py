@@ -19,6 +19,7 @@ from reporting.report_generator import generate_reports
 import argparse
 import copy
 import json
+import math
 import os
 import shutil
 from datetime import datetime, timezone
@@ -32,6 +33,7 @@ from optimization.optimizer.mci_ambulance_gurobi import (
     load_scenario,
     optimize_mci,
 )
+from simulation.road_events import current_closures, current_exclusions
 
 
 BASE = Path(__file__).resolve().parents[1]
@@ -68,15 +70,14 @@ def get_hospital_location(hospital):
     Fall back to hospital coordinates if
     either entrance coordinate is missing.
     """
-    entrance_lat = str(
-        hospital.get("ambulance_entrance_lat") or ""
-    ).strip()
+    def present(value):
+        # Blank CSV cells arrive as NaN from pandas (or "" when read as text).
+        return pd.notna(value) and str(value).strip() != ""
 
-    entrance_lon = str(
-        hospital.get("ambulance_entrance_lon") or ""
-    ).strip()
+    entrance_lat = hospital.get("ambulance_entrance_lat")
+    entrance_lon = hospital.get("ambulance_entrance_lon")
 
-    if entrance_lat and entrance_lon:
+    if present(entrance_lat) and present(entrance_lon):
         return location(entrance_lat, entrance_lon)
 
     return location(
@@ -152,55 +153,133 @@ def decode_polyline(encoded, precision=6):
     return coordinates
 
 
-def get_route(origin, destination):
-    """Request a driving route from Valhalla."""
+def _trip_coordinates(trip):
+    coordinates = []
+    for leg in trip["legs"]:
+        segment = decode_polyline(leg["shape"])
+        if coordinates and segment and coordinates[-1] == segment[0]:
+            segment = segment[1:]
+        coordinates.extend(segment)
+    return coordinates
 
+
+def _seg_m(a, b):
+    dy = (b[0] - a[0]) * 111000
+    dx = (b[1] - a[1]) * 111000 * math.cos(math.radians(b[0]))
+    return math.hypot(dx, dy)
+
+
+def _trip_vertex_minutes(trip):
+    """Cumulative driving minutes at each shape vertex.
+
+    Each Valhalla maneuver carries its own time (slow streets, fast highways); it is spread over that
+    maneuver's segments by length. Lets playback and re-routing place the ambulance by elapsed time
+    rather than assuming one constant speed for the whole trip.
+    """
+    out = []
+    for leg in trip["legs"]:
+        shape = decode_polyline(leg["shape"])
+        times = [0.0] * len(shape)
+        for m in leg.get("maneuvers", []):
+            b, e = int(m.get("begin_shape_index", 0)), int(m.get("end_shape_index", 0))
+            seg = [_seg_m(shape[i], shape[i + 1]) for i in range(b, min(e, len(shape) - 1))]
+            total = sum(seg)
+            for k, length in enumerate(seg):
+                share = length / total if total else 1.0 / len(seg)
+                times[b + k + 1] = times[b + k] + float(m.get("time", 0)) * share
+        base = out[-1] if out else 0.0
+        cumulative = [base + x / 60.0 for x in times]
+        if out and cumulative:
+            cumulative = cumulative[1:]  # shared vertex between legs
+        out.extend(cumulative)
+    return out
+
+
+def _trip_via(trip, limit=3):
+    """Main named roads of a trip, longest first (for explanations)."""
+    length = {}
+    for leg in trip["legs"]:
+        for m in leg.get("maneuvers", []):
+            for name in m.get("street_names") or []:
+                length[name] = length.get(name, 0.0) + float(m.get("length", 0))
+    return [n for n, _ in sorted(length.items(), key=lambda kv: -kv[1])[:limit]]
+
+
+def passes_near(coordinates, point, tol_m=30.0):
+    """True if the polyline comes within tol_m of point (segment distance, local projection)."""
+    k =math.cos(math.radians(point[0])) * 111320.0
+    px, py = point[1] * k, point[0] * 110570.0
+    for (a_lat, a_lon), (b_lat, b_lon) in zip(coordinates, coordinates[1:]):
+        ax, ay, bx, by = a_lon * k, a_lat * 110570.0, b_lon * k, b_lat * 110570.0
+        dx, dy = bx - ax, by - ay
+        t = 0.0 if dx == dy == 0 else max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)))
+        if math.hypot(px - ax - t * dx, py - ay - t * dy) <= tol_m:
+            return True
+    return False
+
+
+def _valhalla(origin, destination, exclusions=None, alternates=0):
     payload = {
         "locations": [
-            {
-                "lat": origin[0],
-                "lon": origin[1]
-            },
-            {
-                "lat": destination[0],
-                "lon": destination[1]
-            }
+            {"lat": origin[0], "lon": origin[1]},
+            {"lat": destination[0], "lon": destination[1]}
         ],
         "costing": "auto",
         "units": "miles"
     }
-
-    response = requests.post(
-        f"{VALHALLA_URL}/route",
-        json=payload,
-        timeout=60
-    )
-
+    if exclusions:
+        payload["exclude_locations"] = exclusions
+    if alternates:
+        payload["alternates"] = alternates
+    response = requests.post(f"{VALHALLA_URL}/route", json=payload, timeout=60)
     response.raise_for_status()
+    return response.json()
 
-    result = response.json()
-    summary = result["trip"]["summary"]
 
-    coordinates = []
+def get_route(origin, destination, explain=False):
+    """Request a driving route from Valhalla.
 
-    for leg in result["trip"]["legs"]:
-        segment = decode_polyline(leg["shape"])
+    Avoids the road closures in effect for this run (simulation/road_events.py). With explain=True
+    the result also carries `why`: the main roads used, the next-best alternative, and which
+    closures the unobstructed fastest route would have used (with the extra minutes they cost).
+    """
 
-        if coordinates and segment:
-            if coordinates[-1] == segment[0]:
-                segment = segment[1:]
+    exclusions = current_exclusions()
+    result = _valhalla(origin, destination, exclusions, alternates=1 if explain else 0)
+    trip = result["trip"]
+    summary = trip["summary"]
+    minutes = float(summary["time"]) / 60.0
 
-        coordinates.extend(segment)
-
-    return {
-        "travel_minutes": float(
-            summary["time"]
-        ) / 60.0,
-        "distance_miles": float(
-            summary["length"]
-        ),
-        "coordinates": coordinates
+    route = {
+        "travel_minutes": minutes,
+        "distance_miles": float(summary["length"]),
+        "coordinates": _trip_coordinates(trip)
     }
+    if not explain:
+        return route
+    vertex_minutes = _trip_vertex_minutes(trip)
+    if len(vertex_minutes) == len(route["coordinates"]):
+        route["vertex_minutes"] = [round(v, 4) for v in vertex_minutes]
+
+    why = {"rule": "lowest-cost route on the road network (Valhalla car costing: driving time plus "
+                   "penalties for turns, signals and minor roads)",
+           "via": _trip_via(trip), "alternative": None, "avoided_closures": [], "unobstructed_minutes": None}
+    alternates = result.get("alternates") or []
+    if alternates:
+        alt = alternates[0]["trip"]
+        why["alternative"] = {"minutes": round(float(alt["summary"]["time"]) / 60.0, 2),
+                              "extra_min": round(float(alt["summary"]["time"]) / 60.0 - minutes, 2),
+                              "via": _trip_via(alt)}
+    if exclusions:
+        # Which closures pushed us off the normal fastest route, and what that cost.
+        free = _valhalla(origin, destination)["trip"]
+        free_coords = _trip_coordinates(free)
+        why["unobstructed_minutes"] = round(float(free["summary"]["time"]) / 60.0, 2)
+        for closure in current_closures():
+            if any(passes_near(free_coords, (loc["lat"], loc["lon"])) for loc in closure["exclude_locations"]):
+                why["avoided_closures"].append(closure.get("road") or closure.get("label") or closure.get("id"))
+    route["why"] = why
+    return route
 
 
 def run_simulation(

@@ -36,6 +36,10 @@ HOSPITALS = [
     {"id": "H5", "name": "MedStar Union Memorial",             "lat": 39.3285, "lon": -76.6125, "trauma": False},
     {"id": "H6", "name": "Mercy Medical Center",               "lat": 39.2955, "lon": -76.6115, "trauma": False},
     {"id": "H7", "name": "MedStar Harbor Hospital",            "lat": 39.2515, "lon": -76.6140, "trauma": False},
+    # H8-H10: coordinates geocoded from OpenStreetMap (Nominatim), Nov 2026.
+    {"id": "H8", "name": "MedStar Good Samaritan Hospital",    "lat": 39.3576, "lon": -76.5858, "trauma": False},
+    {"id": "H9", "name": "Ascension Saint Agnes Hospital",     "lat": 39.2715, "lon": -76.6735, "trauma": False},
+    {"id": "H10", "name": "UMMC Midtown Campus",               "lat": 39.2996, "lon": -76.6208, "trauma": False},
 ]
 DEFAULT_HOSPITAL_IDS = ["H1", "H2", "H3", "H6"]
 

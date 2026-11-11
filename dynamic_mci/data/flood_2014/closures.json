@@ -1,0 +1,336 @@
+{
+ "event": "Baltimore flash flood, 2014-08-12",
+ "method": "Place each NWS road-closure report of Aug 12, 2014 on the road it names, for Valhalla exclusion.",
+ "closures": [
+  {
+   "id": "bowie_rd",
+   "time_local": "2014-08-12 12:45",
+   "road": "Bowie Rd east of US 1, Laurel",
+   "source": "Broadcast Media",
+   "matched_name": "Bowie Road",
+   "all_names": [
+    "Bowie Road"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.096752,
+     "lon": -76.849807,
+     "heading": 311,
+     "heading_tolerance": 45
+    },
+    {
+     "lat": 39.096752,
+     "lon": -76.849807,
+     "heading": 131,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 311,
+     "span_m": 700,
+     "open_min": 3.74,
+     "closed_min": 4.61,
+     "blocked": true
+    },
+    {
+     "heading": 131,
+     "span_m": 700,
+     "open_min": 2.73,
+     "closed_min": 3.76,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": true,
+   "verified": true
+  },
+  {
+   "id": "dorsey_rd",
+   "time_local": "2014-08-12 13:15",
+   "road": "Dorsey Rd at Sawmill Creek (between Central Ave and MD 648), Glen Burnie",
+   "source": "Dept of Highways",
+   "matched_name": "Dorsey Road",
+   "all_names": [
+    "Dorsey Road",
+    "MD 176"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.169927,
+     "lon": -76.632106,
+     "heading": 54,
+     "heading_tolerance": 45
+    },
+    {
+     "lat": 39.169927,
+     "lon": -76.632106,
+     "heading": 234,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 54,
+     "span_m": 700,
+     "open_min": 3.09,
+     "closed_min": 6.16,
+     "blocked": true
+    },
+    {
+     "heading": 234,
+     "span_m": 700,
+     "open_min": 2.22,
+     "closed_min": 6.82,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": true,
+   "verified": true
+  },
+  {
+   "id": "aviation_blvd",
+   "time_local": "2014-08-12 13:47",
+   "road": "Aviation Blvd at the BWI rail station road",
+   "source": "Dept of Highways",
+   "matched_name": "Aviation Boulevard",
+   "all_names": [
+    "Aviation Boulevard",
+    "MD 170"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.184744,
+     "lon": -76.689824,
+     "heading": 41,
+     "heading_tolerance": 45
+    },
+    {
+     "lat": 39.184744,
+     "lon": -76.689824,
+     "heading": 221,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 41,
+     "span_m": 700,
+     "open_min": 4.18,
+     "closed_min": 18.42,
+     "blocked": true
+    },
+    {
+     "heading": 221,
+     "span_m": 700,
+     "open_min": 4.09,
+     "closed_min": 20.63,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": true,
+   "verified": true
+  },
+  {
+   "id": "md3",
+   "time_local": "2014-08-12 13:52",
+   "road": "MD 3 (Crain Hwy) near Furnace Branch Rd, all lanes",
+   "source": "Dept of Highways",
+   "matched_name": "Crain Highway North",
+   "all_names": [
+    "Crain Highway North",
+    "MD 3 Business"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.182277,
+     "lon": -76.614771,
+     "heading": 24,
+     "heading_tolerance": 45
+    },
+    {
+     "lat": 39.182277,
+     "lon": -76.614771,
+     "heading": 204,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 24,
+     "span_m": 700,
+     "open_min": 3.38,
+     "closed_min": 4.78,
+     "blocked": true
+    },
+    {
+     "heading": 204,
+     "span_m": 700,
+     "open_min": 2.29,
+     "closed_min": 2.68,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": true,
+   "verified": true
+  },
+  {
+   "id": "i695_outer",
+   "time_local": "2014-08-12 14:22",
+   "road": "I-695 outer loop at Quarantine Rd",
+   "source": "Dept of Highways",
+   "matched_name": "I 695 West",
+   "all_names": [
+    "I 695 West",
+    "Baltimore Beltway"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.205271,
+     "lon": -76.565145,
+     "heading": 272,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 272,
+     "span_m": 5000,
+     "open_min": 20.29,
+     "closed_min": 32.35,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": true,
+   "verified": true
+  },
+  {
+   "id": "md295",
+   "time_local": "2014-08-12 14:25",
+   "road": "MD 295 between I-695 and Westport",
+   "source": "Dept of Highways",
+   "matched_name": "MD 295",
+   "all_names": [
+    "MD 295",
+    "Baltimore-Washington Parkway"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.231932,
+     "lon": -76.650172,
+     "heading": 186,
+     "heading_tolerance": 45
+    },
+    {
+     "lat": 39.231851,
+     "lon": -76.649733,
+     "heading": 6,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 186,
+     "span_m": 5000,
+     "open_min": 13.52,
+     "closed_min": 14.17,
+     "blocked": true
+    },
+    {
+     "heading": 6,
+     "span_m": 5000,
+     "open_min": 11.27,
+     "closed_min": 12.59,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": true,
+   "verified": true
+  },
+  {
+   "id": "harbor_tunnel",
+   "time_local": "2014-08-12 14:29",
+   "road": "Baltimore Harbor Tunnel (I-895)",
+   "source": "Dept of Highways",
+   "matched_name": "I 895 South",
+   "all_names": [
+    "I 895 South",
+    "Baltimore Harbor Tunnel"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.253706,
+     "lon": -76.571764,
+     "heading": 207,
+     "heading_tolerance": 45
+    },
+    {
+     "lat": 39.253691,
+     "lon": -76.571638,
+     "heading": 27,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 207,
+     "span_m": 2400,
+     "open_min": 11.39,
+     "closed_min": 26.46,
+     "blocked": true
+    },
+    {
+     "heading": 27,
+     "span_m": 2400,
+     "open_min": 11.29,
+     "closed_min": 17.02,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": false,
+   "verified": true
+  },
+  {
+   "id": "md648_magothy",
+   "time_local": "2014-08-12 17:19",
+   "road": "Baltimore Annapolis Blvd at the Magothy River crossing",
+   "source": "Dept of Highways",
+   "matched_name": "MD 648",
+   "all_names": [
+    "Waterford Road",
+    "MD 648"
+   ],
+   "exclude_locations": [
+    {
+     "lat": 39.1208,
+     "lon": -76.561438,
+     "heading": 351,
+     "heading_tolerance": 45
+    },
+    {
+     "lat": 39.1208,
+     "lon": -76.561438,
+     "heading": 171,
+     "heading_tolerance": 45
+    }
+   ],
+   "check": [
+    {
+     "heading": 351,
+     "span_m": 700,
+     "open_min": 1.31,
+     "closed_min": 11.26,
+     "blocked": true
+    },
+    {
+     "heading": 171,
+     "span_m": 700,
+     "open_min": 1.31,
+     "closed_min": 11.42,
+     "blocked": true
+    }
+   ],
+   "cross_street_found": false,
+   "verified": true
+  }
+ ]
+}

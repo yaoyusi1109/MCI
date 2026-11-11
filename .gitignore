@@ -6,3 +6,8 @@ __pycache__/
 .env
 .env.*
 !.env.example
+
+# Large downloaded dataset (288 MB, over GitHub's 100 MB limit). Source:
+# https://www.kaggle.com/datasets/dryad/human-mobility-during-natural-disasters
+# dynamic_mci/data/flood_2014/build_flood_case.py reads it to rebuild frontend/flood_2014.json.
+data/natural_disaster_human_mobility.csv

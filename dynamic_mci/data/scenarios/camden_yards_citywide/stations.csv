@@ -1,0 +1,5 @@
+station_id,station_name,street_address,city,jurisdiction,latitude,longitude,vehicle_exit_lat,vehicle_exit_lon
+S001,BCFD Engine 2,800 Light St,Baltimore,Baltimore City,39.27978,-76.61296,39.279780,-76.612960
+S023,Baltimore Fire Station 23,15 South Eutaw Street,Baltimore,Baltimore City,39.28782,-76.62039,39.28782,-76.62039
+S034,Baltimore Fire Station 34,1227 South Hanover Street,Baltimore,Baltimore City,39.27483,-76.61510,39.27483,-76.61510
+S026,Baltimore Fire Station 26,6 South Gay Street,Baltimore,Baltimore City,39.28924,-76.60919,39.28924,-76.60919

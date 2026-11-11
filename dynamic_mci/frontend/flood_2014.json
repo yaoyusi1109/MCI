@@ -1,0 +1,6459 @@
+{
+ "meta": {
+  "title": "Baltimore flash flood, August 12, 2014",
+  "built": "2026-11-11",
+  "bwi_total_in": 6.3,
+  "peak_hour": {
+   "hour": 13,
+   "inches": 2.7,
+   "trace": false,
+   "window": "12:54\u201313:54"
+  },
+  "road_closures": 8,
+  "storm_window": "11:00\u201315:59",
+  "storm_users_vs_typical": 1.285,
+  "compare_days": [
+   "2014-07-29",
+   "2014-08-05",
+   "2014-08-19",
+   "2014-08-26"
+  ],
+  "mobility": {
+   "users": 14577,
+   "points": 328346,
+   "first_day": "2014-07-28",
+   "last_day": "2014-08-27"
+  },
+  "sources": [
+   {
+    "label": "NWS Baltimore/Washington, Storm Data, August 2014",
+    "url": "https://www.weather.gov/media/lwx/stormdata/storm0814.pdf"
+   },
+   {
+    "label": "NWS monthly hazards summary (PRESTO), August 2014",
+    "url": "https://www.weather.gov/media/publications/presto/2014aug.pdf"
+   },
+   {
+    "label": "NWS Local Storm Reports via Iowa Environmental Mesonet",
+    "url": "https://mesonet.agron.iastate.edu/lsr/"
+   },
+   {
+    "label": "BWI hourly precipitation (ASOS) via Iowa Environmental Mesonet",
+    "url": "https://mesonet.agron.iastate.edu/request/download.phtml"
+   },
+   {
+    "label": "Wang & Taylor, human mobility during natural disasters (Kaggle / Dryad)",
+    "url": "https://www.kaggle.com/datasets/dryad/human-mobility-during-natural-disasters"
+   }
+  ]
+ },
+ "rain_hourly": [
+  {
+   "hour": 0,
+   "inches": 0.0,
+   "trace": true,
+   "window": "23:54\u201300:54"
+  },
+  {
+   "hour": 1,
+   "inches": 0.0,
+   "trace": true,
+   "window": "00:54\u201301:54"
+  },
+  {
+   "hour": 2,
+   "inches": 0.0,
+   "trace": true,
+   "window": "01:54\u201302:54"
+  },
+  {
+   "hour": 3,
+   "inches": 0.0,
+   "trace": true,
+   "window": "02:54\u201303:54"
+  },
+  {
+   "hour": 4,
+   "inches": 0.0,
+   "trace": true,
+   "window": "03:54\u201304:54"
+  },
+  {
+   "hour": 5,
+   "inches": 0.0,
+   "trace": true,
+   "window": "04:54\u201305:54"
+  },
+  {
+   "hour": 6,
+   "inches": 0.0,
+   "trace": true,
+   "window": "05:54\u201306:54"
+  },
+  {
+   "hour": 7,
+   "inches": 0.01,
+   "trace": false,
+   "window": "06:54\u201307:54"
+  },
+  {
+   "hour": 8,
+   "inches": 0.0,
+   "trace": true,
+   "window": "07:54\u201308:54"
+  },
+  {
+   "hour": 9,
+   "inches": 0.04,
+   "trace": false,
+   "window": "08:54\u201309:54"
+  },
+  {
+   "hour": 10,
+   "inches": 0.45,
+   "trace": false,
+   "window": "09:54\u201310:54"
+  },
+  {
+   "hour": 11,
+   "inches": 0.29,
+   "trace": false,
+   "window": "10:54\u201311:54"
+  },
+  {
+   "hour": 12,
+   "inches": 1.49,
+   "trace": false,
+   "window": "11:54\u201312:54"
+  },
+  {
+   "hour": 13,
+   "inches": 2.7,
+   "trace": false,
+   "window": "12:54\u201313:54"
+  },
+  {
+   "hour": 14,
+   "inches": 0.78,
+   "trace": false,
+   "window": "13:54\u201314:54"
+  },
+  {
+   "hour": 15,
+   "inches": 0.38,
+   "trace": false,
+   "window": "14:54\u201315:54"
+  },
+  {
+   "hour": 16,
+   "inches": 0.13,
+   "trace": false,
+   "window": "15:54\u201316:54"
+  },
+  {
+   "hour": 17,
+   "inches": 0.0,
+   "trace": true,
+   "window": "16:54\u201317:54"
+  },
+  {
+   "hour": 18,
+   "inches": 0.03,
+   "trace": false,
+   "window": "17:54\u201318:54"
+  },
+  {
+   "hour": 19,
+   "inches": 0.0,
+   "trace": false,
+   "window": "18:54\u201319:54"
+  },
+  {
+   "hour": 20,
+   "inches": 0.0,
+   "trace": false,
+   "window": "19:54\u201320:54"
+  },
+  {
+   "hour": 21,
+   "inches": 0.0,
+   "trace": true,
+   "window": "20:54\u201321:54"
+  },
+  {
+   "hour": 22,
+   "inches": 0.0,
+   "trace": false,
+   "window": "21:54\u201322:54"
+  },
+  {
+   "hour": 23,
+   "inches": 0.0,
+   "trace": false,
+   "window": "22:54\u201323:54"
+  }
+ ],
+ "reports": [
+  {
+   "time_local": "2014-08-12 12:45",
+   "type": "Flash Flood",
+   "place": "1 ESE Laurel",
+   "county": "Prince Georges",
+   "lat": 39.1,
+   "lon": -76.85,
+   "remark": "Water up to the headlights of cars off bowie road east of route 1. Road closed.",
+   "road_closed": true,
+   "source": "Broadcast Media"
+  },
+  {
+   "time_local": "2014-08-12 13:10",
+   "type": "Flash Flood",
+   "place": "Arbutus",
+   "county": "Baltimore",
+   "lat": 39.24,
+   "lon": -76.69,
+   "remark": "The USGS stream gauge on east branch herbert run exceeded its flood stage of 7 feet. The stream was out of its banks and covering yards near the stream.",
+   "road_closed": false,
+   "source": "Other Federal"
+  },
+  {
+   "time_local": "2014-08-12 13:15",
+   "type": "Flash Flood",
+   "place": "Glen Burnie",
+   "county": "Anne Arundel",
+   "lat": 39.17,
+   "lon": -76.6,
+   "remark": "Dorsey road flooded and closed at sawmill creek between central avenue and route 648.",
+   "road_closed": true,
+   "source": "Dept Of Highways"
+  },
+  {
+   "time_local": "2014-08-12 13:40",
+   "type": "Flood",
+   "place": "Savage",
+   "county": "Howard",
+   "lat": 39.13,
+   "lon": -76.82,
+   "remark": "Fields and trails were flooded near the little patuxent river.",
+   "road_closed": false,
+   "source": "Other Federal"
+  },
+  {
+   "time_local": "2014-08-12 13:45",
+   "type": "Flash Flood",
+   "place": "1 NNW Linthicum",
+   "county": "Anne Arundel",
+   "lat": 39.22,
+   "lon": -76.67,
+   "remark": "Water more than halfway up the wheels of cars in parking lots near linthicum heights.",
+   "road_closed": false,
+   "source": "Broadcast Media"
+  },
+  {
+   "time_local": "2014-08-12 13:47",
+   "type": "Flash Flood",
+   "place": "1 NW BWI Airport",
+   "county": "Anne Arundel",
+   "lat": 39.18,
+   "lon": -76.69,
+   "remark": "Aviation boulevard reported to be flooded and completely closed at the road leading to the MARC and Amtrak station.",
+   "road_closed": true,
+   "source": "Dept Of Highways"
+  },
+  {
+   "time_local": "2014-08-12 13:52",
+   "type": "Flash Flood",
+   "place": "1 ESE Ferndale",
+   "county": "Anne Arundel",
+   "lat": 39.18,
+   "lon": -76.61,
+   "remark": "All lanes of route 3 flooded by sawmill creek and closed near furnace branch road.",
+   "road_closed": true,
+   "source": "Dept Of Highways"
+  },
+  {
+   "time_local": "2014-08-12 13:57",
+   "type": "Flash Flood",
+   "place": "BWI Airport",
+   "county": "Anne Arundel",
+   "lat": 39.17,
+   "lon": -76.67,
+   "remark": "Flooding reported at the maintenance shop at BWI.",
+   "road_closed": false,
+   "source": "Public"
+  },
+  {
+   "time_local": "2014-08-12 13:58",
+   "type": "Flash Flood",
+   "place": "BWI Airport",
+   "county": "Anne Arundel",
+   "lat": 39.17,
+   "lon": -76.67,
+   "remark": "Water flowing over roadways and up to the headlights of cars near BWI airport.",
+   "road_closed": false,
+   "source": "Public"
+  },
+  {
+   "time_local": "2014-08-12 13:58",
+   "type": "Flash Flood",
+   "place": "BWI Airport",
+   "county": "Anne Arundel",
+   "lat": 39.17,
+   "lon": -76.67,
+   "remark": "Water flowing over roadways. Damage to up to 100 vehicles in long term parking lots a and b at BWI airport.",
+   "road_closed": false,
+   "source": "Broadcast Media"
+  },
+  {
+   "time_local": "2014-08-12 13:58",
+   "type": "Flash Flood",
+   "place": "BWI Airport",
+   "county": "Anne Arundel",
+   "lat": 39.17,
+   "lon": -76.67,
+   "remark": "Water flowing over roadways. Water also up to the headlights of cars in parking lots near BWI airport.",
+   "road_closed": false,
+   "source": "Public"
+  },
+  {
+   "time_local": "2014-08-12 14:03",
+   "type": "Flash Flood",
+   "place": "1 NE Morrell Park",
+   "county": "Baltimore City",
+   "lat": 39.27,
+   "lon": -76.65,
+   "remark": "Gwynns falls exceeded its flood stage of 13 feet...with minor overbank flooding occurring for about an hour near the gwynns falls trail.",
+   "road_closed": false,
+   "source": "Other Federal"
+  },
+  {
+   "time_local": "2014-08-12 14:15",
+   "type": "Flash Flood",
+   "place": "1 S Ferndale",
+   "county": "Anne Arundel",
+   "lat": 39.17,
+   "lon": -76.63,
+   "remark": "The stream gauge on sawmill creek exceeded its flood stage of 5 feet. Numerous roads were closed and flooding was reported in two businesses. This is the highest creek level ever recorded at this location. Continuous records date back to 1983.",
+   "road_closed": false,
+   "source": "Other Federal"
+  },
+  {
+   "time_local": "2014-08-12 14:22",
+   "type": "Flash Flood",
+   "place": "3 ESE Brooklyn Park",
+   "county": "Baltimore City",
+   "lat": 39.2,
+   "lon": -76.56,
+   "remark": "Outer loop of the baltimore beltway flooded and completely closed at quarantine road. All traffic diverted.",
+   "road_closed": true,
+   "source": "Dept Of Highways"
+  },
+  {
+   "time_local": "2014-08-12 14:25",
+   "type": "Flash Flood",
+   "place": "Lansdowne",
+   "county": "Baltimore",
+   "lat": 39.24,
+   "lon": -76.66,
+   "remark": "Maryland 295 flooded and closed between the baltimore beltway and westport.",
+   "road_closed": true,
+   "source": "Dept Of Highways"
+  },
+  {
+   "time_local": "2014-08-12 14:29",
+   "type": "Flash Flood",
+   "place": "2 S Fells Point",
+   "county": "Baltimore City",
+   "lat": 39.25,
+   "lon": -76.58,
+   "remark": "Baltimore harbor tunnel closed due to flooding.",
+   "road_closed": true,
+   "source": "Dept Of Highways"
+  },
+  {
+   "time_local": "2014-08-12 14:53",
+   "type": "Flash Flood",
+   "place": "Arbutus",
+   "county": "Baltimore",
+   "lat": 39.24,
+   "lon": -76.69,
+   "remark": "At least six inches of water flowing across benson avenue in arbutus.",
+   "road_closed": false,
+   "source": "Public"
+  },
+  {
+   "time_local": "2014-08-12 17:19",
+   "type": "Flash Flood",
+   "place": "Pasadena",
+   "county": "Anne Arundel",
+   "lat": 39.11,
+   "lon": -76.56,
+   "remark": "Baltimore annapolis boulevard was flooded and closed at the magothy river crossing near pasadena.",
+   "road_closed": true,
+   "source": "Dept Of Highways"
+  }
+ ],
+ "activity_hourly": [
+  {
+   "hour": 0,
+   "event_users": 129,
+   "typical_mean": 115.2,
+   "typical_min": 104,
+   "typical_max": 130
+  },
+  {
+   "hour": 1,
+   "event_users": 66,
+   "typical_mean": 68.8,
+   "typical_min": 44,
+   "typical_max": 84
+  },
+  {
+   "hour": 2,
+   "event_users": 41,
+   "typical_mean": 31.2,
+   "typical_min": 0,
+   "typical_max": 49
+  },
+  {
+   "hour": 3,
+   "event_users": 26,
+   "typical_mean": 21.8,
+   "typical_min": 0,
+   "typical_max": 36
+  },
+  {
+   "hour": 4,
+   "event_users": 29,
+   "typical_mean": 22.8,
+   "typical_min": 0,
+   "typical_max": 35
+  },
+  {
+   "hour": 5,
+   "event_users": 38,
+   "typical_mean": 35.5,
+   "typical_min": 0,
+   "typical_max": 60
+  },
+  {
+   "hour": 6,
+   "event_users": 71,
+   "typical_mean": 63.8,
+   "typical_min": 38,
+   "typical_max": 99
+  },
+  {
+   "hour": 7,
+   "event_users": 109,
+   "typical_mean": 110.5,
+   "typical_min": 100,
+   "typical_max": 125
+  },
+  {
+   "hour": 8,
+   "event_users": 123,
+   "typical_mean": 131.8,
+   "typical_min": 120,
+   "typical_max": 155
+  },
+  {
+   "hour": 9,
+   "event_users": 154,
+   "typical_mean": 148.5,
+   "typical_min": 128,
+   "typical_max": 163
+  },
+  {
+   "hour": 10,
+   "event_users": 193,
+   "typical_mean": 176.8,
+   "typical_min": 169,
+   "typical_max": 192
+  },
+  {
+   "hour": 11,
+   "event_users": 233,
+   "typical_mean": 182.2,
+   "typical_min": 176,
+   "typical_max": 186
+  },
+  {
+   "hour": 12,
+   "event_users": 237,
+   "typical_mean": 188.5,
+   "typical_min": 175,
+   "typical_max": 204
+  },
+  {
+   "hour": 13,
+   "event_users": 222,
+   "typical_mean": 173.0,
+   "typical_min": 165,
+   "typical_max": 184
+  },
+  {
+   "hour": 14,
+   "event_users": 232,
+   "typical_mean": 175.2,
+   "typical_min": 167,
+   "typical_max": 193
+  },
+  {
+   "hour": 15,
+   "event_users": 218,
+   "typical_mean": 169.5,
+   "typical_min": 163,
+   "typical_max": 179
+  },
+  {
+   "hour": 16,
+   "event_users": 208,
+   "typical_mean": 176.5,
+   "typical_min": 166,
+   "typical_max": 188
+  },
+  {
+   "hour": 17,
+   "event_users": 193,
+   "typical_mean": 199.5,
+   "typical_min": 180,
+   "typical_max": 222
+  },
+  {
+   "hour": 18,
+   "event_users": 245,
+   "typical_mean": 235.8,
+   "typical_min": 194,
+   "typical_max": 270
+  },
+  {
+   "hour": 19,
+   "event_users": 232,
+   "typical_mean": 249.2,
+   "typical_min": 238,
+   "typical_max": 281
+  },
+  {
+   "hour": 20,
+   "event_users": 257,
+   "typical_mean": 253.2,
+   "typical_min": 230,
+   "typical_max": 275
+  },
+  {
+   "hour": 21,
+   "event_users": 227,
+   "typical_mean": 257.0,
+   "typical_min": 238,
+   "typical_max": 270
+  },
+  {
+   "hour": 22,
+   "event_users": 207,
+   "typical_mean": 228.2,
+   "typical_min": 200,
+   "typical_max": 281
+  },
+  {
+   "hour": 23,
+   "event_users": 181,
+   "typical_mean": 165.0,
+   "typical_min": 141,
+   "typical_max": 185
+  }
+ ],
+ "mobility_daily": [
+  {
+   "date": "2014-07-28",
+   "active_users": 1390,
+   "mean_rg_km": 0.779
+  },
+  {
+   "date": "2014-07-29",
+   "active_users": 1584,
+   "mean_rg_km": 0.67
+  },
+  {
+   "date": "2014-07-30",
+   "active_users": 1596,
+   "mean_rg_km": 0.746
+  },
+  {
+   "date": "2014-07-31",
+   "active_users": 1615,
+   "mean_rg_km": 0.686
+  },
+  {
+   "date": "2014-08-01",
+   "active_users": 1868,
+   "mean_rg_km": 0.715
+  },
+  {
+   "date": "2014-08-02",
+   "active_users": 1811,
+   "mean_rg_km": 0.731
+  },
+  {
+   "date": "2014-08-03",
+   "active_users": 1793,
+   "mean_rg_km": 0.625
+  },
+  {
+   "date": "2014-08-04",
+   "active_users": 1467,
+   "mean_rg_km": 0.674
+  },
+  {
+   "date": "2014-08-05",
+   "active_users": 1434,
+   "mean_rg_km": 0.71
+  },
+  {
+   "date": "2014-08-06",
+   "active_users": 1392,
+   "mean_rg_km": 0.771
+  },
+  {
+   "date": "2014-08-07",
+   "active_users": 1821,
+   "mean_rg_km": 0.777
+  },
+  {
+   "date": "2014-08-08",
+   "active_users": 2013,
+   "mean_rg_km": 0.782
+  },
+  {
+   "date": "2014-08-09",
+   "active_users": 2277,
+   "mean_rg_km": 0.753
+  },
+  {
+   "date": "2014-08-10",
+   "active_users": 2055,
+   "mean_rg_km": 0.648
+  },
+  {
+   "date": "2014-08-11",
+   "active_users": 1712,
+   "mean_rg_km": 0.693
+  },
+  {
+   "date": "2014-08-12",
+   "active_users": 1541,
+   "mean_rg_km": 0.647
+  },
+  {
+   "date": "2014-08-13",
+   "active_users": 1697,
+   "mean_rg_km": 0.671
+  },
+  {
+   "date": "2014-08-14",
+   "active_users": 1458,
+   "mean_rg_km": 0.658
+  },
+  {
+   "date": "2014-08-15",
+   "active_users": 1500,
+   "mean_rg_km": 0.788
+  },
+  {
+   "date": "2014-08-16",
+   "active_users": 1536,
+   "mean_rg_km": 0.802
+  },
+  {
+   "date": "2014-08-17",
+   "active_users": 1506,
+   "mean_rg_km": 0.636
+  },
+  {
+   "date": "2014-08-18",
+   "active_users": 1392,
+   "mean_rg_km": 0.682
+  },
+  {
+   "date": "2014-08-19",
+   "active_users": 1399,
+   "mean_rg_km": 0.671
+  },
+  {
+   "date": "2014-08-20",
+   "active_users": 1421,
+   "mean_rg_km": 0.682
+  },
+  {
+   "date": "2014-08-21",
+   "active_users": 1410,
+   "mean_rg_km": 0.707
+  },
+  {
+   "date": "2014-08-22",
+   "active_users": 1386,
+   "mean_rg_km": 0.831
+  },
+  {
+   "date": "2014-08-23",
+   "active_users": 1615,
+   "mean_rg_km": 0.749
+  },
+  {
+   "date": "2014-08-24",
+   "active_users": 1546,
+   "mean_rg_km": 0.691
+  },
+  {
+   "date": "2014-08-25",
+   "active_users": 1578,
+   "mean_rg_km": 0.751
+  },
+  {
+   "date": "2014-08-26",
+   "active_users": 1565,
+   "mean_rg_km": 0.759
+  },
+  {
+   "date": "2014-08-27",
+   "active_users": 1554,
+   "mean_rg_km": 0.833
+  }
+ ],
+ "activity_grid": {
+  "cell_deg": [
+   0.004,
+   0.005
+  ],
+  "min_users_period": 10,
+  "min_users_day": 5,
+  "days": 31,
+  "cells": [
+   {
+    "lat": 39.198,
+    "lon": -76.7025,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.6975,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.6875,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.6825,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.6425,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.6275,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.6225,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.6125,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.198,
+    "lon": -76.5975,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6975,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6925,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6875,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6825,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6775,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6575,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6525,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6425,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6375,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6325,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6275,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6225,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6175,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.6125,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.202,
+    "lon": -76.5575,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6925,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6875,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6825,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6775,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6525,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6425,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6325,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6275,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6175,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.6125,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.206,
+    "lon": -76.5975,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.21,
+    "lon": -76.6825,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.21,
+    "lon": -76.6775,
+    "users": 72,
+    "event_users": null
+   },
+   {
+    "lat": 39.21,
+    "lon": -76.6475,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.21,
+    "lon": -76.6425,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.214,
+    "lon": -76.6775,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.214,
+    "lon": -76.6725,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.214,
+    "lon": -76.6525,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.214,
+    "lon": -76.6475,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.214,
+    "lon": -76.6425,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.214,
+    "lon": -76.6175,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.214,
+    "lon": -76.6125,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.7025,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.6675,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.6625,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.6575,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.6525,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.6425,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.6175,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.218,
+    "lon": -76.6125,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.222,
+    "lon": -76.6625,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.222,
+    "lon": -76.6575,
+    "users": 41,
+    "event_users": null
+   },
+   {
+    "lat": 39.222,
+    "lon": -76.6525,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.222,
+    "lon": -76.6425,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.222,
+    "lon": -76.6125,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.222,
+    "lon": -76.5875,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.7025,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.6675,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.6625,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.6575,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.6525,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.6225,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.6125,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.226,
+    "lon": -76.5875,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.6625,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.6525,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.6425,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.6375,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.6225,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.6025,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.5975,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.23,
+    "lon": -76.5925,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.7125,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.7075,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6775,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6675,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6525,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6475,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6425,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6325,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6225,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6175,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6125,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6075,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.6025,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.234,
+    "lon": -76.5975,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.7075,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.7025,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6975,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6925,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6675,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6525,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6475,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6175,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6125,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6075,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.238,
+    "lon": -76.6025,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.7025,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6975,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6925,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6775,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6725,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6675,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6525,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6475,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6325,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6275,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6175,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6125,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6075,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.6025,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.5975,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.5925,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.5875,
+    "users": 55,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.5825,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.242,
+    "lon": -76.5775,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.7025,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6975,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6925,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6875,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6775,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6725,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6525,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6475,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6325,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6275,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.6225,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.246,
+    "lon": -76.5775,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.7075,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6975,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6925,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6875,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6825,
+    "users": 46,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6775,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6725,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6675,
+    "users": 64,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6475,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6425,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6375,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6325,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6275,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6225,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6175,
+    "users": 20,
+    "event_users": 6
+   },
+   {
+    "lat": 39.25,
+    "lon": -76.6125,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.7125,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.7075,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.7025,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6975,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6925,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6875,
+    "users": 39,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6825,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6775,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6675,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6575,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6525,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6475,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6425,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6375,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6325,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6225,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6175,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.6125,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.254,
+    "lon": -76.5725,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.7125,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.7075,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.7025,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6975,
+    "users": 41,
+    "event_users": 5
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6925,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6875,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6775,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6725,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6625,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6425,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6375,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6325,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.258,
+    "lon": -76.6075,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.7075,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.7025,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6975,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6775,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6725,
+    "users": 47,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6675,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6425,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6375,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6325,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.6125,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.5975,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.5775,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.262,
+    "lon": -76.5675,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.7125,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.7075,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.7025,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6975,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6925,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6875,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6775,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6725,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6675,
+    "users": 41,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6625,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6525,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6475,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6375,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6325,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6275,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6225,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6175,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6125,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6075,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.6025,
+    "users": 42,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.5975,
+    "users": 62,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.5925,
+    "users": 61,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.5875,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.5825,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.5775,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.5675,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.266,
+    "lon": -76.5625,
+    "users": 113,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6925,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6875,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6825,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6775,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6725,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6675,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6625,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6575,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6525,
+    "users": 41,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6475,
+    "users": 74,
+    "event_users": 6
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6425,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6375,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6325,
+    "users": 81,
+    "event_users": 5
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6275,
+    "users": 123,
+    "event_users": 8
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6225,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6175,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6125,
+    "users": 67,
+    "event_users": 5
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6075,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.6025,
+    "users": 99,
+    "event_users": 5
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.5975,
+    "users": 87,
+    "event_users": 5
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.5925,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.5875,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.5625,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.27,
+    "lon": -76.5575,
+    "users": 58,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6975,
+    "users": 19,
+    "event_users": 6
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6925,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6875,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6775,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6725,
+    "users": 40,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6675,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6575,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6475,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6425,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6325,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6275,
+    "users": 152,
+    "event_users": 5
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6225,
+    "users": 50,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6175,
+    "users": 73,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6125,
+    "users": 108,
+    "event_users": 11
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6075,
+    "users": 46,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.6025,
+    "users": 65,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5975,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5925,
+    "users": 49,
+    "event_users": 5
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5825,
+    "users": 57,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5675,
+    "users": 53,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5625,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5575,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5525,
+    "users": 50,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5425,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5375,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5325,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.274,
+    "lon": -76.5275,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.7075,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.7025,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6975,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6875,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6825,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6725,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6625,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6575,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6475,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6425,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6375,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6325,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6275,
+    "users": 71,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6225,
+    "users": 557,
+    "event_users": 5
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6175,
+    "users": 136,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6125,
+    "users": 321,
+    "event_users": 14
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6075,
+    "users": 60,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.6025,
+    "users": 59,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5975,
+    "users": 41,
+    "event_users": 8
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5925,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5775,
+    "users": 81,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5725,
+    "users": 78,
+    "event_users": 6
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5675,
+    "users": 136,
+    "event_users": 10
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5625,
+    "users": 49,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5575,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5525,
+    "users": 57,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5475,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5375,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.278,
+    "lon": -76.5325,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.7075,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.7025,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6975,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6925,
+    "users": 22,
+    "event_users": 5
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6875,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6825,
+    "users": 30,
+    "event_users": 5
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6725,
+    "users": 47,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6625,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6575,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6525,
+    "users": 45,
+    "event_users": 6
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6475,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6425,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6375,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6325,
+    "users": 44,
+    "event_users": 5
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6275,
+    "users": 74,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6225,
+    "users": 1520,
+    "event_users": 13
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6175,
+    "users": 117,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6125,
+    "users": 192,
+    "event_users": 6
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6075,
+    "users": 170,
+    "event_users": 6
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.6025,
+    "users": 580,
+    "event_users": 46
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5975,
+    "users": 179,
+    "event_users": 5
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5925,
+    "users": 510,
+    "event_users": 11
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5875,
+    "users": 76,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5825,
+    "users": 108,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5775,
+    "users": 155,
+    "event_users": 8
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5725,
+    "users": 84,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5675,
+    "users": 65,
+    "event_users": 8
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5625,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5575,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5525,
+    "users": 47,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5475,
+    "users": 54,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5425,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5375,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.282,
+    "lon": -76.5325,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.7125,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6925,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6875,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6825,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6775,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6725,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6675,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6625,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6575,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6525,
+    "users": 29,
+    "event_users": 5
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6475,
+    "users": 45,
+    "event_users": 6
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6425,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6375,
+    "users": 57,
+    "event_users": 6
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6325,
+    "users": 54,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6275,
+    "users": 163,
+    "event_users": 7
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6225,
+    "users": 1349,
+    "event_users": 15
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6175,
+    "users": 798,
+    "event_users": 23
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6125,
+    "users": 968,
+    "event_users": 24
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6075,
+    "users": 808,
+    "event_users": 39
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.6025,
+    "users": 322,
+    "event_users": 17
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5975,
+    "users": 136,
+    "event_users": 7
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5925,
+    "users": 97,
+    "event_users": 12
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5875,
+    "users": 129,
+    "event_users": 10
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5825,
+    "users": 51,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5775,
+    "users": 57,
+    "event_users": 5
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5725,
+    "users": 71,
+    "event_users": 5
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5675,
+    "users": 47,
+    "event_users": 6
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5625,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5575,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5525,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5475,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5425,
+    "users": 67,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5375,
+    "users": 60,
+    "event_users": null
+   },
+   {
+    "lat": 39.286,
+    "lon": -76.5325,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6875,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6775,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6725,
+    "users": 39,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6625,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6575,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6525,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6475,
+    "users": 50,
+    "event_users": 5
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6425,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6375,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6325,
+    "users": 48,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6275,
+    "users": 157,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6225,
+    "users": 270,
+    "event_users": 10
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6175,
+    "users": 396,
+    "event_users": 20
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6125,
+    "users": 492,
+    "event_users": 36
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6075,
+    "users": 432,
+    "event_users": 35
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.6025,
+    "users": 98,
+    "event_users": 6
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5975,
+    "users": 68,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5925,
+    "users": 59,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5875,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5825,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5775,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5725,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5675,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5625,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5575,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5525,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5475,
+    "users": 41,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5425,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5375,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.29,
+    "lon": -76.5325,
+    "users": 42,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.7075,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.7025,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6975,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6925,
+    "users": 48,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6875,
+    "users": 47,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6825,
+    "users": 46,
+    "event_users": 5
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6775,
+    "users": 53,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6725,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6675,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6625,
+    "users": 43,
+    "event_users": 5
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6575,
+    "users": 52,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6525,
+    "users": 78,
+    "event_users": 5
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6475,
+    "users": 56,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6425,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6375,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6325,
+    "users": 52,
+    "event_users": 5
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6275,
+    "users": 81,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6225,
+    "users": 133,
+    "event_users": 5
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6175,
+    "users": 213,
+    "event_users": 8
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6125,
+    "users": 214,
+    "event_users": 11
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6075,
+    "users": 98,
+    "event_users": 6
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.6025,
+    "users": 54,
+    "event_users": 5
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5975,
+    "users": 78,
+    "event_users": 7
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5925,
+    "users": 90,
+    "event_users": 8
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5875,
+    "users": 58,
+    "event_users": 7
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5825,
+    "users": 69,
+    "event_users": 9
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5775,
+    "users": 76,
+    "event_users": 8
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5725,
+    "users": 68,
+    "event_users": 9
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5675,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5625,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5525,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.294,
+    "lon": -76.5325,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.7075,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6875,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6825,
+    "users": 20,
+    "event_users": 6
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6775,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6725,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6675,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6625,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6575,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6525,
+    "users": 40,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6475,
+    "users": 45,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6425,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6375,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6325,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6275,
+    "users": 69,
+    "event_users": 8
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6225,
+    "users": 73,
+    "event_users": 8
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6175,
+    "users": 192,
+    "event_users": 14
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6125,
+    "users": 159,
+    "event_users": 10
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6075,
+    "users": 60,
+    "event_users": 5
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.6025,
+    "users": 72,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5975,
+    "users": 71,
+    "event_users": 5
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5925,
+    "users": 174,
+    "event_users": 8
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5875,
+    "users": 62,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5825,
+    "users": 53,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5775,
+    "users": 62,
+    "event_users": 5
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5725,
+    "users": 49,
+    "event_users": 6
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5675,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5625,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5575,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5525,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5475,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5325,
+    "users": 46,
+    "event_users": null
+   },
+   {
+    "lat": 39.298,
+    "lon": -76.5275,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.7125,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6725,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6675,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6625,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6575,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6525,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6475,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6425,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6375,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6325,
+    "users": 46,
+    "event_users": 5
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6275,
+    "users": 42,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6225,
+    "users": 91,
+    "event_users": 5
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6175,
+    "users": 225,
+    "event_users": 12
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6125,
+    "users": 83,
+    "event_users": 6
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6075,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.6025,
+    "users": 52,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5975,
+    "users": 48,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5925,
+    "users": 46,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5875,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5825,
+    "users": 43,
+    "event_users": 6
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5775,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5625,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5525,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5475,
+    "users": 60,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5425,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.302,
+    "lon": -76.5325,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.7075,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6725,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6675,
+    "users": 36,
+    "event_users": 5
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6625,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6575,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6525,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6475,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6425,
+    "users": 43,
+    "event_users": 5
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6375,
+    "users": 76,
+    "event_users": 10
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6325,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6275,
+    "users": 49,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6225,
+    "users": 69,
+    "event_users": 5
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6175,
+    "users": 303,
+    "event_users": 13
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6125,
+    "users": 129,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6075,
+    "users": 41,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.6025,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5975,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5925,
+    "users": 45,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5875,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5825,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5775,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5725,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5575,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5475,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5425,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5375,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.306,
+    "lon": -76.5325,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.7075,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.7025,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6825,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6775,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6725,
+    "users": 51,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6675,
+    "users": 65,
+    "event_users": 10
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6625,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6575,
+    "users": 45,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6525,
+    "users": 50,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6475,
+    "users": 65,
+    "event_users": 5
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6425,
+    "users": 59,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6375,
+    "users": 66,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6325,
+    "users": 63,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6275,
+    "users": 48,
+    "event_users": 5
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6225,
+    "users": 83,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6175,
+    "users": 271,
+    "event_users": 11
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6125,
+    "users": 81,
+    "event_users": 5
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6075,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.6025,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5975,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5925,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5875,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5825,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5775,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5725,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5675,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5625,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5575,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5425,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5375,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5325,
+    "users": 56,
+    "event_users": 6
+   },
+   {
+    "lat": 39.31,
+    "lon": -76.5275,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.7075,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.7025,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6875,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6825,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6775,
+    "users": 28,
+    "event_users": 5
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6725,
+    "users": 46,
+    "event_users": 8
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6675,
+    "users": 29,
+    "event_users": 7
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6625,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6575,
+    "users": 60,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6525,
+    "users": 62,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6475,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6425,
+    "users": 58,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6375,
+    "users": 41,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6325,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6275,
+    "users": 48,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6225,
+    "users": 45,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6175,
+    "users": 120,
+    "event_users": 5
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6125,
+    "users": 70,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6075,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.6025,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5975,
+    "users": 64,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5925,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5875,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5825,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5725,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5675,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5625,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5425,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5375,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.314,
+    "lon": -76.5325,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6825,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6775,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6725,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6675,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6575,
+    "users": 74,
+    "event_users": 7
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6525,
+    "users": 119,
+    "event_users": 6
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6475,
+    "users": 49,
+    "event_users": 5
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6425,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6375,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6325,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6275,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6225,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6175,
+    "users": 183,
+    "event_users": 12
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6125,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6075,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.6025,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5975,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5925,
+    "users": 40,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5875,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5775,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5725,
+    "users": 37,
+    "event_users": 6
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5675,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5625,
+    "users": 26,
+    "event_users": 5
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5575,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5525,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5475,
+    "users": 23,
+    "event_users": 5
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5425,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5375,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.318,
+    "lon": -76.5325,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.7025,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6825,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6775,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6725,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6675,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6625,
+    "users": 59,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6575,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6525,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6475,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6325,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6275,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6225,
+    "users": 74,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6175,
+    "users": 70,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6125,
+    "users": 70,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6075,
+    "users": 47,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.6025,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5975,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5925,
+    "users": 42,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5875,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5775,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5725,
+    "users": 70,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5675,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5625,
+    "users": 24,
+    "event_users": 5
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5575,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5525,
+    "users": 39,
+    "event_users": 7
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5475,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5425,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5375,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.322,
+    "lon": -76.5325,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6875,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6825,
+    "users": 42,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6775,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6725,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6675,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6575,
+    "users": 30,
+    "event_users": 5
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6475,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6425,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6375,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6325,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6275,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6225,
+    "users": 60,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6175,
+    "users": 123,
+    "event_users": 6
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6125,
+    "users": 59,
+    "event_users": 5
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6075,
+    "users": 79,
+    "event_users": 7
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.6025,
+    "users": 39,
+    "event_users": 5
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5975,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5925,
+    "users": 58,
+    "event_users": 8
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5875,
+    "users": 35,
+    "event_users": 5
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5825,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5775,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5725,
+    "users": 33,
+    "event_users": 6
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5675,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5625,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5575,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5525,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5475,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5425,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5375,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.326,
+    "lon": -76.5325,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.7075,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.7025,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6975,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6925,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6875,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6825,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6675,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6625,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6575,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6525,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6475,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6425,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6375,
+    "users": 33,
+    "event_users": 6
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6325,
+    "users": 160,
+    "event_users": 8
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6275,
+    "users": 59,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6225,
+    "users": 72,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6175,
+    "users": 128,
+    "event_users": 6
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6125,
+    "users": 59,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6075,
+    "users": 71,
+    "event_users": 5
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.6025,
+    "users": 40,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5975,
+    "users": 53,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5925,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5875,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5825,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5775,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5675,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5625,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5575,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5525,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5475,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5425,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5375,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5325,
+    "users": 37,
+    "event_users": null
+   },
+   {
+    "lat": 39.33,
+    "lon": -76.5275,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.7075,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.7025,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6975,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6925,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6875,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6825,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6775,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6725,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6675,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6625,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6575,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6525,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6475,
+    "users": 68,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6425,
+    "users": 76,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6375,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6325,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6275,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6225,
+    "users": 45,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6175,
+    "users": 40,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6125,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6075,
+    "users": 45,
+    "event_users": 5
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.6025,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5975,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5925,
+    "users": 31,
+    "event_users": 6
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5875,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5825,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5775,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5625,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5575,
+    "users": 39,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5475,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5425,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.334,
+    "lon": -76.5325,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.7075,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.7025,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6975,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6825,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6775,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6725,
+    "users": 50,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6675,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6625,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6475,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6425,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6375,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6325,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6275,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6225,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6175,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6075,
+    "users": 46,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.6025,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5975,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5925,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5875,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5825,
+    "users": 60,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5775,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5725,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5675,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5575,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5525,
+    "users": 56,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5475,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.338,
+    "lon": -76.5325,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.7075,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6975,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6925,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6875,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6825,
+    "users": 49,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6775,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6725,
+    "users": 27,
+    "event_users": 7
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6675,
+    "users": 42,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6625,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6575,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6525,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6475,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6425,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6375,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6325,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6075,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.6025,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5975,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5925,
+    "users": 73,
+    "event_users": 9
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5875,
+    "users": 108,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5825,
+    "users": 69,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5725,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5675,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5625,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5575,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5525,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5475,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5425,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5375,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.342,
+    "lon": -76.5325,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.7075,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.7025,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6975,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6925,
+    "users": 80,
+    "event_users": 6
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6875,
+    "users": 70,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6825,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6775,
+    "users": 31,
+    "event_users": 6
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6725,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6575,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6525,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6475,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6425,
+    "users": 50,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6375,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6325,
+    "users": 53,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6275,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6225,
+    "users": 51,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6175,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6125,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6075,
+    "users": 45,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.6025,
+    "users": 36,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5975,
+    "users": 41,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5925,
+    "users": 65,
+    "event_users": 5
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5875,
+    "users": 92,
+    "event_users": 6
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5825,
+    "users": 110,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5725,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5675,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5575,
+    "users": 23,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5525,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5475,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.346,
+    "lon": -76.5425,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.7075,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.7025,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6975,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6925,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6875,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6825,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6775,
+    "users": 44,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6725,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6675,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6625,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6575,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6475,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6375,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6225,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6175,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6125,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6075,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.6025,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5975,
+    "users": 45,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5925,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5875,
+    "users": 32,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5825,
+    "users": 51,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5675,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5625,
+    "users": 46,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5575,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5475,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5375,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.35,
+    "lon": -76.5325,
+    "users": 19,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.7075,
+    "users": 39,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.7025,
+    "users": 43,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6975,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6875,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6825,
+    "users": 48,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6775,
+    "users": 144,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6725,
+    "users": 310,
+    "event_users": 6
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6675,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6625,
+    "users": 56,
+    "event_users": 7
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6475,
+    "users": 27,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6275,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6225,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6125,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6075,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.6025,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5975,
+    "users": 30,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5925,
+    "users": 35,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5875,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5825,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5775,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5725,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5675,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5625,
+    "users": 40,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5575,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5525,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5475,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5375,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5325,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.354,
+    "lon": -76.5275,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.7075,
+    "users": 48,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.7025,
+    "users": 39,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.6775,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.6725,
+    "users": 40,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.6325,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.6125,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.6075,
+    "users": 39,
+    "event_users": 5
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.6025,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5975,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5925,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5875,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5825,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5775,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5725,
+    "users": 28,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5675,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5575,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5425,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5375,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.358,
+    "lon": -76.5325,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.7125,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.7075,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.7025,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6975,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6875,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6525,
+    "users": 25,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6475,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6375,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6325,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6275,
+    "users": 17,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6225,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6125,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6075,
+    "users": 49,
+    "event_users": 5
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.6025,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5975,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5925,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5875,
+    "users": 34,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5825,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5675,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5575,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5525,
+    "users": 29,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5475,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.362,
+    "lon": -76.5425,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.7075,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.7025,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.6525,
+    "users": 58,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.6475,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.6175,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.6125,
+    "users": 56,
+    "event_users": 5
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.6075,
+    "users": 91,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.6025,
+    "users": 33,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5975,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5925,
+    "users": 26,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5875,
+    "users": 46,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5825,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5775,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5725,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5675,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5625,
+    "users": 24,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5575,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5525,
+    "users": 22,
+    "event_users": null
+   },
+   {
+    "lat": 39.366,
+    "lon": -76.5475,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.6875,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.6575,
+    "users": 10,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.6525,
+    "users": 38,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.6475,
+    "users": 14,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.6125,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.6075,
+    "users": 20,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.6025,
+    "users": 13,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5925,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5875,
+    "users": 12,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5825,
+    "users": 31,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5725,
+    "users": 16,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5675,
+    "users": 50,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5625,
+    "users": 18,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5575,
+    "users": 11,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5525,
+    "users": 15,
+    "event_users": null
+   },
+   {
+    "lat": 39.37,
+    "lon": -76.5475,
+    "users": 21,
+    "event_users": null
+   },
+   {
+    "lat": 39.374,
+    "lon": -76.5425,
+    "users": 13,
+    "event_users": null
+   }
+  ],
+  "suppressed_cells": 602
+ }
+}

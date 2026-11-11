@@ -322,7 +322,8 @@ def run_triage(
             stations_by_id[sid]
         )
 
-        route = get_route(origin, pickup)
+        # explain=True also returns per-vertex driving times, so the dashboard can animate the unit.
+        route = get_route(origin, pickup, explain=True)
 
         dispatch = minutes(unit.get("dispatch_min"))
         arrival = dispatch + route["travel_minutes"]
@@ -335,7 +336,8 @@ def run_triage(
             "start_min": round(dispatch, 4),
             "end_min": round(arrival, 4),
             "distance_miles": route["distance_miles"],
-            "coordinates": route["coordinates"]
+            "coordinates": route["coordinates"],
+            "vertex_minutes": route.get("vertex_minutes")
         })
 
         log(dispatch, "UNIT_DISPATCHED", unit_id=uid)

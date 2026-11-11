@@ -42,6 +42,64 @@ input,textarea{font:inherit;color:var(--ink);background:var(--panel);border:1px 
 #splitter:hover::after,#splitter.drag::after{background:var(--blue)}
 body.resizing{cursor:col-resize;user-select:none}
 #scenarioEditor,#simAssignments,#ai-paramTable,#ai-planOut{overflow-x:auto}
+/* 2014 flood case tab: chart colours validated (dataviz validator) on the light and dark panel surfaces */
+:root{--viz-rain:#2a78d6;--viz-mob:#eb6834;--viz-closed:#d1343e;--viz-flood:#2a78d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--viz-rain:#3987e5;--viz-mob:#d95926;--viz-closed:#e66767;--viz-flood:#3987e5}}
+:root[data-theme="dark"]{--viz-rain:#3987e5;--viz-mob:#d95926;--viz-closed:#e66767;--viz-flood:#3987e5}
+.fl-lead{font-size:12.5px;margin:0 0 12px;color:var(--ink)}
+.fl-stats strong{font-size:19px}
+.fl-chart{position:relative}.fl-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.fl-chart text{font-size:10px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.fl-chart .lab{fill:var(--ink);font-weight:650}
+.fl-chart .grid{stroke:var(--border);stroke-width:1}
+.fl-tip{position:absolute;pointer-events:none;z-index:5;background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:7px;padding:6px 8px;font-size:11px;line-height:1.35;white-space:nowrap;display:none}
+.fl-tip b{display:block;font-size:11px}
+.fl-key{display:block;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 1px #000}
+.fl-key.closed{background:var(--viz-closed);position:relative}.fl-key.closed::after{content:'';position:absolute;left:2px;right:2px;top:50%;height:2px;margin-top:-1px;background:#fff}
+.fl-key.flood{background:var(--viz-flood)}
+.fl-reports{list-style:none;padding:0;margin:0;font-size:12px}
+.fl-reports li{display:grid;grid-template-columns:60px 14px 1fr;gap:6px;padding:7px 4px;border-bottom:1px solid var(--border);cursor:pointer;border-radius:6px}
+.fl-reports li:hover,.fl-reports li:focus{background:var(--soft);outline:none}
+.fl-reports .t{font-variant-numeric:tabular-nums;color:var(--muted)}.fl-reports .fl-key{margin-top:3px;width:10px;height:10px}
+.fl-reports .p{font-weight:650}.fl-reports .r{color:var(--muted);font-size:11.5px}
+.fl-sources{margin:0;padding-left:16px;font-size:11.5px}.fl-sources a{color:var(--blue)}
+/* Activity grid: one-hue orange ramps, validated (--ordinal) separately for each mode */
+:root{--heat-1:#f4a067;--heat-2:#ec7a3e;--heat-3:#d65d25;--heat-4:#ad4318;--heat-5:#7f2e0e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--heat-1:#fbd3b0;--heat-2:#f6a26b;--heat-3:#eb6834;--heat-4:#c24a1c;--heat-5:#9c3914}}
+:root[data-theme="dark"]{--heat-1:#fbd3b0;--heat-2:#f6a26b;--heat-3:#eb6834;--heat-4:#c24a1c;--heat-5:#9c3914}
+.heat-1{fill:var(--heat-1)}.heat-2{fill:var(--heat-2)}.heat-3{fill:var(--heat-3)}.heat-4{fill:var(--heat-4)}.heat-5{fill:var(--heat-5)}
+.fl-heatkey{display:flex;gap:2px;margin:10px 0 4px}.fl-heatkey div{flex:1;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.fl-heatkey i{display:block;height:10px;border-radius:2px;margin-bottom:3px}
+.fl-apply{background:var(--soft)}
+.fl-switch{display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:start;font-size:13px;margin-bottom:6px;cursor:pointer}
+.fl-switch input{margin-top:3px}
+.fl-banner{margin:12px 23px 0;padding:10px 12px;border-radius:9px;background:var(--soft);color:var(--soft-ink);font-size:12px;border:1px solid var(--border)}
+.fl-banner a{color:var(--blue);cursor:pointer;font-weight:650}
+.fl-pin.later{opacity:.45}
+/* Why panel and what-if road blocks (sim_explain.js) */
+.why h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+.why .now{font-size:13px;color:var(--ink);background:var(--soft);border-radius:8px;padding:9px 11px}
+.why .now b{color:var(--ink)}
+.why .tbl tr.chosen td{font-weight:650;color:var(--ink)}
+.why .tbl tr.chosen td:first-child::before{content:"✓ ";color:var(--ok)}
+.why .tbl td{color:var(--muted)}
+.why .callout{border-left:3px solid var(--viz-closed);padding:6px 10px;margin:8px 0;color:var(--ink);background:var(--soft);border-radius:0 6px 6px 0}
+.why .rule{margin-top:10px}
+.why ul{margin:4px 0;padding-left:16px}
+.rb-list{list-style:none;padding:0;margin:10px 0 0;font-size:12px}
+.rb-list li{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)}
+.rb-list li span{flex:1}.rb-list button{border:0;background:none;color:var(--bad);font-size:15px;cursor:pointer}
+.rb-pin{width:16px;height:16px;border-radius:3px;background:#111;border:2px solid #fff;box-shadow:0 0 2px #000;position:relative}
+.rb-pin::after{content:'';position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;background:#fff}
+.rb-pin.pending{opacity:.45}
+#map.rb-picking{cursor:crosshair}
+.fire-pin{background:#b91c1c;color:#fff;font:700 10px/16px system-ui,sans-serif;text-align:center;border:2px solid #fff;border-radius:4px;box-shadow:0 1px 4px #0006;height:20px}
+.fire-pin.cmd{border-color:#facc15}
+.amb-pin{background:#2563eb;color:#fff;font:700 10px/16px system-ui,sans-serif;text-align:center;border:2px solid #fff;border-radius:10px;box-shadow:0 1px 4px #0006;height:20px;cursor:pointer}
+.amb-pin.sel{box-shadow:0 0 0 3px #111,0 1px 4px #0006}
+.map-hide-main .leaflet-simBlocks-pane{display:none}
+.fl-pin{width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 2px #000;position:relative}
+.fl-pin.closed::after{content:'';position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;background:#fff}
 .tbl{min-width:100%}
 @media(max-width:1100px){.section{padding:16px 18px}.brand{padding:18px 18px 16px}.map-footer{display:none}}
 @media(max-width:750px){#app{grid-template-columns:1fr;grid-template-rows:minmax(0,52dvh) minmax(300px,1fr);height:100dvh}#splitter{display:none}.map-title{display:none}#tabs button{padding:10px 2px;font-size:11.5px}aside{border-right:0;border-bottom:1px solid var(--border)}.brand{padding:15px 20px}.section{padding:12px 20px}.map-title{top:12px;left:12px}.map-footer{bottom:16px;left:12px}}
@@ -56,6 +114,7 @@ body.resizing{cursor:col-resize;user-select:none}
   <button data-tab="scenario">Scenario</button>
   <button data-tab="mapcfg">Map &amp; routing</button>
   <button data-tab="ai">AI simulation</button>
+  <button data-tab="flood">Flood</button>
 </nav>
 
 <!-- ================= Scenario ================= -->
@@ -131,6 +190,7 @@ body.resizing{cursor:col-resize;user-select:none}
 
 <!-- ================= Simulation ================= -->
 <div class="pane on" id="pane-sim">
+<div class="fl-banner" id="floodBanner" hidden></div>
 <section class="section"><h2>Simulation playback</h2>
 <div class="row"><label for="simulationMode">Simulation mode</label></div>
 <select id="simulationMode"><option value="static">Static baseline</option><option value="dynamic" selected>Dynamic Gurobi + rolling triage</option></select>
@@ -145,6 +205,15 @@ body.resizing{cursor:col-resize;user-select:none}
 <button class="button" id="simEnd">Show final results</button>
 <div id="simStatus" class="status">Run a simulation to load the event timeline.</div>
 <ul id="simLog" class="steplog"></ul>
+</section>
+<section class="section"><h2>Why is the ambulance doing this?</h2>
+<div class="row"><label for="whyAmb">Ambulance (or click one on the map)</label><select id="whyAmb" style="width:110px" disabled></select></div>
+<div id="simWhy" class="why small">Run a simulation, then play or drag the timeline.</div></section>
+<section class="section"><h2>What if a road is blocked?</h2>
+  <p class="small">Add a block, click a road on the map, and run again. From the block's minute, an ambulance already heading through it re-routes from where it is, and later trips use the new travel times. Static mode applies every block from minute 0.</p>
+  <div class="row"><label for="rbMinute">Block starts at minute</label><input id="rbMinute" type="number" min="0" max="240" step="1" value="0" style="width:80px;padding:6px 8px"></div>
+  <div class="buttons"><button class="button" id="rbAdd">Add road block</button><button class="button" id="rbNow" title="Use the playback clock as the start minute">Use playback time</button></div>
+  <ol class="rb-list" id="rbList"></ol>
 </section>
 <section class="section"><h2>Results</h2><div id="simAssignments" class="small">No run yet.</div></section>
 <section class="section"><h2>Scenario overview</h2><div class="metrics"><div class="metric"><strong>01</strong><span>Active MCI</span></div><div class="metric"><strong>01</strong><span>Example ambulance</span></div><div class="metric"><strong id="travel">—</strong><span>Station → Pickup (min)</span></div><div class="metric"><strong id="distance">—</strong><span>Pickup → Hospital (min)</span></div></div><p class="small">Ambulance origin, pickup and hospital entrance are illustrative; verify vehicle access points. Dynamic mode uses rolling-triage Gurobi dispatch; static mode retains the original baseline.</p></section>
@@ -214,6 +283,9 @@ body.resizing{cursor:col-resize;user-select:none}
     <span><i class="dot" style="background:#9f1d2b"></i>Hospital: PARC / trauma I</span>
     <span><i class="dot" style="background:#e5484d"></i>Hospital: trauma II</span>
     <span><i class="dot" style="background:#f59e0b"></i>Hospital: other</span>
+    <span><i class="dot" style="background:#b91c1c;border-radius:2px"></i>Fire engine (gold edge = incident command)</span>
+    <span><i class="dot" style="background:#fff;border:2px solid #7c3aed"></i>Reference: academic medical center</span>
+    <span><i class="dot" style="background:#fff;border:2px solid #dc2626"></i>Reference: community hospital</span>
   </div>
 </section>
 
@@ -299,6 +371,55 @@ body.resizing{cursor:col-resize;user-select:none}
 </section>
 </div>
 
+<!-- ================= 2014 flood case (real event; display only, not yet a simulation input) ================= -->
+<div class="pane" id="pane-flood">
+<section class="section fl-apply">
+  <h2>Use in the simulation</h2>
+  <label class="fl-switch"><input type="checkbox" id="fl-apply"> <span><b>Run the simulation inside this flood</b><br>
+    <span class="small">Your MCI stays as placed. Real road closures reported by the start time are avoided by every route, and the flood reports and activity layer show on the Simulation and Map tabs.</span></span></label>
+  <div class="row"><label for="fl-at">MCI starts at (Aug 12, 2014)</label>
+    <select id="fl-at" style="width:120px"><option value="12:00">12:00 PM</option><option value="13:00">1:00 PM</option><option value="13:30">1:30 PM</option><option value="14:00">2:00 PM</option><option value="14:30" selected>2:30 PM</option><option value="15:00">3:00 PM</option><option value="16:00">4:00 PM</option><option value="18:00">6:00 PM</option></select></div>
+  <p class="small" id="fl-apply-note"></p>
+  <button class="button primary" id="fl-goto" style="width:100%">Open Simulation</button>
+</section>
+<section class="section">
+  <h2>Real event · Tue, Aug 12, 2014</h2>
+  <p class="fl-lead">Heavy rain ahead of a warm front gave BWI its second-wettest day on record. NWS issued a rare <b>flash flood emergency</b>, and the Beltway outer loop, MD-295 and the Harbor Tunnel all closed between 2:22 and 2:29 PM.</p>
+  <div class="metrics fl-stats" id="fl-stats"><p class="small">Loading…</p></div>
+</section>
+<section class="section">
+  <h2>Rainfall at BWI, by hour</h2>
+  <div id="fl-rain" class="fl-chart"></div>
+  <h2 style="margin-top:16px">Geotagged Twitter users active, by hour</h2>
+  <div id="fl-activity" class="fl-chart"></div>
+  <p class="small" id="fl-activity-note"></p>
+  <h2 style="margin-top:16px">Mean daily activity radius</h2>
+  <div id="fl-daily" class="fl-chart"></div>
+  <p class="small">Radius of gyration per user-day (users with ≥2 posts), averaged. Computed only from relative distances; the dataset's anonymised coordinates are never mapped.</p>
+</section>
+<section class="section">
+  <h2>Where people were (geotagged posts)</h2>
+  <div class="seg" id="fl-heatmode" role="group" aria-label="Activity layer">
+    <button data-m="off">Off</button><button data-m="all" class="on">All 31 days</button><button data-m="event">Aug 12 only</button>
+  </div>
+  <div class="fl-heatkey" id="fl-heatkey"></div>
+  <p class="small" id="fl-heatnote">Distinct Twitter users who posted in each ~450 m cell. Shows where people were active, not residents or traffic.</p>
+</section>
+<section class="section">
+  <h2>NWS flood reports on the map</h2>
+  <div class="ai-legend" style="margin-bottom:10px">
+    <i class="fl-key closed"></i><span>Road closed</span>
+    <i class="fl-key flood"></i><span>Flooding reported</span>
+  </div>
+  <ol class="fl-reports" id="fl-reports"></ol>
+  <p class="small">Road closures are drawn where they were placed on the named road for routing (checked against Valhalla); other reports sit at the NWS location, which is rounded to about 1 km. A closure counts from its report time and is not reopened during a run.</p>
+</section>
+<section class="section">
+  <h2>Sources</h2>
+  <ul class="fl-sources" id="fl-sources"></ul>
+</section>
+</div>
+
 </aside>
 <div id="splitter" role="separator" aria-orientation="vertical" aria-label="Resize side panel" tabindex="0" title="Drag to resize · double-click to reset"></div>
 <main class="map-wrap"><div id="map"></div><div class="map-title"><b>Baltimore, Maryland</b><span id="mapSubtitle">Road-network response routing</span></div><div class="map-footer" id="mapFooter">Click to place · Drag red marker to reposition</div></main>
@@ -326,12 +447,40 @@ const hospital = {
     coordinates: [39.2885, -76.6235]
 };
 
+// Major Baltimore hospitals shown for reference. Display only: dispatch destinations still come
+// from the scenario's hospitals.csv. Coordinates geocoded from OpenStreetMap (Nominatim), Nov 2026.
+const REFERENCE_HOSPITALS=[
+  {name:'The Johns Hopkins Hospital',category:'academic',address:'1800 Orleans St',lat:39.29644,lon:-76.59239},
+  {name:'University of Maryland Medical Center',category:'academic',address:'22 S Greene St',lat:39.28827,lon:-76.62439},
+  {name:'Johns Hopkins Bayview Medical Center',category:'academic',address:'4940 Eastern Ave',lat:39.29111,lon:-76.54896},
+  {name:'MedStar Union Memorial Hospital',category:'community',address:'201 E University Pkwy',lat:39.32953,lon:-76.61484},
+  {name:'MedStar Good Samaritan Hospital',category:'community',address:'5601 Loch Raven Blvd',lat:39.35755,lon:-76.58585},
+  {name:'Sinai Hospital of Baltimore',category:'community',address:'2401 W Belvedere Ave',lat:39.35290,lon:-76.66229},
+  {name:'Mercy Medical Center',category:'community',address:'345 St Paul Pl',lat:39.29327,lon:-76.61280},
+  {name:'Ascension Saint Agnes Hospital',category:'community',address:'900 S Caton Ave',lat:39.27154,lon:-76.67346},
+  {name:'UMMC Midtown Campus',category:'community',address:'827 Linden Ave',lat:39.29963,lon:-76.62084},
+];
+const REFERENCE_COLORS={academic:'#7c3aed',community:'#dc2626'};
+const REFERENCE_MATCH_M=300; // a reference hospital this close to a scenario hospital is the same campus
+
 const hospitalLayer=L.layerGroup().addTo(map);
 function showHospitals(){
   hospitalLayer.clearLayers();
-  const table=activeScenario?.tables?.['hospitals.csv'];
-  if(!table)return;
-  for(const h of table.rows){
+  const rows=activeScenario?.tables?.['hospitals.csv']?.rows||[];
+  const scenarioPoints=[];
+  for(const h of rows){
+    const lat=Number(h.ambulance_entrance_lat || h.latitude);
+    const lon=Number(h.ambulance_entrance_lon || h.longitude);
+    if(Number.isFinite(lat)&&Number.isFinite(lon)&&lat&&lon)scenarioPoints.push(L.latLng(lat,lon));
+  }
+  for(const r of REFERENCE_HOSPITALS){
+    const p=L.latLng(r.lat,r.lon);
+    if(scenarioPoints.some(q=>map.distance(p,q)<REFERENCE_MATCH_M))continue;
+    L.circleMarker(p,{radius:7,color:REFERENCE_COLORS[r.category],weight:3,fillColor:'#fff',fillOpacity:1})
+      .bindPopup(`<b>${escapeHtml(r.name)}</b><br>${escapeHtml(r.address)}<br>${r.category==='academic'?'Academic medical center':'Community / regional hospital'}<br><i>Reference only: not a destination in this scenario</i>`)
+      .addTo(hospitalLayer);
+  }
+  for(const h of rows){
     const lat=Number(h.ambulance_entrance_lat || h.latitude);
     const lon=Number(h.ambulance_entrance_lon || h.longitude);
     if(!Number.isFinite(lat)||!Number.isFinite(lon)||!lat||!lon)continue;
@@ -355,10 +504,12 @@ let mciMarker=null,routeLine=null,hospitalRoute=null,requestSerial=0;
 function setStatus(msg){$('status').textContent=msg;}
 function updateCoords(p){$('coords').textContent=`${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}`;}
 async function requestRoute(origin, destination){
-  const response = await fetch('/route', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:$('provider').value,origin_lat:origin[0],origin_lon:origin[1],destination_lat:destination[0],destination_lon:destination[1]})});
+  const response = await fetch('/route', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:$('provider').value,origin_lat:origin[0],origin_lon:origin[1],destination_lat:destination[0],destination_lon:destination[1],...(window.floodCase?.routingParams()||{})})});
   if(!response.ok){let detail='Routing failed';try{const body=await response.json();detail=body.detail||detail;}catch{}throw new Error(detail);}
   return response.json();
 }
+// The Flood tab's "run inside this flood" switch changes which roads are closed; redraw the route.
+window.onFloodChanged=()=>{if(mciMarker)routeTo(mciMarker.getLatLng());};
 async function routeTo(p){
   const serial=++requestSerial;
   updateCoords(p);setStatus('Calculating both driving routes…');
@@ -375,7 +526,7 @@ async function routeTo(p){
     hospitalRoute=L.polyline(leg2.coordinates,{color:'#159c79',weight:5,opacity:.95}).addTo(map);
     $('travel').textContent=Number(leg1.travel_minutes).toFixed(1);
     $('distance').textContent=Number(leg2.travel_minutes).toFixed(1);
-    setStatus(`Station → Pickup: ${Number(leg1.travel_minutes).toFixed(1)} min / ${Number(leg1.distance_miles).toFixed(2)} mi · To Shock Trauma: ${Number(leg2.travel_minutes).toFixed(1)} min / ${Number(leg2.distance_miles).toFixed(2)} mi · Total driving: ${(Number(leg1.travel_minutes)+Number(leg2.travel_minutes)).toFixed(1)} min`);
+    setStatus(`Station → Pickup: ${Number(leg1.travel_minutes).toFixed(1)} min / ${Number(leg1.distance_miles).toFixed(2)} mi · To Shock Trauma: ${Number(leg2.travel_minutes).toFixed(1)} min / ${Number(leg2.distance_miles).toFixed(2)} mi · Total driving: ${(Number(leg1.travel_minutes)+Number(leg2.travel_minutes)).toFixed(1)} min${leg1.closures_avoided?` · avoiding ${leg1.closures_avoided.length} Aug 12, 2014 road closures`:''}`);
   }catch(err){if(serial!==requestSerial)return;
     $('travel').textContent='—';$('distance').textContent='—';
     if(routeLine){map.removeLayer(routeLine);routeLine=null;}
@@ -388,7 +539,7 @@ function placeMci(p){
   else mciMarker.setLatLng(p);
   routeTo(p);
 }
-map.on('click',e=>{if(activeTab==='ai')return;placeMci(e.latlng);}); // AI tab has its own markers
+map.on('click',e=>{if(window.simExplain?.takeMapClick(e.latlng))return;if(activeTab==='ai'||activeTab==='flood')return;placeMci(e.latlng);}); // AI and flood tabs have their own markers; road-block picking takes the click first
 $('clear').onclick=()=>{requestSerial++;if(routeLine){map.removeLayer(routeLine);routeLine=null;}if(hospitalRoute){map.removeLayer(hospitalRoute);hospitalRoute=null;}$('travel').textContent='—';$('distance').textContent='—';setStatus('Routes cleared. Drag the MCI marker or click the map to recalculate.');};
 $('reset').onclick=()=>{map.setView([39.285,-76.621],14);placeMci(L.latLng(39.2839,-76.6217));};
 function updateBasemap(){const isSat=$('basemap').value==='satellite';if(isSat){map.removeLayer(streets);satellite.addTo(map);if($('labels').checked)labels.addTo(map);}else{map.removeLayer(satellite);map.removeLayer(labels);streets.addTo(map);}}
@@ -414,6 +565,7 @@ placeMci(L.latLng(39.2839,-76.6217));
 
 let activeScenario = null;
 let scenarioDirty = false;
+showHospitals(); // reference hospitals appear before (or without) a loaded scenario
 
 const scenarioSelect =
   document.getElementById("scenarioSelect");
@@ -726,7 +878,68 @@ loadScenarioList().catch(error => {
 // ---- Saved simulation playback (no solver calls during animation) ----
 let simData=null, simMinute=0, simPlaying=false, simFrame=0, simLastStamp=null;
 const simRouteLayer=L.layerGroup().addTo(map);
-const simAmbulance=L.circleMarker([39.28,-76.62],{radius:10,color:'#fff',weight:3,fillColor:'#2563eb',fillOpacity:1});
+// What each crew member of a unit is doing at t (staff_timeline from the dynamic engine).
+const CREW_ROLE={TRIAGING:p=>`triaging ${p}`,COMMAND:()=>'incident command',STABILIZING:p=>`stabilising ${p}`,
+  REASSESSING:p=>`re-assessing ${p}`,TRANSPORT_RESERVED:p=>`with patient ${p}`,AVAILABLE:()=>'standing by'};
+function crewActivity(unit,t){
+  const now={};
+  for(const r of simData?.staff_timeline||[]){
+    if(r.unit_id!==unit||!(r.start_min<=t+1e-6&&t<r.end_min-1e-6))continue;
+    if(!now[r.personnel_id]||r.role==='TRIAGING')now[r.personnel_id]=r; // initial triage wins over "standing by"
+  }
+  const ids=Object.keys(now).sort();
+  return ids.length?'<br>'+ids.map(id=>`${escapeHtml(id)}: ${escapeHtml((CREW_ROLE[now[id].role]||(()=>now[id].role.toLowerCase()))(now[id].patient_id||''))}`).join('<br>'):'';
+}
+// Ambulances: one labelled marker each, following that ambulance's own route legs. Several parked at
+// the CCP are fanned out so they do not hide each other. Click one to explain it in the Why panel.
+const ambLayer=L.layerGroup().addTo(map);
+let ambMarkers={}, ambFor=null;
+const ambulanceIdOf=r=>r.ambulance_id||simData?.assignments?.[0]?.ambulance_id||'A001';
+function renderAmbulances(t){
+  if(ambFor!==simData){ambLayer.clearLayers();ambMarkers={};ambFor=simData;}
+  const by={};
+  for(const r of simData?.routes||[]){
+    if(!Array.isArray(r.coordinates)||!r.coordinates.length||!Number.isFinite(Number(r.start_min))||!Number.isFinite(Number(r.end_min)))continue;
+    (by[ambulanceIdOf(r)]||=[]).push(r);
+  }
+  const ids=Object.keys(by).sort(), selected=window.simExplain?.selectedAmbulance();
+  ids.forEach((aid,i)=>{
+    const legs=by[aid].sort((a,b)=>Number(a.start_min)-Number(b.start_min));
+    let pos=legs[0].coordinates[0], status='at its station', last=null;
+    for(const r of legs){
+      const s=Number(r.start_min), e=Number(r.end_min);
+      if(t<s)break;
+      if(t<=e){
+        pos=positionOnRoute(r,(t-s)/Math.max(1e-5,e-s)); last=null;
+        status=r.purpose==='STATION_TO_MCI'?'driving to the CCP':r.purpose==='MCI_TO_HOSPITAL'?`taking ${r.patient_id} to ${r.hospital_id}`:`returning to the CCP from ${r.hospital_id}`;
+        if(r.rerouted)status+=` (re-routed around ${r.reroute_reason})`;
+        break;
+      }
+      pos=r.coordinates.at(-1); last=r;
+    }
+    if(last){
+      if(last.purpose==='MCI_TO_HOSPITAL')status=`handing over ${last.patient_id} at ${last.hospital_id}`;
+      else{
+        // Between legs at the CCP: loading if Gurobi already gave this ambulance its next patient.
+        const next=legs.find(r=>Number(r.start_min)>t&&r.purpose==='MCI_TO_HOSPITAL');
+        const picked=next&&(simData.optimizer_decisions||[]).some(d=>d.ambulance_id===aid&&d.selected_patient_id===next.patient_id&&Number(d.decision_time_min)<=t+1e-6);
+        status=picked?`loading ${next.patient_id} for ${next.hospital_id}`:'at the CCP';
+        const ang=Math.PI/4+i*2*Math.PI/Math.max(1,ids.length);pos=[pos[0]+0.00012*Math.sin(ang),pos[1]+0.00016*Math.cos(ang)];
+      }
+    }
+    const tip=`<b>${escapeHtml(aid)}</b> · ambulance (transports patients)<br>${escapeHtml(status)}${crewActivity(aid,t)}`;
+    let m=ambMarkers[aid];
+    const html=`<div class="amb-pin${aid===selected?' sel':''}">${escapeHtml(aid)}</div>`;
+    if(!m){
+      m=L.marker(pos,{icon:L.divIcon({className:'',iconSize:[34,20],iconAnchor:[17,10],html}),zIndexOffset:600,keyboard:false}).bindTooltip(tip).addTo(ambLayer);
+      m.on('click',()=>window.simExplain?.selectAmbulance(aid));
+      m._html=html;ambMarkers[aid]=m;
+    }else{
+      m.setLatLng(pos);m.setTooltipContent(tip);
+      if(m._html!==html){m.setIcon(L.divIcon({className:'',iconSize:[34,20],iconAnchor:[17,10],html}));m._html=html;}
+    }
+  });
+}
 function simTime(t){const sec=Math.max(0,Math.round(t*60));return `${Math.floor(sec/3600)}:${String(Math.floor(sec%3600/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;}
 function interpolateRoute(points,fraction){
   if(points.length===1)return points[0];
@@ -742,6 +955,38 @@ function interpolateRoute(points,fraction){
   const part=(target-d[j-1])/Math.max(1e-9,d[j]-d[j-1]);
   return [points[j-1][0]+(points[j][0]-points[j-1][0])*part,points[j-1][1]+(points[j][1]-points[j-1][1])*part];
 }
+// Fire engines (non-transport units from the triage stage): at their station before dispatch, driving
+// in along their route, then parked around the CCP. Their crews triage, stabilise and hold command.
+const fireLayer=L.layerGroup().addTo(map);
+let fireMarkers={}, fireFor=null;
+function renderFireUnits(t){
+  if(fireFor!==simData){fireLayer.clearLayers();fireMarkers={};fireFor=simData;}
+  const units=simData?.response_units||[], routes=simData?.unit_routes||[];
+  units.forEach((u,i)=>{
+    const r=routes.find(x=>x.unit_id===u.unit_id); if(!r)return;
+    const s=Number(r.start_min), e=Number(r.end_min); let pos;
+    if(t<=s)pos=r.coordinates[0];
+    else if(t<e)pos=positionOnRoute(r,(t-s)/Math.max(1e-5,e-s));
+    else{const end=r.coordinates.at(-1), ang=i*2*Math.PI/Math.max(1,units.length);pos=[end[0]+0.00020*Math.sin(ang),end[1]+0.00026*Math.cos(ang)];}
+    const status=t>=e?`on scene since ${simTime(e)}`:t>s?`driving in, arrives ${simTime(e)}`:'at station';
+    const tip=`<b>${escapeHtml(u.unit_id)}</b> · fire engine from ${escapeHtml(u.station||'?')}<br>${u.crew} crew (triage and stabilisation)${u.incident_command?' · <b>incident command</b>':''}<br>${status}${crewActivity(u.unit_id,t)}`;
+    let m=fireMarkers[u.unit_id];
+    if(!m){
+      m=L.marker(pos,{icon:L.divIcon({className:'',iconSize:[30,20],iconAnchor:[15,10],html:`<div class="fire-pin${u.incident_command?' cmd':''}">${escapeHtml(u.unit_id)}</div>`}),zIndexOffset:400,keyboard:false}).bindTooltip(tip).addTo(fireLayer);
+      fireMarkers[u.unit_id]=m;
+    }else{m.setLatLng(pos);m.setTooltipContent(tip);}
+  });
+}
+// Place the ambulance by elapsed driving time when the route has per-vertex times (slow streets,
+// fast highways); otherwise at an even pace. integrated_scheduler.position_on uses the same rule.
+function positionOnRoute(route,fraction){
+  const pts=route.coordinates, vm=route.vertex_minutes;
+  if(!Array.isArray(vm)||vm.length!==pts.length||!(vm.at(-1)>0))return interpolateRoute(pts,fraction);
+  const target=Math.max(0,Math.min(1,fraction))*vm.at(-1);
+  let j=1;while(j<vm.length-1&&vm[j]<target)j++;
+  const part=(target-vm[j-1])/Math.max(1e-9,vm[j]-vm[j-1]);
+  return [pts[j-1][0]+(pts[j][0]-pts[j-1][0])*part,pts[j-1][1]+(pts[j][1]-pts[j-1][1])*part];
+}
 function renderSim(t){
   if(!simData)return;
   const end=Number(simData.playback_end_min ?? simData.makespan_min);
@@ -750,21 +995,11 @@ function renderSim(t){
   $('simClock').textContent=simTime(simMinute);
   const completed=(simData.assignments||[]).filter(a=>a.hospital_arrival_min!=null&&Number(a.hospital_arrival_min)<=simMinute);
   $('simDelivered').textContent=`${completed.length} / ${simData.transport_patients}`;
-  const routes=(simData.routes||[]).filter(r=>Array.isArray(r.coordinates)&&r.coordinates.length&&Number.isFinite(Number(r.start_min))&&Number.isFinite(Number(r.end_min))).slice().sort((a,b)=>Number(a.start_min)-Number(b.start_min));
-  let position=null;
-  for(const route of routes){
-    const start=Number(route.start_min), finish=Number(route.end_min);
-    if(simMinute<start)break;
-    if(simMinute<=finish){
-      position=interpolateRoute(route.coordinates,Math.max(0,Math.min(1,(simMinute-start)/Math.max(.00001,finish-start))));
-      break;
-    }
-    position=route.coordinates[route.coordinates.length-1];
-  }
-  if(!position&&routes.length)position=routes[0].coordinates[0];
-  if(position){simAmbulance.setLatLng(position);if(!map.hasLayer(simAmbulance))simAmbulance.addTo(map);}
+  renderAmbulances(simMinute);
+  renderFireUnits(simMinute);
   const last=(simData.events||[]).filter(e=>Number(e.time_min)<=simMinute).at(-1);
   $('simStatus').textContent=last?`${simTime(last.time_min)} · ${String(last.event).replaceAll('_',' ')}${last.patient_id?' · '+last.patient_id:''}`:'Simulation ready';
+  window.simExplain?.render(simMinute);
 }
 function pauseSim(){simPlaying=false;$('playSimulation').textContent='Play';if(simFrame)cancelAnimationFrame(simFrame);simFrame=0;simLastStamp=null;}
 function tickSim(stamp){
@@ -795,7 +1030,7 @@ $('runSimulation').onclick=async()=>{
   const t0=performance.now();
   const timer=setInterval(()=>{running.textContent=`Running ${mode==='dynamic'?'triage → integrated Gurobi':'baseline'}… ${Math.round((performance.now()-t0)/1000)} s`;},1000);
   try{
-    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scen,ambulance_id:'A001',mode,horizon:240,survival_curve:curve})});
+    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scen,ambulance_id:'A001',mode,horizon:240,survival_curve:curve,...(window.floodCase?.routingParams()||{}),...(window.simExplain?.requestParams()||{})})});
     if(!r.ok){const body=await r.json();throw new Error(body.detail||`HTTP ${r.status}`);}
     simData=await r.json();
     clearInterval(timer);running.className='ok';running.textContent=`Finished in ${((performance.now()-t0)/1000).toFixed(1)} s`;
@@ -806,11 +1041,13 @@ $('runSimulation').onclick=async()=>{
       simLog(`${simData.patients_delivered ?? (simData.assignments||[]).length} of ${simData.transport_patients} transport patients delivered`);
     }
     simLog(`${(simData.routes||[]).length} route legs loaded for playback`);
+    if(simData.flood_at)simLog(`Aug 12, 2014 flood at ${simData.flood_at}: every route avoided ${(simData.road_closures_applied||[]).length} real road closures`);
     simLog(`Expected survivors (${simData.survival_curve} curve): ${simData.expected_survivors} of ${simData.survival_scored_patients} red/yellow`);
     setReportRun(simData.run_id,simData.scenario_id||scen);
     if(simData.run_id)simLog(`Reports ready: ${simData.run_id}`);
     simRouteLayer.clearLayers();
     for(const route of simData.routes||[]){if(Array.isArray(route.coordinates)&&route.coordinates.length>1){L.polyline(route.coordinates,{color:route.purpose==='MCI_TO_HOSPITAL'?'#159c79':'#2563eb',weight:4,opacity:.45}).addTo(simRouteLayer);}}
+    for(const route of simData.unit_routes||[]){if(Array.isArray(route.coordinates)&&route.coordinates.length>1){L.polyline(route.coordinates,{color:'#b91c1c',weight:3,opacity:.4,dashArray:'6 6'}).addTo(simRouteLayer);}}
     $('simMakespan').textContent=`${Number(simData.playback_end_min ?? simData.makespan_min).toFixed(2)} min`;
     $('simSurvivors').textContent=`${simData.expected_survivors} / ${simData.survival_scored_patients}`;
     renderSimResults();
@@ -900,9 +1137,13 @@ function setTab(t){
   document.querySelectorAll('aside > .pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+t));
   // The AI tab draws its own layers; hide the scenario-simulation layers while it is open.
   const c=map.getContainer();c.classList.toggle('map-hide-main',t==='ai');c.classList.toggle('map-show-ai',t==='ai');
-  $('mapSubtitle').textContent=t==='ai'?'AI estimates → Gurobi t0 plan':'Road-network response routing';
-  $('mapFooter').textContent=t==='ai'?'Drag the black site or blue ambulances · Click a hospital to toggle it':'Click to place · Drag red marker to reposition';
+  $('mapSubtitle').textContent=t==='ai'?'AI estimates → Gurobi t0 plan':t==='flood'?'Aug 12, 2014 flash flood · NWS reports':'Road-network response routing';
+  $('mapFooter').textContent=t==='ai'?'Drag the black site or blue ambulances · Click a hospital to toggle it':t==='flood'?'Click a report for details':'Click to place · Drag red marker to reposition';
   if(t==='ai'){pauseSim();window.aiSim?.activate();}else window.aiSim?.deactivate();
+  if(t==='flood')window.floodCase?.activate();else window.floodCase?.deactivate();
+  // The draggable "+" is the Map & routing tab's illustrative origin; on the Simulation tab the real
+  // ambulances are the labelled markers, so hide it there (its position is still saved with the scenario).
+  if(t==='sim'){if(map.hasLayer(ambulanceMarker))map.removeLayer(ambulanceMarker);}else if(!map.hasLayer(ambulanceMarker))ambulanceMarker.addTo(map);
   try{localStorage.setItem('mci.tab',t);}catch{}
 }
 $('tabs').onclick=e=>{const t=e.target.closest('button')?.dataset.tab;if(t)setTab(t);};
@@ -933,4 +1174,6 @@ splitter.addEventListener('keydown',e=>{
 new ResizeObserver(()=>map.invalidateSize()).observe($('map'));
 </script>
 <script src="ai_sim.js"></script>
+<script src="flood_case.js"></script>
+<script src="sim_explain.js"></script>
 </body></html>
