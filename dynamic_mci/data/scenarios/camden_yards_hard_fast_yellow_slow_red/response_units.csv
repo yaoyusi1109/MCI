@@ -1,0 +1,3 @@
+unit_id,unit_type,station_id,dispatch_min,status
+A001,AMBULANCE,S001,0,AT_STATION
+F001,FIRE_EMS,S001,0,AT_STATION

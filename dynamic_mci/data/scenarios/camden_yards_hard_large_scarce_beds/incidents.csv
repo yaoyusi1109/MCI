@@ -1,0 +1,2 @@
+incident_id,incident_name,address,latitude,longitude,pickup_address,pickup_latitude,pickup_longitude,status
+MCI01,Camden Yards MCI,333 W Camden St Baltimore MD,39.283956,-76.621567,418 W Lee St Baltimore MD,39.282315,-76.622021,ACTIVE

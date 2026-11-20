@@ -1,0 +1,5 @@
+ambulance_id,station_id,status,available_min,capacity_patients
+A001,S001,AVAILABLE_AT_MCI,0,1
+A002,S002,AT_STATION,0,1
+A003,S003,AT_STATION,0,1
+A004,S004,AT_STATION,0,1

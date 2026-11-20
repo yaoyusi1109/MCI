@@ -134,6 +134,7 @@ body.resizing{cursor:col-resize;user-select:none}
 <section class="section"><h2>Simulation playback</h2>
 <div class="row"><label for="simulationMode">Simulation mode</label></div>
 <select id="simulationMode"><option value="static">Static baseline</option><option value="dynamic" selected>Dynamic Gurobi + rolling triage</option></select>
+<div class="row"><label for="simPolicy">Dispatch policy (dynamic)</label><select id="simPolicy" style="width:220px"><option value="gurobi" selected>Gurobi MILP</option></select></div>
 <div class="row"><label for="simCurve">Survival curve (scoring only)</label><select id="simCurve" style="width:140px"><option value="optimistic">Optimistic</option><option value="moderate" selected>Moderate</option><option value="pessimistic">Pessimistic</option></select></div>
 <div class="buttons" style="margin-top:10px"><button class="button primary" id="runSimulation">Run Simulation</button><button class="button" id="playSimulation" disabled>Play</button></div>
 <div class="row"><label>Playback speed</label><select id="playSpeed" style="width:120px"><option value="1">1×</option><option value="10">10×</option><option value="60" selected>60×</option><option value="300">300×</option></select></div>
@@ -785,22 +786,24 @@ $('simEnd').onclick=()=>{pauseSim();if(simData)renderSim(Number(simData.playback
 $('runSimulation').onclick=async()=>{
   if(scenarioDirty){$('simStatus').textContent='Save scenario changes before running.';return;}
   pauseSim();$('runSimulation').disabled=true;
-  const mode=$('simulationMode').value, curve=$('simCurve').value, scen=scenarioSelect.value;
-  const modeName=mode==='dynamic'?'rolling triage + dynamic Gurobi':'static baseline';
+  const mode=$('simulationMode').value, curve=$('simCurve').value, scen=scenarioSelect.value, policy=$('simPolicy').value;
+  const policyName=policy==='gurobi'?'Gurobi':policy;
+  const modeName=mode==='dynamic'?`rolling triage + ${policyName} dispatch`:'static baseline';
   $('simStatus').textContent='Running '+modeName+'…';
   $('simLog').replaceChildren();
   simLog(`Scenario ${scen} · ${modeName} · horizon 240 min`);
   // The backend runs as one request, so this line shows elapsed time rather than per-stage progress.
-  const running=simLog(`Running ${mode==='dynamic'?'triage → integrated Gurobi':'baseline'}… 0 s`,'run');
+  const running=simLog(`Running ${mode==='dynamic'?'triage → integrated '+policyName:'baseline'}… 0 s`,'run');
   const t0=performance.now();
-  const timer=setInterval(()=>{running.textContent=`Running ${mode==='dynamic'?'triage → integrated Gurobi':'baseline'}… ${Math.round((performance.now()-t0)/1000)} s`;},1000);
+  const timer=setInterval(()=>{running.textContent=`Running ${mode==='dynamic'?'triage → integrated '+policyName:'baseline'}… ${Math.round((performance.now()-t0)/1000)} s`;},1000);
   try{
-    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scen,ambulance_id:'A001',mode,horizon:240,survival_curve:curve})});
+    const r=await fetch('/api/simulation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario_id:scen,ambulance_id:'A001',mode,horizon:240,survival_curve:curve,policy})});
     if(!r.ok){const body=await r.json();throw new Error(body.detail||`HTTP ${r.status}`);}
     simData=await r.json();
     clearInterval(timer);running.className='ok';running.textContent=`Finished in ${((performance.now()-t0)/1000).toFixed(1)} s`;
     if(simData.mode==='dynamic'){
-      simLog(`${simData.delivered} delivered · ${simData.expectant ?? 0} expectant · ${(simData.optimizer_decisions||[]).length} Gurobi decisions`);
+      simLog(`${simData.delivered} delivered · ${simData.expectant ?? 0} expectant · ${(simData.optimizer_decisions||[]).length} ${policyName} decisions`);
+      simLog(`${simData.deteriorated_to_black ?? 0} deteriorated to BLACK · ${simData.deterioration_transitions ?? 0} triage upgrades · ${simData.still_awaiting ?? 0} still waiting at horizon`);
       if(simData.validation!=null)simLog(`Validation: ${typeof simData.validation==='object'?(simData.validation.status||JSON.stringify(simData.validation)):simData.validation}`);
     }else{
       simLog(`${simData.patients_delivered ?? (simData.assignments||[]).length} of ${simData.transport_patients} transport patients delivered`);
@@ -814,12 +817,14 @@ $('runSimulation').onclick=async()=>{
     $('simMakespan').textContent=`${Number(simData.playback_end_min ?? simData.makespan_min).toFixed(2)} min`;
     $('simSurvivors').textContent=`${simData.expected_survivors} / ${simData.survival_scored_patients}`;
     renderSimResults();
-    if(simData.mode==='dynamic'){$('simStatus').textContent=`Dynamic Gurobi · ${simData.delivered} delivered · ${simData.expectant} expectant · ${simData.optimizer_decisions.length} decisions`;}
+    if(simData.mode==='dynamic'){$('simStatus').textContent=`Dynamic ${policyName} · ${simData.delivered} delivered · ${simData.expectant} expectant · ${simData.optimizer_decisions.length} decisions`;}
     $('simSeek').disabled=false;$('playSimulation').disabled=false;renderSim(0);
     if((simData.routes||[]).length){const coords=simData.routes.flatMap(x=>x.coordinates||[]);if(coords.length)map.fitBounds(L.latLngBounds(coords),{padding:[35,35]});}
   }catch(e){clearInterval(timer);running.className='err';running.textContent=`Failed after ${((performance.now()-t0)/1000).toFixed(1)} s: ${e.message}`;$('simStatus').textContent=`Simulation error: ${e.message}`;}
   finally{clearInterval(timer);$('runSimulation').disabled=false;}
 };
+fetch('/api/simulation/policies').then(r=>r.ok?r.json():[]).then(list=>{const sel=$('simPolicy');if(!list.length)return;sel.replaceChildren();for(const p of list){const o=document.createElement('option');o.value=p.id;o.textContent=p.id==='gurobi'?'Gurobi MILP':p.id;o.title=p.label;sel.appendChild(o);}sel.value='gurobi';}).catch(()=>{});
+$('simulationMode').addEventListener('change',()=>{$('simPolicy').disabled=$('simulationMode').value!=='dynamic';});
 function simLog(text,cls='ok'){const li=document.createElement('li');li.className=cls;li.textContent=text;$('simLog').appendChild(li);return li;}
 function renderSimResults(){
   const box=$('simAssignments');box.replaceChildren();

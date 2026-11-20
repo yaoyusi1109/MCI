@@ -129,6 +129,9 @@ class SimulationRequest(BaseModel):
     horizon: float = Field(default=240.0, gt=0, le=1440)
     # Reporting only: which Mills et al. (2013) curve to score arrivals with. Does not affect dispatch.
     survival_curve: str = 'moderate'
+    # Dynamic mode only: 'gurobi' or a baseline rule (simulation/baseline_dispatch.py).
+    policy: str = 'gurobi'
+    seed: int = 0
 
 
 def _as_float(value, default=None):
@@ -185,7 +188,17 @@ def _dynamic_dashboard_result(raw, run_id, scenario_id):
         'optimizer_decisions': raw.get('optimizer_decisions') or [],
         'patients': raw.get('patients') or [],
         'hospital_capacity_final': raw.get('hospital_capacity_final'),
+        'policy': summary.get('dispatch_policy', 'gurobi'),
+        'deteriorated_to_black': summary.get('deteriorated_to_black'),
+        'deterioration_transitions': summary.get('deterioration_transitions'),
+        'still_awaiting': summary.get('still_awaiting_or_in_transport'),
     }
+
+
+@app.get('/api/simulation/policies')
+def list_policies():
+    from simulation.baseline_dispatch import POLICY_DESCRIPTIONS
+    return [{'id': k, 'label': v} for k, v in POLICY_DESCRIPTIONS.items()]
 
 
 @app.post('/api/simulation/run')
@@ -218,7 +231,8 @@ def run_simulation_api(req: SimulationRequest):
                 raise FileNotFoundError(f'Triage result not saved: {triage_file}')
             run_folder = REPORT_ROOT / req.scenario_id / 'integrated_tests'
             existing = {p.name for p in run_folder.iterdir() if p.is_dir()} if run_folder.exists() else set()
-            raw = run_integrated(scenario, triage_file, horizon=req.horizon, save=True)
+            raw = run_integrated(scenario, triage_file, horizon=req.horizon, save=True,
+                                 policy=req.policy, seed=req.seed)
             created = [p for p in run_folder.iterdir() if p.is_dir() and p.name not in existing
                        and (p / 'integrated_results.json').is_file()]
             if len(created) != 1:
@@ -288,11 +302,7 @@ def download_report(scenario_id: str, run_id: str, report_type: str):
 # SF(t) = b0 / ((t / b1) ** b2 + 1), t = minutes from incident start to hospital arrival.
 # Chang et al. (2026) Fig. 12, values from Mills et al. (2013). Same table as AI_simulation/mci_ai/config.py.
 # It scores the plan after the fact; the dispatch objective above is unchanged.
-SURVIVAL_CURVES = {
-    'pessimistic': {'RED': (0.09, 17, 1.01), 'YELLOW': (0.57, 61, 2.03)},
-    'moderate':    {'RED': (0.24, 47, 1.30), 'YELLOW': (0.76, 138, 2.17)},
-    'optimistic':  {'RED': (0.56, 91, 1.58), 'YELLOW': (0.81, 160, 2.41)},
-}
+from reporting.survival import SURVIVAL_CURVES  # shared with experiments/compare_policies.py
 
 
 def _add_survival(result, curve):

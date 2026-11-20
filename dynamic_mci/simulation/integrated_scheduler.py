@@ -17,7 +17,7 @@ from simulation.engine import (
     get_station_location,
     location,
 )
-from simulation.gurobi_dispatch import choose_dispatch
+from simulation.baseline_dispatch import POLICIES, get_dispatcher
 
 BASE = Path(__file__).resolve().parents[1]
 STEP = 0.75
@@ -109,7 +109,10 @@ class HospitalBedLedger:
         return issues
 
 
-def run(scenario, triage_file, horizon=240.0, save=True):
+def run(scenario, triage_file, horizon=240.0, save=True, policy='gurobi', seed=0):
+    """policy: 'gurobi' (default) or a baseline from simulation.baseline_dispatch."""
+    policy = str(policy or 'gurobi').lower()
+    choose_dispatch = get_dispatcher(policy, seed=seed)
     scenario = Path(scenario).resolve()
     triage = json.loads(Path(triage_file).read_text(encoding='utf-8'))
     if triage['scenario'] != scenario.name or triage['validation']['status'] != 'PASS':
@@ -496,7 +499,7 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                     log(t, 'PATIENT_ASSIGNED', patient_id=pid, hospital_id=hid,
                         observed_triage=p['observed'],
                         optimizer_known_triage=p['optimizer_known'],
-                        optimizer='GUROBI')
+                        optimizer=policy.upper())
                     decision_log.update(selected_patient_id=pid,
                                         selected_hospital_id=hid)
                 optimizer_decisions.append(decision_log)
@@ -530,7 +533,11 @@ def run(scenario, triage_file, horizon=240.0, save=True):
                'still_awaiting_or_in_transport': len(remaining),
                'observed_makespan_min': round(max((p['arrival'] for p in delivered), default=0), 4),
                'completed_incident': not remaining and ambulance['phase'] not in ('LOADING', 'TO_HOSPITAL'),
-               'transport_policy': 'Gurobi rolling single-dispatch MILP; not full-horizon optimal',
+               'transport_policy': ('Gurobi rolling single-dispatch MILP; not full-horizon optimal'
+                                    if policy == 'gurobi' else f'Baseline rule: {policy}'),
+               'dispatch_policy': policy, 'dispatch_seed': seed,
+               'deteriorated_to_black': sum(p['initial'] != 'BLACK' and p['true'] == 'BLACK' for p in state.values()),
+               'deterioration_transitions': sum(p['transition_count'] for p in state.values()),
                'validation': {'status': 'PASS' if not conflicts else 'FAIL', 'issues': conflicts}}
     summary['optimizer_observation_policy'] = observation_policy
     summary['optimizer_observation_release_min'] = release_min
@@ -562,8 +569,10 @@ def main():
     ap.add_argument('--scenario', default='data/scenarios/camden_yards_dynamic')
     ap.add_argument('--triage-results', required=True)
     ap.add_argument('--horizon', type=float, default=240)
+    ap.add_argument('--policy', default='gurobi', choices=POLICIES)
+    ap.add_argument('--seed', type=int, default=0)
     args = ap.parse_args()
-    run(args.scenario, args.triage_results, args.horizon)
+    run(args.scenario, args.triage_results, args.horizon, policy=args.policy, seed=args.seed)
 
 
 if __name__ == '__main__':
