@@ -1,4 +1,15 @@
-hospital_id,name,trauma_level,available_beds,latitude,longitude,ambulance_entrance_lat,ambulance_entrance_lon
-H001,R Adams Cowley Shock Trauma Center,PARC,3,39.2885,-76.6235,,
-H002,Johns Hopkins Hospital,I,3,39.295828,-76.591953,,
-H004,Mercy Medical Center,NONE,6,39.2948,-76.6136,,
+hospital_id,name,trauma_level,available_beds,latitude,longitude,ambulance_entrance_lat,ambulance_entrance_lon,licensed_beds
+H001,University of Maryland Medical Center / R Adams Cowley Shock Trauma Center,PARC,220,39.288179,-76.623881,,,760
+H002,The Johns Hopkins Hospital,I,338,39.296885,-76.592431,,,1166
+H003,Sinai Hospital of Baltimore,II,124,39.353871,-76.662050,,,429
+H004,Mercy Medical Center,NONE,45,39.293416,-76.613070,,,158
+H005,MedStar Harbor Hospital,NONE,38,39.251973,-76.613871,,,133
+H006,Johns Hopkins Bayview Medical Center,II,113,39.290132,-76.548412,,,391
+H007,MedStar Union Memorial Hospital,NONE,54,39.329265,-76.614290,,,187
+H008,MedStar Good Samaritan Hospital,NONE,41,39.358640,-76.587836,,,142
+H009,Ascension Saint Agnes Hospital,NONE,51,39.272402,-76.670918,,,176
+H010,University of Maryland Medical Center Midtown Campus,NONE,33,39.299310,-76.620600,,,117
+H011,Greater Baltimore Medical Center,NONE,61,39.390826,-76.624712,,,211
+H012,MedStar Franklin Square Medical Center,NONE,110,39.351629,-76.481302,,,381
+H013,Northwest Hospital Center,NONE,61,39.358715,-76.781613,,,213
+H014,University of Maryland St. Joseph Medical Center,NONE,62,39.388276,-76.611270,,,217

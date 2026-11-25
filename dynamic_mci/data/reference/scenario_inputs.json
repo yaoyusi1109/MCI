@@ -1,0 +1,42 @@
+{
+  "population": {
+    "total": 45000,
+    "breakdown": {
+      "ticketed_fans": 42455,
+      "event_operations_staff": "1000-1500",
+      "concessions_hospitality": "500-800",
+      "teams_media_officials": "200-300"
+    },
+    "note": "Sold-out game at Oriole Park at Camden Yards (2026 seating capacity 42,455; venue record 49,828). Every person present is treated as a casualty."
+  },
+  "triage_split_percent": {"BLACK": 1, "RED": 7, "YELLOW": 25, "GREEN": 68},
+  "triage_counts": {"BLACK": 450, "RED": 3150, "YELLOW": 11250, "GREEN": 30150},
+  "triage_counts_note": "1+7+25+68 = 101%, which gives 45,450. BLACK, RED and YELLOW keep the stated counts; GREEN is reduced from 30,600 to 30,150 so the total is 45,000.",
+  "free_bed_share": 0.29,
+  "free_bed_share_note": "Maryland sets licensed acute beds at 140% of average daily census, so about 1 - 1/1.4 = 29% of licensed beds are free on an average day. Upper bound: staffed beds are fewer than licensed beds.",
+  "red_compatible_trauma_levels": ["PARC", "I", "II"],
+  "mci_level_3_response": {
+    "trigger": "51 or more patients",
+    "deputy_chief_ems": 1,
+    "suppression_companies": 8,
+    "medic_units": 16,
+    "apparatus_coordinator": 1,
+    "on_request": [
+      "MD State Police Medevac helicopter(s)",
+      "MTA bus(es)",
+      "Commercial ambulance(s) (via MIEMSS)",
+      "Baltimore City Health Department (Off-Site Triage, Treatment, and Transport Centers, OST3C)",
+      "Mutual aid from surrounding jurisdictions",
+      "Go Team",
+      "Medical Examiner",
+      "CISM Team",
+      "Chaplain Corps"
+    ]
+  },
+  "assumptions": {
+    "suppression_company_crew": 4,
+    "medic_unit_crew": 2,
+    "unit_assignment": "The 16 medic units and 8 suppression companies come from the stations nearest the MCI pickup point (straight-line distance), S001 first.",
+    "deterioration": "No published per-patient rate exists. Each scenario keeps its own existing per-triage timing and deterioration pattern (scenario_profiles.json), repeated over the new patients."
+  }
+}

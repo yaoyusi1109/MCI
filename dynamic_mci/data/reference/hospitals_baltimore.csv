@@ -1,0 +1,15 @@
+hospital_id,name,county,trauma_level,specialty,licensed_beds_fy2026,imap_license_capacity,latitude,longitude
+H001,University of Maryland Medical Center / R Adams Cowley Shock Trauma Center,Baltimore City,PARC,NEUROTRAUMA;HYPERBARIC,760,772,39.288179,-76.623881
+H002,The Johns Hopkins Hospital,Baltimore City,I,PEDIATRIC_TRAUMA_I;ADULT_BURN;PEDIATRIC_BURN;EYE_TRAUMA,1166,1149,39.296885,-76.592431
+H003,Sinai Hospital of Baltimore,Baltimore City,II,,429,424,39.353871,-76.662050
+H004,Mercy Medical Center,Baltimore City,NONE,,158,183,39.293416,-76.613070
+H005,MedStar Harbor Hospital,Baltimore City,NONE,,133,107,39.251973,-76.613871
+H006,Johns Hopkins Bayview Medical Center,Baltimore City,II,,391,415,39.290132,-76.548412
+H007,MedStar Union Memorial Hospital,Baltimore City,NONE,HAND_UPPER_EXTREMITY,187,209,39.329265,-76.614290
+H008,MedStar Good Samaritan Hospital,Baltimore City,NONE,,142,206,39.358640,-76.587836
+H009,Ascension Saint Agnes Hospital,Baltimore City,NONE,,176,263,39.272402,-76.670918
+H010,University of Maryland Medical Center Midtown Campus,Baltimore City,NONE,,117,87,39.299310,-76.620600
+H011,Greater Baltimore Medical Center,Baltimore County,NONE,,211,232,39.390826,-76.624712
+H012,MedStar Franklin Square Medical Center,Baltimore County,NONE,,381,353,39.351629,-76.481302
+H013,Northwest Hospital Center,Baltimore County,NONE,,213,192,39.358715,-76.781613
+H014,University of Maryland St. Joseph Medical Center,Baltimore County,NONE,,217,232,39.388276,-76.611270

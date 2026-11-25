@@ -1,0 +1,100 @@
+station_id,station_name,street_address,city,jurisdiction,staffing,latitude,longitude,km_to_camden_yards
+S001,BCFD Engine 2 (iMAP: Baltimore City Fire Station 33),800 Light St,Baltimore,Baltimore City,Career,39.279787,-76.612872,0.84
+S002,Baltimore City Engine 23,15 S Eutaw St,Baltimore,Baltimore City,Career,39.287776,-76.620327,0.62
+S003,Baltimore City Fire Station 34,1227 S Hanover St,Baltimore,Baltimore City,Career,39.274831,-76.615217,1.02
+S004,Baltimore City Fire Station 32,1229 Bush St,Baltimore,Baltimore City,Career,39.277965,-76.637086,1.38
+S005,Baltimore City Fire Headquarters Station 24,414 N Calvert St,Baltimore,Baltimore City,Career,39.294405,-76.61284,1.56
+S006,Baltimore City Fire Station 35,399 E Fort Ave,Baltimore,Baltimore City,Career,39.272714,-76.608203,1.6
+S007,Baltimore City Engine 6,1100 Hillen St,Baltimore,Baltimore City,Career,39.297358,-76.605466,2.2
+S008,Baltimore City Fire Station 18,1908 Hollins St,Baltimore,Baltimore City,Career,39.287286,-76.64752,2.26
+S009,Baltimore City Fire Station 21,1503 W Lafayette Ave,Baltimore,Baltimore City,Career,39.298773,-76.641899,2.51
+S010,Baltimore City Fire Station 22,405 Mcmechen St,Baltimore,Baltimore City,Career,39.305039,-76.630303,2.63
+S011,Baltimore City Fire Station 37,2425 Annapolis Road,Baltimore,Baltimore City,Career,39.260883,-76.635032,2.63
+S012,Baltimore City Fire Station 19,2249 Edmondson Ave,Baltimore,Baltimore City,Career,39.294669,-76.653023,3.0
+S013,Baltimore City Fire Station 28,2120 Eastern Ave,Baltimore,Baltimore City,Career,39.286035,-76.586118,3.12
+S014,Baltimore City Fire Station 17,2608 Washington Blvd,Baltimore,Baltimore City,Career,39.265499,-76.6542,3.34
+S015,Baltimore City Fire Station 36 / Fire Rescue Boat No. 1,2609 Leahy St,Baltimore,Baltimore City,Career,39.266894,-76.580539,3.96
+S016,Baltimore City Fire Station 27,1223 N Montford Ave,Baltimore,Baltimore City,Career,39.305317,-76.583935,4.16
+S017,Baltimore City Fire Station 16,3220 Frederick Ave,Baltimore,Baltimore City,Career,39.280908,-76.670874,4.21
+S018,Baltimore City Fire Station 12,801 E 25Th St,Baltimore,Baltimore City,Career,39.317854,-76.601938,4.31
+S019,Baltimore City Fire Station 30,520 S Conkling St,Baltimore,Baltimore City,Career,39.285998,-76.567337,4.72
+S020,Baltimore City Fire Station 20,3525 Woodbrook Ave,Baltimore,Baltimore City,Career,39.319049,-76.651289,4.8
+S021,Baltimore City Fire Station 29,646 N Highland Ave,Baltimore,Baltimore City,Career,39.298729,-76.569883,4.84
+S022,Baltimore City Fire Station 38,430 Maude Ave,Baltimore,Baltimore City,Career,39.239199,-76.60293,5.07
+S023,Baltimore City Fire Station 7,3123 Greenmount Ave,Baltimore,Baltimore City,Career,39.326837,-76.609187,5.07
+S024,English Counsul Volunteer Fire Department,2827 Michigan Ave,Baltimore,Baltimore County,Volunteer,39.23824,-76.638483,5.1
+S025,Baltimore City Fire Station 15,3130 W North Ave,Baltimore,Baltimore City,Career,39.309202,-76.670576,5.14
+S026,Lansdowne Volunteer Fire Association Station 36,140 Laverne Ave,Lansdowne,Baltimore County,Volunteer,39.246147,-76.662347,5.31
+S027,Violetville Volunteer Fire Department Station 34,4000 Benson Ave,Baltimore,Baltimore County,Volunteer,39.261007,-76.68,5.52
+S028,Baltimore City Fire Station 6,3724 Roland Ave,Baltimore,Baltimore City,Career,39.333608,-76.633034,5.78
+S029,Baltimore City Fire Station 14,608 Swann Ave,Baltimore,Baltimore City,Career,39.294371,-76.694221,6.36
+S030,Baltimore City Fire Station 39,5714 Eastern Ave,Baltimore,Baltimore City,Career,39.287718,-76.546846,6.5
+S031,Baltimore City Fire Station 31,1601 Broening Hwy,Baltimore,Baltimore City,Career,39.274321,-76.543192,6.84
+S032,Baltimore City Fire Station 39,4427 Pennington Ave,Baltimore,Baltimore City,Career,39.225412,-76.588288,6.96
+S033,Arbutus Volunteer Fire Company,5200 Southwestern Blvd,Arbutus,Baltimore County,Volunteer,39.250429,-76.691897,6.98
+S034,Baltimore City Fire Station 13,4315 Mannasota Ave,Baltimore,Baltimore City,Career,39.325538,-76.56068,7.14
+S035,Baltimore City Fire Station 4,4312 Park Heights Ave,Baltimore,Baltimore City,Career,39.337996,-76.665444,7.23
+S036,Baltimore City Engine 4,1201 E Cold Spring Ln,Baltimore,Baltimore City,Career,39.344683,-76.597455,7.25
+S037,Baltimore City Fire Station 3,3906 Liberty Heights Ave,Baltimore,Baltimore City,Career,39.327879,-76.683362,7.32
+S038,Baltimore City Fire Station 5,2 Upland Road,Baltimore,Baltimore City,Career,39.350308,-76.635959,7.65
+S039,Baltimore County Fire Department Halethorpe - Station 5,4500 Washington Blvd,Halethorpe,Baltimore County,Career,39.234277,-76.68642,7.7
+S040,Baltimore City Fire Station 11,4522 Harford Road,Baltimore,Baltimore City,Career,39.341515,-76.571365,7.89
+S041,Baltimore City Fire Station 8,1100 Walters Ave,Baltimore,Baltimore City,Career,39.359249,-76.597074,8.82
+S042,Baltimore City Fire Station 2,5500 Reisterstown Road,Baltimore,Baltimore City,Career,39.347619,-76.690709,9.36
+S043,Baltimore County Fire Department Catonsville - Station 4,756 Frederick Road,Baltimore,Baltimore County,Career,39.27189,-76.733659,9.68
+S044,Baltimore City Fire Station 40,5821 Belair Road,Baltimore,Baltimore City,Career,39.344157,-76.542554,9.7
+S045,Baltimore County Fire Department Dundalk - Station 6,2815 Sollers Point Road,Dundalk,Baltimore County,Career,39.25927,-76.511966,9.81
+S046,Baltimore County Fire Department Eastview - Station 15,1056 North Point Road,Baltimore,Baltimore County,Career,39.288299,-76.507118,9.91
+S047,Baltimore City Fire Station 1,2700 Glen Ave,Baltimore,Baltimore City,Career,39.361554,-76.677694,10.03
+S048,Woodlawn Volunteer Fire Department Station 3,6423 Windsor Mill Road,Baltimore,Baltimore County,Volunteer,39.322525,-76.728305,10.18
+S049,Woodlawn Volunteer Fire Company Station 33,2033 Woodlawn Dr,Baltimore,Baltimore County,Volunteer,39.321966,-76.729196,10.22
+S050,Baltimore County Fire Department Westview - Station 13,6300 Johnnycake Road,Baltimore,Baltimore County,Career,39.300298,-76.73904,10.27
+S051,Rosedale Volunteer Fire Company - Station 28,8037 Philadelphia Road,Rosedale,Baltimore County,Volunteer,39.321822,-76.512324,10.41
+S052,Baltimore City Fire Station 10,6512 Harford Road,Baltimore,Baltimore City,Career,39.362162,-76.553272,10.67
+S053,Baltimore County Fire Department Hilendale - Station 11,6636 Loch Raven Blvd,Baltimore,Baltimore County,Career,39.379214,-76.580223,11.36
+S054,Baltimore County Fire Department Golden Ring - Station 16,6814 Golden Ring Road,Baltimore,Baltimore County,Career,39.334605,-76.496884,12.24
+S055,Wise Avenue Volunteer Fire Company Station 27,214 Wise Ave,Dundalk,Baltimore County,Volunteer,39.262594,-76.481804,12.27
+S056,Baltimore County Fire Department Woodlawn - Station 3,7223 Windsor Mill Rd,Woodlawn,Baltimore County,Career,39.337771,-76.755261,13.02
+S057,Pikesville Volunteer Fire Company Station 32,40 E Sudbrook Ln,Pikesville,Baltimore County,Volunteer,39.37696,-76.720293,13.5
+S058,Baltimore County Fire Department Brooklandville - Station 14,10017 Falls Rd,Brooklandville,Baltimore County,Career,39.399436,-76.664998,13.54
+S059,Baltimore County Fire Department Pikesville - Station 2,22 Walker Ave,Pikesville,Baltimore County,Career,39.377459,-76.722723,13.67
+S060,Baltimore County Fire Department Essex - Station 7,800 Myrth Ave,Essex,Baltimore County,Career,39.315175,-76.468681,13.69
+S061,Baltimore County Fire Department Parkville - Station 10,2325 Putty Hill Ave,Parkville,Baltimore County,Career,39.389984,-76.544851,13.69
+S062,Baltimore County Fire Department Towson - Station 1,800 York Road,Towson,Baltimore County,Career,39.406499,-76.606863,13.87
+S063,Baltimore County Fire Department Fullerton - Station 8,4401 Fitch Ave,Baltimore,Baltimore County,Career,39.369112,-76.505386,13.92
+S064,Baltimore County Fire Department Sparrows Point - Station 57,1545 Sparrows Point Blvd,Baltimore,Baltimore County,Career,39.221912,-76.468357,14.84
+S065,Baltimore County Fire Department Edgemere - Station 9,6800 North Point Road,Baltimore,Baltimore County,Career,39.242599,-76.449352,15.51
+S066,Lutherville Volunteer Fire Company,1609 Bellona Ave,Lutherville Timonium,Baltimore County,Volunteer,39.422301,-76.620318,15.57
+S067,Volunteer Fire Department Of Hyde Park,1449 Sussex Road,Baltimore,Baltimore County,Volunteer,39.285921,-76.440175,15.66
+S068,North Point-Edgemere Volunteer Fire Department - Station 26,7500 North Point Road,Sparrows Point,Baltimore County,Volunteer,39.236831,-76.442342,16.28
+S069,Providence Volunteer Fire Company Station 29,1416 Providence Road,Towson,Baltimore County,Volunteer,39.423298,-76.564731,16.43
+S070,Baltimore County Fire Department Millde River - Station 12,609 Compass Road,Baltimore,Baltimore County,Career,39.34397,-76.448288,16.44
+S071,Middleborough Volunteer Fire Dept. Station 23,1913 Middleborough Road,Baltimore,Baltimore County,Volunteer,39.307228,-76.431261,16.65
+S072,Baltimore County Fire Department Randallstown - Station 18,3610 Brenbrook Dr,Randallstown,Baltimore County,Career,39.364854,-76.784667,16.73
+S073,Baltimore County Fire Department Back River Neck - Station 58,805 Back River Neck Road,Baltimore,Baltimore County,Career,39.28713,-76.426395,16.85
+S074,Middle River Volunteer Ambulance Rescue Company,2000 Leland Ave,Baltimore,Baltimore County,Volunteer,39.335134,-76.433859,17.22
+S075,Middle River Volunteer Fire Company Station 22,1100 Wilson Point Road,Middle River,Baltimore County,Volunteer,39.322137,-76.423278,17.66
+S076,Baltimore County Fire Department Garrison - Station 19,15 Kenmar Ave,Owings Mills,Baltimore County,Career,39.406166,-76.75952,18.15
+S077,Baltimore County Fire Department Perry Hall - Station 56,9325 Belair Road,Baltimore,Baltimore County,Career,39.404178,-76.472413,18.69
+S078,Rockaway Beach Volunteer Fire Company,2212 Seneca Road,Essex,Baltimore County,Volunteer,39.294922,-76.40543,18.69
+S079,Baltimore County Fire Department Texas - Station 17,9835 York Road,Cockeysville,Baltimore County,Career,39.460545,-76.634121,19.85
+S080,White Marsh Volunteer Fire Company Station 20,5419 Ebenezer Road,White Marsh,Baltimore County,Volunteer,39.382206,-76.430759,19.85
+S081,Community Volunteer Fire Department Of Bowley’s Quarters And Vicinity,900 Bowleys Quarters Road,Middle River,Baltimore County,Volunteer,39.320104,-76.39245,20.2
+S082,Owings Mills Volunteer Fire Compnay Station 31,10401 Owings Mills Blvd,Owings Mills,Baltimore County,Volunteer,39.421225,-76.777404,20.42
+S083,Liberty Road Volunteer Fire Company Station 46,10010 Liberty Road,Randallstown,Baltimore County,Volunteer,39.384037,-76.82778,21.0
+S084,Chestnut Ridge Volunteer Fire Co. Station 50,12020 Greenspring Ave,Owings Mills,Baltimore County,Volunteer,39.454163,-76.727315,21.14
+S085,Long Green Volunteer Fire Company (Baltimore County),4506 Long Green Road,Glen Arm,Baltimore County,Volunteer,39.473027,-76.521713,22.89
+S086,Baltimore County Fire Department Chase - Station 54,12438 Eastern Ave,Middle River,Baltimore County,Career,39.358567,-76.371281,23.18
+S087,Cockeysville Volunteer Fire Company Station 39,11210 York Road,Cockeysville,Baltimore County,Volunteer,39.492335,-76.650732,23.48
+S088,Baltimore County Fire Department Franklin - Station 56,600 Nicodemus Road,Reisterstown,Baltimore County,Career,39.443259,-76.826551,25.09
+S089,Kingsville Volunteer Fire Company,11601 Bellvue Ave,Kingsville,Baltimore County,Volunteer,39.442218,-76.415076,25.15
+S090,Jacksonville Volunteer Fire Company Station 47,3500 Sweet Air Road,Jacksonville,Baltimore County,Volunteer,39.515383,-76.556142,26.53
+S091,Reisterstown Volunteer Fire Company Station 41,108 Main St,Reisterstown,Baltimore County,Volunteer,39.466364,-76.829685,27.16
+S092,Glyndon Volunteer Fire Department,4812 Butler Road,Glyndon,Baltimore County,Volunteer,39.476227,-76.818628,27.39
+S093,Butler Volunteer Fire Company,15005 Falls Rd,Sparks Glencoe,Baltimore County,Volunteer,39.535616,-76.728047,29.6
+S094,Boring Volunteer Fire Company,14711 Old Hanover Road,Reisterstown,Baltimore County,Volunteer,39.530348,-76.822037,32.5
+S095,Hereford Ems Rescue / Volunteer Fire Dep Station 44,901 Monkton Road,Monkton,Baltimore County,Volunteer,39.590247,-76.648104,34.31
+S096,Hereford Volunteer Fire Company,510 Monkton Road,Monkton,Baltimore County,Volunteer,39.589409,-76.662018,34.32
+S097,Arcadia Volunteer Fire Department,5415 Arcadia Ave,Upperco,Baltimore County,Volunteer,39.563378,-76.836704,36.29
+S098,Baltimore County Fire Department Parkton - Station 60,800 Stablers Church Road,Parkton,Baltimore County,Career,39.662152,-76.647238,42.29
+S099,Maryland Line Volunteer Fire Company,21631 York Road,Freeland,Baltimore County,Volunteer,39.718214,-76.6548,48.55
